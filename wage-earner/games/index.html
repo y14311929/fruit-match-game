@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>摸鱼游戏 - 打工人之家</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .game-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .game-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            color: #333;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .game-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+        
+        .game-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+        
+        .game-desc {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .game-tags {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        
+        .tag-hot {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .tag-new {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        
+        .tag-free {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+        
+        .coming-soon {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .coming-soon:hover {
+            transform: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <a href="/" class="back-link">← 返回首页</a>
+        
+        <h1>🎮 摸鱼游戏中心</h1>
+        <p style="font-size: 1.2em; opacity: 0.9;">工作累了？来局游戏放松一下～</p>
+        
+        <div class="game-grid">
+            <!-- 水果消消乐 -->
+            <a href="/games/fruit/" class="game-card">
+                <div class="game-icon">🍎</div>
+                <div class="game-title">水果消消乐</div>
+                <div class="game-desc">
+                    经典三消玩法，6 种可爱水果，无限关卡挑战！
+                </div>
+                <div class="game-tags">
+                    <span class="tag tag-hot">热门</span>
+                    <span class="tag tag-free">免费</span>
+                </div>
+            </a>
+            
+            <!-- 即将上线 -->
+            <div class="game-card coming-soon">
+                <div class="game-icon">🐍</div>
+                <div class="game-title">贪吃蛇大作战</div>
+                <div class="game-desc">
+                    经典重现，多人竞技，看谁蛇最长！
+                </div>
+                <div class="game-tags">
+                    <span class="tag tag-new">即将上线</span>
+                </div>
+            </div>
+            
+            <div class="game-card coming-soon">
+                <div class="game-icon">🧱</div>
+                <div class="game-title">打工人搬砖</div>
+                <div class="game-desc">
+                    模拟搬砖日常，体验打工人的酸爽～
+                </div>
+                <div class="game-tags">
+                    <span class="tag tag-new">开发中</span>
+                </div>
+            </div>
+            
+            <div class="game-card coming-soon">
+                <div class="game-icon">🎯</div>
+                <div class="game-title">摸鱼大作战</div>
+                <div class="game-desc">
+                    在老板眼皮底下摸鱼，你能坚持多久？
+                </div>
+                <div class="game-tags">
+                    <span class="tag tag-new">策划中</span>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 40px; padding: 30px; background: rgba(255,255,255,0.1); border-radius: 15px; backdrop-filter: blur(10px);">
+            <h2 style="margin-bottom: 15px;">💡 温馨提示</h2>
+            <p style="line-height: 1.8;">
+                游戏虽好，可不要贪玩哦～<br>
+                适度摸鱼有益身心健康，过度摸鱼可能导致...<br>
+                <strong style="color: #ffd700;">被老板发现！</strong> 😱
+            </p>
+        </div>
+    </div>
+</body>
+</html>
