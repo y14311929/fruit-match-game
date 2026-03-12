@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>意见反馈 - 打工人之家</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .back-link { display: inline-block; color: white; text-decoration: none; margin-bottom: 20px; font-size: 1.1em; }
+        .card { background: rgba(255,255,255,0.95); border-radius: 20px; padding: 50px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        h1 { color: #333; font-size: 2.5em; margin-bottom: 15px; text-align: center; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 40px; font-size: 1.2em; }
+        .form-group { margin-bottom: 25px; }
+        label { display: block; color: #333; font-weight: 600; margin-bottom: 8px; font-size: 1.05em; }
+        input, select, textarea { width: 100%; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1em; font-family: inherit; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #667eea; }
+        textarea { min-height: 150px; resize: vertical; }
+        .btn { width: 100%; padding: 18px; border: none; border-radius: 10px; font-size: 1.2em; font-weight: bold; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; cursor: pointer; transition: transform 0.3s; }
+        .btn:hover { transform: translateY(-2px); }
+        .contact-methods { margin-top: 40px; padding-top: 40px; border-top: 2px solid #f0f0f0; }
+        .contact-methods h2 { font-size: 1.8em; color: #333; margin-bottom: 25px; text-align: center; }
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .contact-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; text-align: center; }
+        .contact-card h3 { font-size: 1.3em; margin-bottom: 10px; }
+        .contact-card p { opacity: 0.95; line-height: 1.6; }
+        .contact-card a { color: white; font-weight: 600; }
+        .tip-box { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 20px; border-radius: 10px; margin: 25px 0; }
+        .tip-box p { color: #1565c0; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← 返回首页</a>
+        <div class="card">
+            <h1>💬 意见反馈</h1>
+            <p class="subtitle">你的每一条建议，都是我们进步的动力</p>
+            
+            <form onsubmit="submitFeedback(event)">
+                <div class="form-group">
+                    <label>反馈类型 *</label>
+                    <select required>
+                        <option value="">请选择类型</option>
+                        <option value="bug">🐛 Bug 报告</option>
+                        <option value="feature">💡 功能建议</option>
+                        <option value="content">📝 内容问题</option>
+                        <option value="design">🎨 界面设计</option>
+                        <option value="other">📮 其他问题</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>联系方式（选填）</label>
+                    <input type="email" placeholder="你的邮箱，方便我们回复">
+                </div>
+                
+                <div class="form-group">
+                    <label>问题描述 *</label>
+                    <textarea required placeholder="请详细描述你遇到的问题或建议..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>截图上传（选填）</label>
+                    <input type="file" accept="image/*">
+                </div>
+                
+                <button type="submit" class="btn">📤 提交反馈</button>
+            </form>
+            
+            <div class="tip-box">
+                <p>💡 <strong>温馨提示：</strong> 我们会认真阅读每一条反馈，并在 3 个工作日内回复。如遇到紧急问题，请直接发送邮件至 support@wage-earner.com</p>
+            </div>
+            
+            <div class="contact-methods">
+                <h2>📧 更多联系方式</h2>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <h3>📮 意见反馈</h3>
+                        <p>feedback@wage-earner.com</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>🛠️ 技术支持</h3>
+                        <p>support@wage-earner.com</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>💼 商务合作</h3>
+                        <p>business@wage-earner.com</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>👥 加入我们</h3>
+                        <p>hr@wage-earner.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function submitFeedback(e) {
+            e.preventDefault();
+            alert('🎉 反馈提交成功！\n\n感谢您的宝贵意见，我们会在 3 个工作日内处理并回复。\n\n如有紧急问题，请发送邮件至 support@wage-earner.com');
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
