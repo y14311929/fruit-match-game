@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>职场指南 - 打工人之家</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .back-link { display: inline-block; color: white; text-decoration: none; margin-bottom: 20px; font-size: 1.1em; }
+        h1 { color: white; font-size: 2.5em; text-align: center; margin-bottom: 10px; }
+        .subtitle { text-align: center; color: white; opacity: 0.9; margin-bottom: 40px; font-size: 1.2em; }
+        .guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
+        .guide-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .guide-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
+        .guide-category {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .guide-title { font-size: 1.4em; font-weight: bold; margin-bottom: 15px; color: #333; }
+        .guide-summary { color: #666; line-height: 1.8; margin-bottom: 20px; }
+        .guide-meta { display: flex; justify-content: space-between; padding-top: 15px; border-top: 1px solid #e0e0e0; color: #999; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← 返回首页</a>
+        <h1>📚 职场指南</h1>
+        <p class="subtitle">从小白到达人的进阶之路</p>
+        <div class="guide-grid" id="guideGrid"></div>
+    </div>
+    <script>
+        const guides = [
+            { category: "新人入门", title: "入职第一周必做的 10 件事", summary: "快速融入团队，给领导留下好印象，从这些小事开始...", reads: "1.2w", date: "3 天前" },
+            { category: "新人入门", title: "如何优雅地请教同事问题", summary: "问问题也是技术活，这样问既不得罪人又能学到东西...", reads: "8.5k", date: "5 天前" },
+            { category: "升职加薪", title: "谈薪资的 5 个技巧", summary: "HR 不会告诉你的秘密，这样谈薪最多能多要 30%...", reads: "3.5w", date: "1 周前" },
+            { category: "升职加薪", title: "如何让领导看到你的价值", summary: "默默做事不如会展示，学会这招让领导主动给你加薪...", reads: "2.8w", date: "1 周前" },
+            { category: "工作效率", title: "高效人士的晨间习惯", summary: "早上做好这 5 件事，一整天效率翻倍...", reads: "1.9w", date: "2 周前" },
+            { category: "工作效率", title: "番茄工作法实战指南", summary: "25 分钟工作法，亲测有效，拖延症患者的救星...", reads: "2.2w", date: "2 周前" },
+            { category: "职场关系", title: "如何处理办公室政治", summary: "不站队也能生存，聪明人的处世之道...", reads: "4.1w", date: "3 周前" },
+            { category: "职场关系", title: "和领导相处的艺术", summary: "既不被穿小鞋，也不当舔狗，这个度要把握好...", reads: "3.8w", date: "3 周前" },
+            { category: "职业规划", title: "30 岁前必须想清楚的 5 个问题", summary: "职业规划要趁早，这些坑我替你踩过了...", reads: "5.2w", date: "1 月前" },
+            { category: "职业规划", title: "跳槽还是留守？", summary: "什么时候该走，什么时候该留，看这 3 个指标...", reads: "4.5w", date: "1 月前" },
+            { category: "心理健康", title: "职场 burnout 自救指南", summary: "工作太累怎么办？这些方法帮你找回状态...", reads: "3.3w", date: "1 月前" },
+            { category: "心理健康", title: "如何平衡工作与生活", summary: "996 不是常态，学会这招让你准时下班...", reads: "2.9w", date: "1 月前" }
+        ];
+        document.getElementById('guideGrid').innerHTML = guides.map(g => `
+            <div class="guide-card">
+                <span class="guide-category">${g.category}</span>
+                <div class="guide-title">${g.title}</div>
+                <div class="guide-summary">${g.summary}</div>
+                <div class="guide-meta"><span>👁 ${g.reads}</span><span>${g.date}</span></div>
+            </div>
+        `).join('');
+    </script>
+</body>
+</html>

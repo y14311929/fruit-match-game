@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>年假计算器 - 打工人之家</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .back-link {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        .card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1em;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+        .result {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            display: none;
+        }
+        .result.show { display: block; animation: slideIn 0.5s ease; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result-value { font-size: 3em; font-weight: bold; text-align: center; }
+        .result-label { text-align: center; opacity: 0.9; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/tools/" class="back-link">← 返回工具列表</a>
+        <div class="card">
+            <h1>📅 年假计算器</h1>
+            <p class="subtitle">算算你有多少天带薪年假</p>
+            <div class="form-group">
+                <label>累计工作年限</label>
+                <select id="workYears">
+                    <option value="1">1 年以下</option>
+                    <option value="5">1-10 年</option>
+                    <option value="15">10-20 年</option>
+                    <option value="25">20 年以上</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>入职当前公司日期</label>
+                <input type="date" id="joinDate">
+            </div>
+            <div class="form-group">
+                <label>今年已休年假天数</label>
+                <input type="number" id="takenDays" value="0" min="0">
+            </div>
+            <button class="btn" onclick="calculate()">开始计算</button>
+            <div class="result" id="result">
+                <div class="result-value" id="annualLeave">0 天</div>
+                <div class="result-label">今年可享受年假</div>
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.3);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span>剩余年假：</span>
+                        <span id="remainingDays" style="font-weight: bold;">0 天</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>折算工资：</span>
+                        <span id="compensation" style="font-weight: bold;">¥0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function calculate() {
+            const workYears = parseInt(document.getElementById('workYears').value);
+            const joinDate = new Date(document.getElementById('joinDate').value);
+            const takenDays = parseInt(document.getElementById('takenDays').value) || 0;
+            
+            if (!joinDate.getTime()) {
+                alert('请选择入职日期');
+                return;
+            }
+            
+            // 法定年假
+            let baseDays = 0;
+            if (workYears >= 1 && workYears < 10) baseDays = 5;
+            else if (workYears >= 10 && workYears < 20) baseDays = 10;
+            else if (workYears >= 20) baseDays = 15;
+            
+            // 入职折算
+            const now = new Date();
+            const joinYear = joinDate.getFullYear();
+            const daysInYear = now.getFullYear() - joinYear === 0 ? 
+                365 : 365;
+            const daysWorked = Math.floor((now - joinDate) / (1000 * 60 * 60 * 24));
+            const proratedDays = Math.floor((daysWorked / daysInYear) * baseDays);
+            
+            const totalDays = Math.min(baseDays, proratedDays > 0 ? proratedDays : baseDays);
+            const remaining = Math.max(0, totalDays - takenDays);
+            const compensation = remaining * 300; // 3 倍工资
+            
+            document.getElementById('annualLeave').textContent = totalDays + ' 天';
+            document.getElementById('remainingDays').textContent = remaining + ' 天';
+            document.getElementById('compensation').textContent = '¥' + compensation;
+            document.getElementById('result').classList.add('show');
+        }
+    </script>
+</body>
+</html>
