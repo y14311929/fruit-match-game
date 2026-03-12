@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下班倒计时 - 打工人之家</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            text-align: center;
+            color: white;
+        }
+        
+        .back-link {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 30px;
+            padding: 50px 40px;
+            color: #333;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        
+        .timer {
+            font-size: 5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 30px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .status {
+            font-size: 1.5em;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+            font-weight: bold;
+        }
+        
+        .status-working {
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            color: #333;
+        }
+        
+        .status-overtime {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .status-offwork {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+        
+        .form-group {
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        input[type="time"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.2em;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 30px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 1s ease;
+            border-radius: 15px;
+        }
+        
+        .progress-text {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .motivational {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(102,126,234,0.1);
+            border-radius: 15px;
+            font-style: italic;
+            color: #667eea;
+        }
+        
+        @media (max-width: 600px) {
+            .timer {
+                font-size: 3em;
+            }
+            
+            .card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/tools/" class="back-link">← 返回工具列表</a>
+        
+        <div class="card">
+            <h1>⏰ 下班倒计时</h1>
+            <p class="subtitle">坚持住，马上就自由了！</p>
+            
+            <div class="form-group">
+                <label>你的下班时间</label>
+                <input type="time" id="offWorkTime" value="18:00" onchange="updateTimer()">
+            </div>
+            
+            <div class="status status-working" id="status">
+                💪 工作中...
+            </div>
+            
+            <div class="timer" id="timer">00:00:00</div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress" style="width: 0%"></div>
+            </div>
+            
+            <p class="progress-text" id="progressText">今天的工作进度</p>
+            
+            <div class="motivational" id="motivational">
+                💡 加油！每一分钟都是在为自己赚钱～
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const motivationalQuotes = [
+            '💡 加油！每一分钟都是在为自己赚钱～',
+            '💪 坚持住！下班后你就是最靓的仔！',
+            '🌟 工作再忙，也要记得喝水休息哦～',
+            '🎯 专注当下，效率翻倍，早点下班！',
+            '🚀 你现在的努力，是为了以后更好的摸鱼！',
+            '☕ 累了就休息下，效率更重要～',
+            '🎮 想想下班后的游戏/美食/追剧，就有动力了！',
+            '💰 工资是按小时算的，摸鱼就是赚钱！',
+            '🌈 今天也要开心工作，快乐下班！',
+            '🏆 你是最棒的打工人！加油！'
+        ];
+        
+        function updateTimer() {
+            const now = new Date();
+            const offWorkTime = document.getElementById('offWorkTime').value;
+            const [hours, minutes] = offWorkTime.split(':').map(Number);
+            
+            const offWork = new Date();
+            offWork.setHours(hours, minutes, 0, 0);
+            
+            // 假设早上 9 点上班
+            const workStart = new Date();
+            workStart.setHours(9, 0, 0, 0);
+            
+            const diff = offWork - now;
+            const workDuration = offWork - workStart;
+            const worked = now - workStart;
+            
+            const statusEl = document.getElementById('status');
+            const timerEl = document.getElementById('timer');
+            const progressEl = document.getElementById('progress');
+            const progressTextEl = document.getElementById('progressText');
+            const motivationalEl = document.getElementById('motivational');
+            
+            if (diff <= 0) {
+                // 已下班
+                const overtime = Math.abs(diff);
+                const overtimeHours = Math.floor(overtime / 3600000);
+                const overtimeMinutes = Math.floor((overtime % 3600000) / 60000);
+                const overtimeSeconds = Math.floor((overtime % 60000) / 1000);
+                
+                statusEl.textContent = '🎉 下班啦！快去享受生活！';
+                statusEl.className = 'status status-offwork';
+                timerEl.textContent = `已下班 ${String(overtimeHours).padStart(2, '0')}:${String(overtimeMinutes).padStart(2, '0')}:${String(overtimeSeconds).padStart(2, '0')}`;
+                progressEl.style.width = '100%';
+                progressTextEl.textContent = '恭喜完成今天的工作！';
+                motivationalEl.textContent = '🌟 辛苦一天了，好好放松一下吧！';
+            } else if (worked < 0) {
+                // 还没到上班时间
+                const beforeWork = Math.abs(worked);
+                const beforeHours = Math.floor(beforeWork / 3600000);
+                const beforeMinutes = Math.floor((beforeWork % 3600000) / 60000);
+                
+                statusEl.textContent = '😴 还没到上班时间呢～';
+                statusEl.className = 'status status-working';
+                timerEl.textContent = `${beforeHours}小时${beforeMinutes}分钟后上班`;
+                progressEl.style.width = '0%';
+                progressTextEl.textContent = '再睡会儿吧～';
+                motivationalEl.textContent = '☕ 先喝杯咖啡，准备开始新的一天！';
+            } else {
+                // 工作中
+                const hours = Math.floor(diff / 3600000);
+                const minutes = Math.floor((diff % 3600000) / 60000);
+                const seconds = Math.floor((diff % 60000) / 1000);
+                
+                const progress = Math.min(100, (worked / workDuration) * 100);
+                
+                statusEl.textContent = '💪 工作中...';
+                statusEl.className = 'status status-working';
+                timerEl.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                progressEl.style.width = `${progress.toFixed(1)}%`;
+                progressTextEl.textContent = `今天的工作进度：${progress.toFixed(1)}%`;
+                
+                // 随机显示励志语录
+                if (Math.random() < 0.01) {
+                    motivationalEl.textContent = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+                }
+            }
+        }
+        
+        // 每秒更新
+        setInterval(updateTimer, 1000);
+        updateTimer();
+        
+        // 随机更换励志语录
+        setInterval(() => {
+            const motivationalEl = document.getElementById('motivational');
+            motivationalEl.textContent = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+        }, 60000);
+    </script>
+</body>
+</html>

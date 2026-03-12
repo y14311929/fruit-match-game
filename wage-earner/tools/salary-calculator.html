@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>薪资计算器 - 打工人之家</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .back-link {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1em;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102,126,234,0.4);
+        }
+        
+        .result {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .result.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .result h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .result-item {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .result-label {
+            font-size: 0.95em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .result-value {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+        
+        .result-item.highlight {
+            background: rgba(255,255,255,0.3);
+            grid-column: span 2;
+        }
+        
+        .result-item.highlight .result-value {
+            font-size: 2.5em;
+        }
+        
+        .tips {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .tips h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .tips ul {
+            color: #856404;
+            padding-left: 20px;
+            line-height: 1.8;
+        }
+        
+        @media (max-width: 600px) {
+            .card {
+                padding: 25px;
+            }
+            
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .result-item.highlight {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/tools/" class="back-link">← 返回工具列表</a>
+        
+        <div class="card">
+            <h1>💰 薪资计算器</h1>
+            <p class="subtitle">算算你真正到手多少钱</p>
+            
+            <div class="form-group">
+                <label>税前月薪（元）</label>
+                <input type="number" id="salary" placeholder="例如：10000" value="10000">
+            </div>
+            
+            <div class="form-group">
+                <label>工作城市</label>
+                <select id="city">
+                    <option value="beijing">北京</option>
+                    <option value="shanghai">上海</option>
+                    <option value="guangzhou">广州</option>
+                    <option value="shenzhen">深圳</option>
+                    <option value="hangzhou">杭州</option>
+                    <option value="other">其他城市</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>公积金缴纳比例</label>
+                <select id="fund">
+                    <option value="0.12">12%（最高）</option>
+                    <option value="0.10">10%</option>
+                    <option value="0.08">8%</option>
+                    <option value="0.07">7%</option>
+                    <option value="0.05">5%（最低）</option>
+                </select>
+            </div>
+            
+            <button class="btn btn-primary" onclick="calculate()">开始计算</button>
+            
+            <div class="result" id="result">
+                <h2>💰 薪资详情</h2>
+                <div class="result-grid">
+                    <div class="result-item highlight">
+                        <div class="result-label">税后到手</div>
+                        <div class="result-value" id="netSalary">¥0</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">养老保险</div>
+                        <div class="result-value" id="pension">¥0</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">医疗保险</div>
+                        <div class="result-value" id="medical">¥0</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">失业保险</div>
+                        <div class="result-value" id="unemployment">¥0</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">公积金</div>
+                        <div class="result-value" id="fundAmount">¥0</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">个人所得税</div>
+                        <div class="result-value" id="tax">¥0</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">五险一金总额</div>
+                        <div class="result-value" id="totalInsurance">¥0</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tips">
+                <h3>💡 小贴士</h3>
+                <ul>
+                    <li>五险一金包括：养老、医疗、失业、工伤、生育保险 + 住房公积金</li>
+                    <li>公积金比例越高，到手工资金额越少，但公积金账户余额越多</li>
+                    <li>年终奖可以单独计税，可能更划算哦</li>
+                    <li>本计算器结果为估算值，实际以公司缴纳为准</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 各城市社保缴纳比例（个人部分）
+        const cityRates = {
+            beijing: { pension: 0.08, medical: 0.02, unemployment: 0.005 },
+            shanghai: { pension: 0.08, medical: 0.02, unemployment: 0.005 },
+            guangzhou: { pension: 0.08, medical: 0.02, unemployment: 0.002 },
+            shenzhen: { pension: 0.08, medical: 0.02, unemployment: 0.003 },
+            hangzhou: { pension: 0.08, medical: 0.02, unemployment: 0.005 },
+            other: { pension: 0.08, medical: 0.02, unemployment: 0.005 }
+        };
+        
+        function calculate() {
+            const salary = parseFloat(document.getElementById('salary').value);
+            const city = document.getElementById('city').value;
+            const fundRate = parseFloat(document.getElementById('fund').value);
+            
+            if (!salary || salary <= 0) {
+                alert('请输入有效的税前工资');
+                return;
+            }
+            
+            const rates = cityRates[city];
+            
+            // 计算五险一金（个人部分）
+            const pension = salary * rates.pension;
+            const medical = salary * rates.medical;
+            const unemployment = salary * rates.unemployment;
+            const fundAmount = salary * fundRate;
+            
+            const totalInsurance = pension + medical + unemployment + fundAmount;
+            
+            // 计算应纳税所得额
+            const taxableIncome = salary - totalInsurance - 5000; // 5000 是起征点
+            
+            // 计算个人所得税（累进税率）
+            let tax = 0;
+            if (taxableIncome > 0) {
+                if (taxableIncome <= 3000) {
+                    tax = taxableIncome * 0.03;
+                } else if (taxableIncome <= 12000) {
+                    tax = taxableIncome * 0.1 - 210;
+                } else if (taxableIncome <= 25000) {
+                    tax = taxableIncome * 0.2 - 1410;
+                } else if (taxableIncome <= 35000) {
+                    tax = taxableIncome * 0.25 - 2660;
+                } else if (taxableIncome <= 55000) {
+                    tax = taxableIncome * 0.3 - 4410;
+                } else if (taxableIncome <= 80000) {
+                    tax = taxableIncome * 0.35 - 7160;
+                } else {
+                    tax = taxableIncome * 0.45 - 15160;
+                }
+            }
+            
+            // 税后工资
+            const netSalary = salary - totalInsurance - tax;
+            
+            // 显示结果
+            document.getElementById('netSalary').textContent = '¥' + netSalary.toFixed(2);
+            document.getElementById('pension').textContent = '¥' + pension.toFixed(2);
+            document.getElementById('medical').textContent = '¥' + medical.toFixed(2);
+            document.getElementById('unemployment').textContent = '¥' + unemployment.toFixed(2);
+            document.getElementById('fundAmount').textContent = '¥' + fundAmount.toFixed(2);
+            document.getElementById('tax').textContent = '¥' + tax.toFixed(2);
+            document.getElementById('totalInsurance').textContent = '¥' + totalInsurance.toFixed(2);
+            
+            document.getElementById('result').classList.add('show');
+        }
+    </script>
+</body>
+</html>
