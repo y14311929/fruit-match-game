@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🐱 猫咪消消乐 - 完整版</title>
+    <title>🍎 水果消消乐 - 完整版</title>
     <style>
         * {
             margin: 0;
@@ -414,7 +414,7 @@
     </style>
 </head>
 <body>
-    <h1>🐱 猫咪消消乐 🐱</h1>
+    <h1>🍎 水果消消乐 🍎</h1>
     
     <div class="game-info">
         <div>🏆 分数：<span id="score">0</span></div>
@@ -516,7 +516,7 @@
     </div>
     
     <script>
-        const cats = ['🐱', '🐈', '🐈‍⬛', '😺', '😸', '😹'];
+        const fruits = ['🍎', '🍊', '🍇', '🍌', '🍉', '🍓'];
         const boardSize = 8;
         let board = [];
         let selected = null;
@@ -569,14 +569,14 @@
             for (let i = 0; i < boardSize; i++) {
                 board[i] = [];
                 for (let j = 0; j < boardSize; j++) {
-                    board[i][j] = cats[Math.floor(Math.random() * cats.length)];
+                    board[i][j] = fruits[Math.floor(Math.random() * fruits.length)];
                 }
             }
             // 确保初始没有匹配
             while (findMatches().length > 0) {
                 for (let i = 0; i < boardSize; i++) {
                     for (let j = 0; j < boardSize; j++) {
-                        board[i][j] = cats[Math.floor(Math.random() * cats.length)];
+                        board[i][j] = fruits[Math.floor(Math.random() * fruits.length)];
                     }
                 }
             }
@@ -746,7 +746,7 @@
                         }
                     }
                     for (let i = writeRow; i >= 0; i--) {
-                        board[i][j] = cats[Math.floor(Math.random() * cats.length)];
+                        board[i][j] = fruits[Math.floor(Math.random() * fruits.length)];
                     }
                 }
                 
