@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐱 猫咪消消乐 - 完整版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        
+        .game-info {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            color: white;
+            font-size: 1.1em;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .game-info div {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .coin-display {
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%) !important;
+            color: #333 !important;
+            font-weight: bold;
+        }
+        
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(8, 60px);
+            grid-template-rows: repeat(8, 60px);
+            gap: 5px;
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        
+        .cell {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        
+        .cell:hover {
+            transform: scale(1.1);
+            background: rgba(255,255,255,0.5);
+        }
+        
+        .cell.selected {
+            background: rgba(255,215,0,0.6);
+            transform: scale(1.15);
+            box-shadow: 0 0 20px rgba(255,215,0,0.8);
+        }
+        
+        .cell.matched {
+            animation: pop 0.3s ease-out;
+        }
+        
+        .cell.hint {
+            animation: pulse 0.5s ease-in-out infinite;
+            background: rgba(0,255,127,0.5);
+        }
+        
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(0); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        button {
+            padding: 12px 25px;
+            font-size: 1em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        #restart-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        #shop-btn {
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            color: #333;
+        }
+        
+        #leaderboard-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .message {
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 10px;
+            font-size: 1.2em;
+            color: #333;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .combo-text {
+            position: fixed;
+            font-size: 2em;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            pointer-events: none;
+            animation: floatUp 1s ease-out forwards;
+            z-index: 1000;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(1.5);
+            }
+        }
+        
+        /* 商店模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            color: white;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-header h2 {
+            font-size: 1.8em;
+        }
+        
+        .close-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .shop-items {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .shop-item {
+            background: rgba(255,255,255,0.15);
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .shop-item-info {
+            flex: 1;
+        }
+        
+        .shop-item-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .shop-item-desc {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .shop-item-price {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .buy-btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 8px 20px;
+            font-size: 0.9em;
+        }
+        
+        .inventory {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        .inventory h3 {
+            margin-bottom: 15px;
+        }
+        
+        .inventory-items {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .inventory-item {
+            background: rgba(255,255,255,0.1);
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .use-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 6px 15px;
+            font-size: 0.85em;
+        }
+        
+        /* 排行榜 */
+        .leaderboard-list {
+            list-style: none;
+        }
+        
+        .leaderboard-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .leaderboard-rank {
+            font-size: 1.5em;
+            font-weight: bold;
+            width: 40px;
+        }
+        
+        .rank-1 { color: #ffd700; }
+        .rank-2 { color: #c0c0c0; }
+        .rank-3 { color: #cd7f32; }
+        
+        .leaderboard-score {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        
+        .leaderboard-date {
+            font-size: 0.85em;
+            opacity: 0.7;
+        }
+        
+        /* 道具使用按钮区域 */
+        .powerups-bar {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .powerup-btn {
+            padding: 10px 20px;
+            font-size: 0.95em;
+            border-radius: 15px;
+        }
+        
+        .powerup-plus5 {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+        
+        .powerup-reset {
+            background: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
+            color: white;
+        }
+        
+        .powerup-hint {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        
+        .powerup-shuffle {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+        }
+        
+        @media (max-width: 600px) {
+            #game-board {
+                grid-template-columns: repeat(8, 45px);
+                grid-template-rows: repeat(8, 45px);
+            }
+            
+            .cell {
+                width: 45px;
+                height: 45px;
+                font-size: 28px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+            
+            .game-info {
+                gap: 10px;
+                font-size: 0.95em;
+            }
+            
+            .game-info div {
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>🐱 猫咪消消乐 🐱</h1>
+    
+    <div class="game-info">
+        <div>🏆 分数：<span id="score">0</span></div>
+        <div>🎯 关卡：<span id="level">1</span></div>
+        <div>👟 步数：<span id="moves">20</span></div>
+        <div class="coin-display">💰 金币：<span id="coins">0</span></div>
+    </div>
+    
+    <div id="game-board"></div>
+    
+    <div class="powerups-bar">
+        <button class="powerup-btn powerup-plus5" onclick="usePowerup('plus5')">+5 步 <span id="plus5-count">0</span></button>
+        <button class="powerup-btn powerup-reset" onclick="usePowerup('reset')">重置 <span id="reset-count">0</span></button>
+        <button class="powerup-btn powerup-hint" onclick="usePowerup('hint')">提示 <span id="hint-count">0</span></button>
+        <button class="powerup-btn powerup-shuffle" onclick="usePowerup('shuffle')">洗牌 <span id="shuffle-count">0</span></button>
+    </div>
+    
+    <div class="controls">
+        <button id="shop-btn" onclick="openShop()">🛒 商店</button>
+        <button id="leaderboard-btn" onclick="openLeaderboard()">🏆 排行榜</button>
+        <button id="restart-btn" onclick="restartGame()">🔄 重新开始</button>
+    </div>
+    
+    <div id="message" class="message"></div>
+    
+    <!-- 商店模态框 -->
+    <div id="shop-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🛒 道具商店</h2>
+                <button class="close-btn" onclick="closeShop()">×</button>
+            </div>
+            <div style="text-align: center; margin-bottom: 20px; font-size: 1.2em;">
+                💰 当前金币：<span id="shop-coins">0</span>
+            </div>
+            <div class="shop-items">
+                <div class="shop-item">
+                    <div class="shop-item-info">
+                        <div class="shop-item-name">+5 步</div>
+                        <div class="shop-item-desc">增加 5 步移动次数</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="shop-item-price">💰 50</div>
+                        <button class="buy-btn" onclick="buyItem('plus5', 50)">购买</button>
+                    </div>
+                </div>
+                <div class="shop-item">
+                    <div class="shop-item-info">
+                        <div class="shop-item-name">重置棋盘</div>
+                        <div class="shop-item-desc">重新排列所有猫咪</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="shop-item-price">💰 100</div>
+                        <button class="buy-btn" onclick="buyItem('reset', 100)">购买</button>
+                    </div>
+                </div>
+                <div class="shop-item">
+                    <div class="shop-item-info">
+                        <div class="shop-item-name">提示</div>
+                        <div class="shop-item-desc">显示一个可消除的位置</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="shop-item-price">💰 30</div>
+                        <button class="buy-btn" onclick="buyItem('hint', 30)">购买</button>
+                    </div>
+                </div>
+                <div class="shop-item">
+                    <div class="shop-item-info">
+                        <div class="shop-item-name">洗牌</div>
+                        <div class="shop-item-desc">随机打乱整个棋盘</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="shop-item-price">💰 80</div>
+                        <button class="buy-btn" onclick="buyItem('shuffle', 80)">购买</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="inventory">
+                <h3>🎒 我的道具</h3>
+                <div class="inventory-items" id="inventory-list">
+                    <!-- 动态填充 -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 排行榜模态框 -->
+    <div id="leaderboard-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🏆 排行榜</h2>
+                <button class="close-btn" onclick="closeLeaderboard()">×</button>
+            </div>
+            <ul class="leaderboard-list" id="leaderboard-list">
+                <!-- 动态填充 -->
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        const cats = ['🐱', '🐈', '🐈‍⬛', '😺', '😸', '😹'];
+        const boardSize = 8;
+        let board = [];
+        let selected = null;
+        let score = 0;
+        let level = 1;
+        let moves = 20;
+        let isProcessing = false;
+        let coins = 0;
+        let inventory = {
+            plus5: 1,
+            reset: 0,
+            hint: 1,
+            shuffle: 0
+        };
+        let leaderboard = [];
+        let hintActive = false;
+        
+        // 初始化
+        function init() {
+            loadData();
+            initBoard();
+            renderBoard();
+            updateInventory();
+            updateCoins();
+        }
+        
+        // 加载存档
+        function loadData() {
+            const saved = localStorage.getItem('catMatchSave');
+            if (saved) {
+                const data = JSON.parse(saved);
+                coins = data.coins || 0;
+                inventory = data.inventory || inventory;
+                leaderboard = data.leaderboard || [];
+            }
+        }
+        
+        // 保存存档
+        function saveData() {
+            const data = {
+                coins,
+                inventory,
+                leaderboard
+            };
+            localStorage.setItem('catMatchSave', JSON.stringify(data));
+        }
+        
+        function initBoard() {
+            board = [];
+            for (let i = 0; i < boardSize; i++) {
+                board[i] = [];
+                for (let j = 0; j < boardSize; j++) {
+                    board[i][j] = cats[Math.floor(Math.random() * cats.length)];
+                }
+            }
+            // 确保初始没有匹配
+            while (findMatches().length > 0) {
+                for (let i = 0; i < boardSize; i++) {
+                    for (let j = 0; j < boardSize; j++) {
+                        board[i][j] = cats[Math.floor(Math.random() * cats.length)];
+                    }
+                }
+            }
+        }
+        
+        function renderBoard() {
+            const gameBoard = document.getElementById('game-board');
+            gameBoard.innerHTML = '';
+            
+            for (let i = 0; i < boardSize; i++) {
+                for (let j = 0; j < boardSize; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.textContent = board[i][j];
+                    cell.dataset.row = i;
+                    cell.dataset.col = j;
+                    cell.onclick = () => handleClick(i, j);
+                    
+                    if (selected && selected.row === i && selected.col === j) {
+                        cell.classList.add('selected');
+                    }
+                    
+                    if (hintActive && cell.dataset.row == hintActive.row && cell.dataset.col == hintActive.col) {
+                        cell.classList.add('hint');
+                    }
+                    
+                    gameBoard.appendChild(cell);
+                }
+            }
+            
+            document.getElementById('score').textContent = score;
+            document.getElementById('level').textContent = level;
+            document.getElementById('moves').textContent = moves;
+        }
+        
+        function handleClick(row, col) {
+            if (isProcessing || moves <= 0) return;
+            
+            hintActive = null;
+            renderBoard();
+            
+            if (!selected) {
+                selected = { row, col };
+                renderBoard();
+            } else {
+                const rowDiff = Math.abs(selected.row - row);
+                const colDiff = Math.abs(selected.col - col);
+                
+                if (rowDiff + colDiff === 1) {
+                    swap(selected.row, selected.col, row, col);
+                }
+                selected = null;
+                renderBoard();
+            }
+        }
+        
+        function swap(row1, col1, row2, col2) {
+            isProcessing = true;
+            
+            [board[row1][col1], board[row2][col2]] = [board[row2][col2], board[row1][col1]];
+            renderBoard();
+            
+            setTimeout(() => {
+                const matches = findMatches();
+                
+                if (matches.length > 0) {
+                    processMatches(matches);
+                    moves--;
+                } else {
+                    [board[row1][col1], board[row2][col2]] = [board[row2][col2], board[row1][col1]];
+                    renderBoard();
+                    isProcessing = false;
+                }
+            }, 300);
+        }
+        
+        function findMatches() {
+            const matches = [];
+            
+            // 横向匹配
+            for (let i = 0; i < boardSize; i++) {
+                for (let j = 0; j < boardSize - 2; j++) {
+                    const cat = board[i][j];
+                    if (cat && cat === board[i][j+1] && cat === board[i][j+2]) {
+                        matches.push({row: i, col: j}, {row: i, col: j+1}, {row: i, col: j+2});
+                    }
+                }
+            }
+            
+            // 纵向匹配
+            for (let i = 0; i < boardSize - 2; i++) {
+                for (let j = 0; j < boardSize; j++) {
+                    const cat = board[i][j];
+                    if (cat && cat === board[i+1][j] && cat === board[i+2][j]) {
+                        matches.push({row: i, col: j}, {row: i+1, col: j}, {row: i+2, col: j});
+                    }
+                }
+            }
+            
+            // 去重
+            const unique = [];
+            const seen = new Set();
+            for (const match of matches) {
+                const key = `${match.row},${match.col}`;
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    unique.push(match);
+                }
+            }
+            
+            return unique;
+        }
+        
+        function findPossibleMove() {
+            // 查找所有可能的移动
+            for (let i = 0; i < boardSize; i++) {
+                for (let j = 0; j < boardSize; j++) {
+                    // 向右交换
+                    if (j < boardSize - 1) {
+                        [board[i][j], board[i][j+1]] = [board[i][j+1], board[i][j]];
+                        if (findMatches().length > 0) {
+                            [board[i][j], board[i][j+1]] = [board[i][j+1], board[i][j]];
+                            return { row: i, col: j };
+                        }
+                        [board[i][j], board[i][j+1]] = [board[i][j+1], board[i][j]];
+                    }
+                    // 向下交换
+                    if (i < boardSize - 1) {
+                        [board[i][j], board[i+1][j]] = [board[i+1][j], board[i][j]];
+                        if (findMatches().length > 0) {
+                            [board[i][j], board[i+1][j]] = [board[i+1][j], board[i][j]];
+                            return { row: i, col: j };
+                        }
+                        [board[i][j], board[i+1][j]] = [board[i+1][j], board[i][j]];
+                    }
+                }
+            }
+            return null;
+        }
+        
+        function processMatches(matches) {
+            if (matches.length > 3) {
+                showCombo(matches.length);
+            }
+            
+            const points = matches.length * 10 * (1 + Math.floor(matches.length / 3));
+            score += points;
+            
+            matches.forEach(({row, col}) => {
+                const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                if (cell) {
+                    cell.classList.add('matched');
+                }
+            });
+            
+            setTimeout(() => {
+                matches.forEach(({row, col}) => {
+                    board[row][col] = null;
+                });
+                
+                for (let j = 0; j < boardSize; j++) {
+                    let writeRow = boardSize - 1;
+                    for (let i = boardSize - 1; i >= 0; i--) {
+                        if (board[i][j] !== null) {
+                            board[writeRow][j] = board[i][j];
+                            writeRow--;
+                        }
+                    }
+                    for (let i = writeRow; i >= 0; i--) {
+                        board[i][j] = cats[Math.floor(Math.random() * cats.length)];
+                    }
+                }
+                
+                renderBoard();
+                
+                setTimeout(() => {
+                    const newMatches = findMatches();
+                    if (newMatches.length > 0) {
+                        processMatches(newMatches);
+                    } else {
+                        isProcessing = false;
+                        checkGameEnd();
+                    }
+                }, 300);
+            }, 300);
+        }
+        
+        function showCombo(count) {
+            const comboText = document.createElement('div');
+            comboText.className = 'combo-text';
+            comboText.textContent = `${count}连消! +${count * 10}`;
+            comboText.style.left = '50%';
+            comboText.style.top = '40%';
+            comboText.style.transform = 'translateX(-50%)';
+            document.body.appendChild(comboText);
+            
+            setTimeout(() => comboText.remove(), 1000);
+        }
+        
+        function checkGameEnd() {
+            if (moves <= 0) {
+                const targetScore = level * 500;
+                if (score >= targetScore) {
+                    const coinReward = 50 + level * 10;
+                    coins += coinReward;
+                    level++;
+                    moves = 20;
+                    showMessage(`🎉 恭喜过关！进入第${level}关！奖励 ${coinReward} 金币！`, 'success');
+                    saveData();
+                    updateCoins();
+                } else {
+                    saveToLeaderboard(score);
+                    showMessage(`😿 游戏结束！最终得分：${score}`, 'gameover');
+                    saveData();
+                }
+            }
+        }
+        
+        function saveToLeaderboard(score) {
+            leaderboard.push({
+                score,
+                level,
+                date: new Date().toLocaleDateString('zh-CN')
+            });
+            leaderboard.sort((a, b) => b.score - a.score);
+            leaderboard = leaderboard.slice(0, 10);
+        }
+        
+        function showMessage(text, type) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.style.display = 'block';
+            msg.style.background = type === 'success' ? 'rgba(144,238,144,0.9)' : 'rgba(255,182,193,0.9)';
+            
+            if (type === 'success') {
+                setTimeout(() => {
+                    msg.style.display = 'none';
+                    initBoard();
+                    renderBoard();
+                }, 2000);
+            }
+        }
+        
+        function restartGame() {
+            score = 0;
+            level = 1;
+            moves = 20;
+            selected = null;
+            isProcessing = false;
+            hintActive = null;
+            document.getElementById('message').style.display = 'none';
+            initBoard();
+            renderBoard();
+        }
+        
+        // 商店功能
+        function openShop() {
+            document.getElementById('shop-coins').textContent = coins;
+            updateInventory();
+            document.getElementById('shop-modal').style.display = 'flex';
+        }
+        
+        function closeShop() {
+            document.getElementById('shop-modal').style.display = 'none';
+            saveData();
+        }
+        
+        function buyItem(item, price) {
+            if (coins >= price) {
+                coins -= price;
+                inventory[item]++;
+                updateCoins();
+                updateInventory();
+                document.getElementById('shop-coins').textContent = coins;
+                showMessage(`购买成功！获得 ${getItemName(item)} x1`, 'success');
+                saveData();
+            } else {
+                showMessage('金币不足！', 'gameover');
+            }
+        }
+        
+        function getItemName(key) {
+            const names = {
+                plus5: '+5 步',
+                reset: '重置棋盘',
+                hint: '提示',
+                shuffle: '洗牌'
+            };
+            return names[key];
+        }
+        
+        function updateInventory() {
+            const list = document.getElementById('inventory-list');
+            list.innerHTML = '';
+            
+            for (const [key, count] of Object.entries(inventory)) {
+                const item = document.createElement('div');
+                item.className = 'inventory-item';
+                item.innerHTML = `
+                    <span>${getItemName(key)} x${count}</span>
+                    <button class="use-btn" onclick="usePowerup('${key}')" ${count === 0 ? 'disabled' : ''}>使用</button>
+                `;
+                list.appendChild(item);
+            }
+            
+            document.getElementById('plus5-count').textContent = inventory.plus5;
+            document.getElementById('reset-count').textContent = inventory.reset;
+            document.getElementById('hint-count').textContent = inventory.hint;
+            document.getElementById('shuffle-count').textContent = inventory.shuffle;
+        }
+        
+        function updateCoins() {
+            document.getElementById('coins').textContent = coins;
+        }
+        
+        function usePowerup(type) {
+            if (inventory[type] <= 0 || isProcessing || moves <= 0) {
+                if (inventory[type] <= 0) showMessage('道具不足！先去商店购买吧～', 'gameover');
+                return;
+            }
+            
+            inventory[type]--;
+            updateInventory();
+            
+            switch(type) {
+                case 'plus5':
+                    moves += 5;
+                    renderBoard();
+                    showMessage('+5 步！加油！💪', 'success');
+                    break;
+                case 'reset':
+                    initBoard();
+                    renderBoard();
+                    showMessage('棋盘已重置！🔄', 'success');
+                    break;
+                case 'hint':
+                    const hint = findPossibleMove();
+                    if (hint) {
+                        hintActive = hint;
+                        renderBoard();
+                        showMessage('已提示可消除位置！💡', 'success');
+                    } else {
+                        inventory[type]++;
+                        updateInventory();
+                        showMessage('当前没有可消除的位置，试试洗牌吧！', 'gameover');
+                    }
+                    break;
+                case 'shuffle':
+                    initBoard();
+                    renderBoard();
+                    showMessage('棋盘已打乱！🎲', 'success');
+                    break;
+            }
+            
+            saveData();
+        }
+        
+        // 排行榜功能
+        function openLeaderboard() {
+            const list = document.getElementById('leaderboard-list');
+            list.innerHTML = '';
+            
+            if (leaderboard.length === 0) {
+                list.innerHTML = '<li style="text-align: center; padding: 20px; opacity: 0.7;">暂无记录，开始游戏吧！🎮</li>';
+            } else {
+                leaderboard.forEach((entry, index) => {
+                    const item = document.createElement('li');
+                    item.className = 'leaderboard-item';
+                    const rank = index + 1;
+                    item.innerHTML = `
+                        <span class="leaderboard-rank rank-${rank}">#${rank}</span>
+                        <div style="flex: 1; margin-left: 15px;">
+                            <div class="leaderboard-score">${entry.score} 分</div>
+                            <div class="leaderboard-date">第${entry.level}关 | ${entry.date}</div>
+                        </div>
+                    `;
+                    list.appendChild(item);
+                });
+            }
+            
+            document.getElementById('leaderboard-modal').style.display = 'flex';
+        }
+        
+        function closeLeaderboard() {
+            document.getElementById('leaderboard-modal').style.display = 'none';
+        }
+        
+        // 点击模态框外部关闭
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+        
+        // 启动游戏
+        init();
+    </script>
+</body>
+</html>
