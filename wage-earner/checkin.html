@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日签到 - 打工人之家</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .card { background: rgba(255,255,255,0.95); border-radius: 30px; padding: 50px; text-align: center; max-width: 500px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        h1 { color: #333; font-size: 2.5em; margin-bottom: 10px; }
+        .subtitle { color: #666; margin-bottom: 40px; }
+        .checkin-btn { width: 200px; height: 200px; border-radius: 50%; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border: none; color: white; font-size: 1.5em; font-weight: bold; cursor: pointer; transition: all 0.3s; margin: 0 auto 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 10px 40px rgba(240,147,251,0.4); }
+        .checkin-btn:hover { transform: scale(1.05); }
+        .checkin-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .checkin-icon { font-size: 3em; margin-bottom: 10px; }
+        .streak { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 20px 40px; border-radius: 20px; margin-top: 30px; }
+        .streak-count { font-size: 3em; font-weight: bold; }
+        .streak-label { opacity: 0.9; margin-top: 5px; }
+        .rewards { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-top: 30px; }
+        .reward-day { padding: 15px 10px; background: #f5f5f5; border-radius: 10px; text-align: center; }
+        .reward-day.checked { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
+        .reward-day.today { border: 3px solid #667eea; }
+        .reward-coin { font-size: 1.5em; margin-bottom: 5px; }
+        .reward-day-label { font-size: 0.85em; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>📅 每日签到</h1>
+        <p class="subtitle">连续签到领金币，兑换精美道具</p>
+        <button class="checkin-btn" id="checkinBtn" onclick="checkIn()">
+            <div class="checkin-icon">🎁</div>
+            <div>立即签到</div>
+        </button>
+        <div class="streak" id="streakDisplay" style="display: none;">
+            <div class="streak-count" id="streakCount">0</div>
+            <div class="streak-label">连续签到天数</div>
+        </div>
+        <div class="rewards" id="rewards"></div>
+    </div>
+    <script>
+        const rewards = [
+            { day: 1, coins: 10, icon: '🪙' },
+            { day: 2, coins: 20, icon: '🪙' },
+            { day: 3, coins: 50, icon: '💎' },
+            { day: 4, coins: 30, icon: '🪙' },
+            { day: 5, coins: 40, icon: '🪙' },
+            { day: 6, coins: 80, icon: '💎' },
+            { day: 7, coins: 200, icon: '👑' }
+        ];
+        let streak = parseInt(localStorage.getItem('checkinStreak') || '0');
+        let lastCheckin = localStorage.getItem('lastCheckin');
+        const today = new Date().toDateString();
+        function renderRewards() {
+            const container = document.getElementById('rewards');
+            container.innerHTML = rewards.map((r, i) => {
+                const isChecked = i < streak % 7;
+                const isToday = i === streak % 7;
+                return `<div class="reward-day ${isChecked ? 'checked' : ''} ${isToday ? 'today' : ''}">
+                    <div class="reward-coin">${r.icon}</div>
+                    <div class="reward-day-label">第${r.day}天</div>
+                    <div style="font-weight: bold; margin-top: 5px;">${r.coins}金币</div>
+                </div>`;
+            }).join('');
+        }
+        function updateDisplay() {
+            const btn = document.getElementById('checkinBtn');
+            const streakDisplay = document.getElementById('streakDisplay');
+            const streakCount = document.getElementById('streakCount');
+            if (lastCheckin === today) {
+                btn.disabled = true;
+                btn.innerHTML = '<div class="checkin-icon">✅</div><div>已签到</div>';
+                streakDisplay.style.display = 'block';
+                streakCount.textContent = streak;
+            } else {
+                btn.disabled = false;
+                btn.innerHTML = '<div class="checkin-icon">🎁</div><div>立即签到</div>';
+            }
+            renderRewards();
+        }
+        function checkIn() {
+            if (lastCheckin === today) return;
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            if (lastCheckin !== yesterday.toDateString()) {
+                streak = 0;
+            }
+            streak++;
+            localStorage.setItem('checkinStreak', streak.toString());
+            localStorage.setItem('lastCheckin', today);
+            let coins = rewards[streak % 7].coins;
+            let currentCoins = parseInt(localStorage.getItem('coins') || '0');
+            localStorage.setItem('coins', (currentCoins + coins).toString());
+            alert(`🎉 签到成功！\n\n获得 ${coins} 金币\n连续签到 ${streak} 天\n\n当前金币：${currentCoins + coins}`);
+            updateDisplay();
+        }
+        updateDisplay();
+    </script>
+</body>
+</html>

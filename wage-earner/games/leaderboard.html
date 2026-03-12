@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏排行榜 - 打工人之家</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .back-link { display: inline-block; color: white; text-decoration: none; margin-bottom: 20px; font-size: 1.1em; }
+        .card { background: rgba(255,255,255,0.95); border-radius: 20px; padding: 40px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); margin-bottom: 30px; }
+        h1 { color: #333; font-size: 2.5em; margin-bottom: 10px; text-align: center; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 30px; }
+        .game-tabs { display: flex; gap: 15px; margin-bottom: 30px; justify-content: center; }
+        .tab { padding: 12px 30px; background: rgba(102,126,234,0.1); border: none; border-radius: 25px; color: #667eea; font-size: 1.1em; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .leaderboard { list-style: none; }
+        .leaderboard-item { display: flex; align-items: center; padding: 20px; margin-bottom: 15px; background: linear-gradient(135deg, #f5f5f5 0%, #fafafa 100%); border-radius: 15px; transition: transform 0.3s; }
+        .leaderboard-item:hover { transform: translateX(10px); }
+        .rank { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1.5em; font-weight: bold; margin-right: 20px; flex-shrink: 0; }
+        .rank-1 { background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%); color: white; }
+        .rank-2 { background: linear-gradient(135deg, #c0c0c0 0%, #a0a0a0 100%); color: white; }
+        .rank-3 { background: linear-gradient(135deg, #cd7f32 0%, #b87333 100%); color: white; }
+        .rank-other { background: #e0e0e0; color: #666; }
+        .player-info { flex: 1; }
+        .player-name { font-size: 1.2em; font-weight: bold; color: #333; margin-bottom: 5px; }
+        .player-score { color: #667eea; font-size: 1.3em; font-weight: bold; }
+        .player-date { color: #999; font-size: 0.9em; margin-top: 5px; }
+        .empty-state { text-align: center; padding: 60px; color: #999; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/games/" class="back-link">← 返回游戏中心</a>
+        <div class="card">
+            <h1>🏆 游戏排行榜</h1>
+            <p class="subtitle">看看谁是最强摸鱼王</p>
+            <div class="game-tabs">
+                <button class="tab active" onclick="switchGame('fruit')">🍎 水果消消乐</button>
+                <button class="tab" onclick="switchGame('snake')">🐍 贪吃蛇</button>
+            </div>
+            <ul class="leaderboard" id="leaderboard"></ul>
+        </div>
+    </div>
+    <script>
+        const fruitRanking = [
+            { name: '摸鱼小王子', score: 15800, level: 32, date: '2026-03-13' },
+            { name: '职场小达人', score: 14200, level: 28, date: '2026-03-12' },
+            { name: '快乐打工人', score: 12600, level: 25, date: '2026-03-13' },
+            { name: '加班终结者', score: 11000, level: 22, date: '2026-03-11' },
+            { name: '准时下班族', score: 9800, level: 20, date: '2026-03-12' },
+            { name: '效率大师', score: 8500, level: 17, date: '2026-03-10' },
+            { name: '摸鱼高手', score: 7200, level: 15, date: '2026-03-13' },
+            { name: '职场新人', score: 5800, level: 12, date: '2026-03-09' },
+            { name: '努力搬砖', score: 4500, level: 9, date: '2026-03-11' },
+            { name: '初出茅庐', score: 3200, level: 6, date: '2026-03-12' }
+        ];
+        const snakeRanking = [
+            { name: '贪吃蛇王', score: 28500, length: 156, date: '2026-03-13' },
+            { name: '长蛇争霸', score: 24800, length: 142, date: '2026-03-12' },
+            { name: '蛇我其谁', score: 21200, length: 128, date: '2026-03-13' },
+            { name: '游龙戏珠', score: 18600, length: 115, date: '2026-03-11' },
+            { name: '蛇行天下', score: 16000, length: 102, date: '2026-03-10' },
+            { name: '灵蛇出动', score: 13500, length: 89, date: '2026-03-12' },
+            { name: '蛇年大吉', score: 11000, length: 76, date: '2026-03-09' },
+            { name: '小龙女', score: 8500, length: 63, date: '2026-03-13' },
+            { name: '蛇蛇争霸', score: 6000, length: 50, date: '2026-03-11' },
+            { name: '新手上路', score: 3500, length: 37, date: '2026-03-10' }
+        ];
+        function renderRanking(data) {
+            const list = document.getElementById('leaderboard');
+            list.innerHTML = data.map((item, index) => {
+                const rank = index + 1;
+                const rankClass = rank <= 3 ? `rank-${rank}` : 'rank-other';
+                const detail = item.level ? `第${item.level}关` : `长度${item.length}`;
+                return `
+                    <li class="leaderboard-item">
+                        <div class="rank ${rankClass}">#${rank}</div>
+                        <div class="player-info">
+                            <div class="player-name">${item.name}</div>
+                            <div class="player-score">${item.score.toLocaleString()} 分 · ${detail}</div>
+                            <div class="player-date">${item.date}</div>
+                        </div>
+                    </li>
+                `;
+            }).join('');
+        }
+        function switchGame(game) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            renderRanking(game === 'fruit' ? fruitRanking : snakeRanking);
+        }
+        renderRanking(fruitRanking);
+    </script>
+</body>
+</html>
