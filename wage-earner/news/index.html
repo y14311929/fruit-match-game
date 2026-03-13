@@ -3,296 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>职场新闻 - 打工人之家</title>
+    <title>时事新闻 - 打工人之家</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .back-link {
-            display: inline-block;
-            color: white;
-            text-decoration: none;
-            margin-bottom: 20px;
-            font-size: 1.1em;
-        }
-        
-        .back-link:hover {
-            text-decoration: underline;
-        }
-        
-        h1 {
-            color: white;
-            font-size: 2.5em;
-            text-align: center;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .subtitle {
-            text-align: center;
-            color: white;
-            opacity: 0.9;
-            margin-bottom: 40px;
-            font-size: 1.2em;
-        }
-        
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-        
-        .news-card {
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            padding: 25px;
-            color: #333;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-        
-        .news-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-        
-        .news-badge {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        
-        .badge-hot {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-        }
-        
-        .badge-new {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-        }
-        
-        .badge-important {
-            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
-            color: #333;
-        }
-        
-        .news-title {
-            font-size: 1.4em;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #333;
-            line-height: 1.4;
-        }
-        
-        .news-summary {
-            color: #666;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-        
-        .news-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 15px;
-            border-top: 1px solid #e0e0e0;
-            color: #999;
-            font-size: 0.9em;
-        }
-        
-        .news-source {
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .refresh-btn {
-            display: block;
-            margin: 40px auto;
-            padding: 15px 50px;
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-size: 1.2em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .refresh-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(17,153,142,0.4);
-        }
-        
-        .loading {
-            text-align: center;
-            color: white;
-            font-size: 1.5em;
-            padding: 50px;
-            display: none;
-        }
-        
-        .last-update {
-            text-align: center;
-            color: white;
-            opacity: 0.8;
-            margin-top: 30px;
-        }
-        
-        @media (max-width: 768px) {
-            .news-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; min-height: 100vh; padding: 20px; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .back-link { display: inline-block; color: #667eea; text-decoration: none; margin-bottom: 20px; font-size: 1.1em; font-weight: 600; }
+        .page-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 50px 30px; border-radius: 20px; margin-bottom: 30px; text-align: center; }
+        .page-header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .page-header p { font-size: 1.2em; opacity: 0.9; }
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 25px; margin-bottom: 30px; }
+        .news-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.08); transition: all 0.3s; cursor: pointer; }
+        .news-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
+        .news-image { width: 100%; height: 240px; object-fit: cover; }
+        .news-body { padding: 25px; }
+        .news-badge { display: inline-block; padding: 5px 15px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border-radius: 20px; font-size: 0.85em; font-weight: 600; margin-bottom: 12px; }
+        .news-title { font-size: 1.3em; font-weight: bold; color: #333; margin-bottom: 12px; line-height: 1.4; }
+        .news-summary { color: #666; line-height: 1.8; font-size: 0.95em; margin-bottom: 15px; }
+        .news-meta { display: flex; justify-content: space-between; align-items: center; padding-top: 15px; border-top: 1px solid #e0e0e0; color: #999; font-size: 0.9em; }
+        .news-source { font-weight: 600; color: #667eea; }
+        .read-more { color: #667eea; text-decoration: none; font-weight: 600; font-size: 0.95em; }
+        .pagination { display: flex; justify-content: center; gap: 10px; margin-top: 30px; }
+        .page-btn { padding: 12px 25px; background: white; border: 2px solid #e0e0e0; border-radius: 25px; cursor: pointer; font-weight: 600; color: #666; transition: all 0.3s; }
+        .page-btn.active, .page-btn:hover { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-color: #667eea; }
+        @media (max-width: 768px) { .news-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <div class="container">
         <a href="/" class="back-link">← 返回首页</a>
         
-        <h1>📰 职场时事新闻</h1>
-        <p class="subtitle">每日更新，了解职场动态</p>
-        
-        <div class="loading" id="loading">🔄 正在加载最新新闻...</div>
-        
-        <div class="news-grid" id="newsGrid">
-            <!-- 新闻内容由 JS 动态加载 -->
+        <div class="page-header">
+            <h1>📰 时事新闻</h1>
+            <p>每日更新职场相关新闻资讯，了解行业动态，把握政策变化</p>
         </div>
         
-        <button class="refresh-btn" onclick="loadNews()">🔄 刷新新闻</button>
+        <div class="news-grid" id="newsGrid"></div>
         
-        <div class="last-update" id="lastUpdate"></div>
+        <div class="pagination">
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">下一页 →</button>
+        </div>
     </div>
     
     <script>
-        // 模拟新闻数据（实际应该从 API 获取）
         const newsData = [
-            {
-                title: "2026 年多地调整最低工资标准，看看你的城市涨了多少？",
-                summary: "近日，多个省份宣布调整最低工资标准，平均涨幅约 10%。其中，上海、北京、深圳等地领跑全国。专家表示，这将有助于提高低收入劳动者生活水平...",
-                source: "人社部官网",
-                time: "2 小时前",
-                badge: "hot",
-                badgeText: "热门"
-            },
-            {
-                title: "九部门发文：保障新就业形态劳动者权益",
-                summary: "人社部等九部门联合发布指导意见，明确平台企业用工责任，完善社保政策，优化职业发展环境。外卖骑手、网约车司机等群体将受益...",
-                source: "新华网",
-                time: "5 小时前",
-                badge: "important",
-                badgeText: "重要"
-            },
-            {
-                title: "2026 届高校毕业生规模预计达 1187 万人",
-                summary: "教育部数据显示，2026 届全国普通高校毕业生规模预计 1187 万人，同比增加 23 万人。各地出台多项政策促进高校毕业生就业创业...",
-                source: "教育部",
-                time: "8 小时前",
-                badge: "new",
-                badgeText: "最新"
-            },
-            {
-                title: "多地发布高温津贴标准，6-9 月可领这笔钱",
-                summary: "随着夏季来临，多地发布高温津贴发放标准。按规定，用人单位安排劳动者在 35℃以上高温天气从事室外露天作业，应发放高温津贴...",
-                source: "工人日报",
-                time: "12 小时前",
-                badge: "new",
-                badgeText: "最新"
-            },
-            {
-                title: "职场调研：00 后更看重工作生活平衡",
-                summary: "最新职场调研显示，00 后求职者最看重的因素中，工作生活平衡首次超过薪资位列第一。专家建议企业调整管理方式，吸引年轻人才...",
-                source: "智联招聘",
-                time: "1 天前",
-                badge: "hot",
-                badgeText: "热门"
-            },
-            {
-                title: "人社部：开展职业技能提升行动",
-                summary: "人社部宣布启动新一轮职业技能提升行动，计划年内培训 1000 万人次，重点面向企业职工、就业重点群体和贫困劳动力...",
-                source: "人社部",
-                time: "1 天前",
-                badge: "important",
-                badgeText: "重要"
-            },
-            {
-                title: "多地试点灵活就业人员职业伤害保障",
-                summary: "北京、上海、江苏等地开展新就业形态就业人员职业伤害保障试点，平台企业按规定缴费，从业人员享受相应保障...",
-                source: "人民日报",
-                time: "2 天前",
-                badge: "new",
-                badgeText: "最新"
-            },
-            {
-                title: "2026 年养老金实现\"22 连涨\"，涨幅 3.5%",
-                summary: "人社部和财政部联合发布通知，2026 年退休人员基本养老金上调 3.5%，这是我国养老金连续第 22 年上涨，惠及 1.4 亿退休人员...",
-                source: "央视新闻",
-                time: "3 天前",
-                badge: "hot",
-                badgeText: "热门"
-            }
+            { id: 1, badge: '热门', title: '2026 年多地调整最低工资标准，看看你的城市涨了多少？', summary: '近日，多个省份宣布调整最低工资标准，平均涨幅约 10%。其中，上海、北京、深圳等地领跑全国。专家表示，这将有助于提高低收入劳动者生活水平，促进消费增长。', image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&h=400&fit=crop', source: '人社部官网', time: '2 小时前', content: '详细内容...' },
+            { id: 2, badge: '重要', title: '九部门发文：保障新就业形态劳动者权益', summary: '人社部等九部门联合发布指导意见，明确平台企业用工责任，完善社保政策，优化职业发展环境。外卖骑手、网约车司机等群体将受益。', image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&h=400&fit=crop', source: '新华网', time: '5 小时前', content: '详细内容...' },
+            { id: 3, badge: '最新', title: '2026 届高校毕业生规模预计达 1187 万人', summary: '教育部数据显示，2026 届全国普通高校毕业生规模预计 1187 万人，同比增加 23 万人。各地出台多项政策促进高校毕业生就业创业。', image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&h=400&fit=crop', source: '教育部', time: '8 小时前', content: '详细内容...' },
+            { id: 4, badge: '热门', title: '多地发布高温津贴标准，6-9 月可领这笔钱', summary: '随着夏季来临，多地发布高温津贴发放标准。按规定，用人单位安排劳动者在 35℃以上高温天气从事室外露天作业，应发放高温津贴。', image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&h=400&fit=crop', source: '工人日报', time: '12 小时前', content: '详细内容...' },
+            { id: 5, badge: '最新', title: '职场调研：00 后更看重工作生活平衡', summary: '最新职场调研显示，00 后求职者最看重的因素中，工作生活平衡首次超过薪资位列第一。专家建议企业调整管理方式，吸引年轻人才。', image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=400&fit=crop', source: '智联招聘', time: '1 天前', content: '详细内容...' },
+            { id: 6, badge: '重要', title: '人社部：开展职业技能提升行动', summary: '人社部宣布启动新一轮职业技能提升行动，计划年内培训 1000 万人次，重点面向企业职工、就业重点群体和贫困劳动力。', image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b955?w=600&h=400&fit=crop', source: '人社部', time: '1 天前', content: '详细内容...' },
+            { id: 7, badge: '最新', title: '多地试点灵活就业人员职业伤害保障', summary: '北京、上海、江苏等地开展新就业形态就业人员职业伤害保障试点，平台企业按规定缴费，从业人员享受相应保障。', image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop', source: '人民日报', time: '2 天前', content: '详细内容...' },
+            { id: 8, badge: '热门', title: '2026 年养老金实现"22 连涨"，涨幅 3.5%', summary: '人社部和财政部联合发布通知，2026 年退休人员基本养老金上调 3.5%，这是我国养老金连续第 22 年上涨，惠及 1.4 亿退休人员。', image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=600&h=400&fit=crop', source: '央视新闻', time: '3 天前', content: '详细内容...' }
         ];
         
-        function loadNews() {
+        function renderNews() {
             const grid = document.getElementById('newsGrid');
-            const loading = document.getElementById('loading');
-            const lastUpdate = document.getElementById('lastUpdate');
-            
-            grid.style.display = 'none';
-            loading.style.display = 'block';
-            
-            // 模拟加载
-            setTimeout(() => {
-                grid.innerHTML = '';
-                
-                newsData.forEach(news => {
-                    const card = document.createElement('div');
-                    card.className = 'news-card';
-                    card.innerHTML = `
-                        <span class="news-badge badge-${news.badge}">${news.badgeText}</span>
-                        <div class="news-title">${news.title}</div>
-                        <div class="news-summary">${news.summary}</div>
+            grid.innerHTML = newsData.map(news => `
+                <div class="news-card" onclick="location.href='/news/detail.html?id=${news.id}'">
+                    <img src="${news.image}" alt="${news.title}" class="news-image">
+                    <div class="news-body">
+                        <span class="news-badge">${news.badge}</span>
+                        <h3 class="news-title">${news.title}</h3>
+                        <p class="news-summary">${news.summary}</p>
                         <div class="news-meta">
                             <span class="news-source">${news.source}</span>
                             <span>${news.time}</span>
+                            <a href="/news/detail.html?id=${news.id}" class="read-more" onclick="event.stopPropagation()">阅读全文 →</a>
                         </div>
-                    `;
-                    grid.appendChild(card);
-                });
-                
-                loading.style.display = 'none';
-                grid.style.display = 'grid';
-                
-                const now = new Date();
-                lastUpdate.textContent = `最后更新：${now.toLocaleString('zh-CN')}`;
-            }, 800);
+                    </div>
+                </div>
+            `).join('');
         }
         
-        // 页面加载时获取新闻
-        loadNews();
-        
-        // 每 30 分钟自动刷新
-        setInterval(loadNews, 30 * 60 * 1000);
+        renderNews();
     </script>
 </body>
 </html>
