@@ -41,20 +41,40 @@
         <a href="/news/" class="back-link">← 返回新闻列表</a>
         
         <article class="article">
-            <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&h=500&fit=crop" alt="新闻封面" class="article-cover">
+            <img id="coverImage" src="" alt="新闻封面" class="article-cover">
             
             <div class="article-body">
-                <span class="article-badge">🔥 热门</span>
-                <h1 class="article-title">2026 年多地调整最低工资标准，看看你的城市涨了多少？</h1>
+                <span id="badge" class="article-badge"></span>
+                <h1 id="title" class="article-title"></h1>
                 
                 <div class="article-meta">
-                    <span>📰 人社部官网</span>
-                    <span>🕐 2 小时前</span>
-                    <span>👁 12.5w 阅读</span>
-                    <span>💬 328 评论</span>
+                    <span id="source"></span>
+                    <span id="time"></span>
+                    <span id="views"></span>
                 </div>
                 
-                <div class="article-content">
+                <div id="content" class="article-content"></div>
+                
+                <div class="article-tags" id="tags"></div>
+            </div>
+        </article>
+        
+        <div class="related-news">
+            <h3>📰 相关新闻</h3>
+            <div class="related-grid" id="relatedGrid"></div>
+        </div>
+    </div>
+    
+    <script>
+        const newsData = {
+            1: {
+                badge: '🔥 热门',
+                title: '2026 年多地调整最低工资标准，看看你的城市涨了多少？',
+                source: '📰 人社部官网',
+                time: '🕐 2 小时前',
+                views: '👁 12.5w 阅读',
+                cover: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&h=500&fit=crop',
+                content: `
                     <p><strong>【本报讯】</strong> 近日，全国多个省份相继宣布调整最低工资标准，平均涨幅约 10%。其中，上海、北京、深圳等一线城市领跑全国，月最低工资标准分别达到 2690 元、2420 元和 2360 元。</p>
                     
                     <div class="article-image">
@@ -87,54 +107,128 @@
                     </div>
                     
                     <h2>📈 影响分析</h2>
-                    <p>此次最低工资标准调整，将直接惠及全国数千万低收入劳动者。据估算，仅上海、北京、深圳三地，就有超过 500 万劳动者将因此受益。此外，最低工资标准的提高，还将带动相关社会保险缴费基数、失业保险金标准等相应提高。</p>
+                    <p>此次最低工资标准调整，将直接惠及全国数千万低收入劳动者。据估算，仅上海、北京、深圳三地，就有超过 500 万劳动者将因此受益。</p>
                     
                     <div class="article-image">
                         <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=800&h=400&fit=crop" alt="劳动者工作场景">
                         <div class="image-caption">广大劳动者将从政策调整中受益</div>
                     </div>
+                `,
+                tags: ['#最低工资', '#薪资调整', '#劳动权益', '#政策解读', '#2026 新政'],
+                related: [2, 3, 4]
+            },
+            2: {
+                badge: '⚠️ 重要',
+                title: '九部门发文：保障新就业形态劳动者权益',
+                source: '📰 新华网',
+                time: '🕐 5 小时前',
+                views: '👁 8.3w 阅读',
+                cover: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&h=500&fit=crop',
+                content: `
+                    <p><strong>【本报讯】</strong> 人社部等九部门联合发布指导意见，明确平台企业用工责任，完善社保政策，优化职业发展环境。外卖骑手、网约车司机等群体将受益。</p>
                     
-                    <h2>✅ 温馨提示</h2>
-                    <p>劳动者如发现用人单位支付的工资低于当地最低工资标准，可向当地劳动保障监察机构投诉举报。同时，最低工资标准不包括加班费、特殊工作环境津贴等，用人单位不得将上述项目计入最低工资。</p>
-                    
-                    <div class="article-tags">
-                        <span class="tag">#最低工资</span>
-                        <span class="tag">#薪资调整</span>
-                        <span class="tag">#劳动权益</span>
-                        <span class="tag">#政策解读</span>
-                        <span class="tag">#2026 新政</span>
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1616401784845-180886ba9ca2?w=800&h=400&fit=crop" alt="外卖骑手">
+                        <div class="image-caption">外卖骑手等新就业形态劳动者权益将得到保障</div>
                     </div>
-                </div>
-            </div>
-        </article>
+                    
+                    <h2>📋 政策要点</h2>
+                    <p>指导意见明确，平台企业应当与劳动者签订书面协议，明确双方权利义务。对于符合劳动关系情形的，企业应当依法与劳动者订立劳动合同。</p>
+                    
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=800&h=400&fit=crop" alt="合同签订">
+                        <div class="image-caption">平台企业应与劳动者签订书面协议</div>
+                    </div>
+                    
+                    <h2>💰 社保完善</h2>
+                    <p>政策要求，平台企业应当为新就业形态劳动者参加社会保险提供便利。鼓励有条件的地区开展职业伤害保障试点，解决劳动者后顾之忧。</p>
+                    
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=400&fit=crop" alt="社保办理">
+                        <div class="image-caption">社保政策将更加完善</div>
+                    </div>
+                `,
+                tags: ['#新就业形态', '#劳动权益', '#平台经济', '#社保政策'],
+                related: [1, 5, 7]
+            },
+            3: {
+                badge: '🆕 最新',
+                title: '2026 届高校毕业生规模预计达 1187 万人',
+                source: '📰 教育部',
+                time: '🕐 8 小时前',
+                views: '👁 6.7w 阅读',
+                cover: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&h=500&fit=crop',
+                content: `
+                    <p><strong>【本报讯】</strong> 教育部数据显示，2026 届全国普通高校毕业生规模预计 1187 万人，同比增加 23 万人。各地出台多项政策促进高校毕业生就业创业。</p>
+                    
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&h=400&fit=crop" alt="高校毕业生">
+                        <div class="image-caption">2026 届高校毕业生规模创新高</div>
+                    </div>
+                    
+                    <h2>📊 就业形势</h2>
+                    <p>教育部高校学生司司长表示，2026 届高校毕业生规模预计达到 1187 万人，同比增加 23 万人，就业形势依然严峻复杂。</p>
+                    
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&h=400&fit=crop" alt="就业数据">
+                        <div class="image-caption">高校毕业生就业数据统计</div>
+                    </div>
+                    
+                    <h2>🎯 政策措施</h2>
+                    <p>各地纷纷出台政策措施，包括扩大国企招聘规模、增加基层岗位、鼓励创业等，全力促进高校毕业生就业创业。</p>
+                    
+                    <div class="article-image">
+                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&h=400&fit=crop" alt="招聘会">
+                        <div class="image-caption">各地举办专场招聘会</div>
+                    </div>
+                `,
+                tags: ['#高校毕业生', '#就业', '#2026 届', '#政策措施'],
+                related: [1, 4, 6]
+            }
+        };
         
-        <!-- 相关新闻 -->
-        <div class="related-news">
-            <h3>📰 相关新闻</h3>
-            <div class="related-grid">
-                <div class="related-card" onclick="location.href='/news/detail.html'">
-                    <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=180&fit=crop" alt="相关新闻 1" class="related-image">
-                    <div class="related-body">
-                        <h4 class="related-title">九部门发文：保障新就业形态劳动者权益</h4>
-                        <div class="related-meta">新华网 · 5 小时前</div>
+        const newsList = [
+            { id: 1, title: '2026 年多地调整最低工资标准', image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400&h=180&fit=crop', source: '人社部官网', time: '2 小时前' },
+            { id: 2, title: '九部门发文：保障新就业形态劳动者权益', image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=180&fit=crop', source: '新华网', time: '5 小时前' },
+            { id: 3, title: '2026 届高校毕业生规模预计达 1187 万人', image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=180&fit=crop', source: '教育部', time: '8 小时前' },
+            { id: 4, title: '多地发布高温津贴标准', image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&h=180&fit=crop', source: '工人日报', time: '12 小时前' }
+        ];
+        
+        function loadNews() {
+            const params = new URLSearchParams(window.location.search);
+            const id = parseInt(params.get('id') || '1');
+            const news = newsData[id];
+            
+            if (!news) {
+                document.body.innerHTML = '<div style="text-align:center;padding:100px;"><h1>新闻不存在</h1><a href="/news/" style="color:#667eea;">返回新闻列表</a></div>';
+                return;
+            }
+            
+            document.getElementById('coverImage').src = news.cover;
+            document.getElementById('badge').textContent = news.badge;
+            document.getElementById('title').textContent = news.title;
+            document.getElementById('source').textContent = news.source;
+            document.getElementById('time').textContent = news.time;
+            document.getElementById('views').textContent = news.views;
+            document.getElementById('content').innerHTML = news.content;
+            document.getElementById('tags').innerHTML = news.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+            
+            const relatedGrid = document.getElementById('relatedGrid');
+            relatedGrid.innerHTML = news.related.map(relId => {
+                const rel = newsList.find(n => n.id === relId) || newsList[0];
+                return `
+                    <div class="related-card" onclick="location.href='/news/detail.html?id=${relId}'">
+                        <img src="${rel.image}" alt="${rel.title}" class="related-image">
+                        <div class="related-body">
+                            <h4 class="related-title">${rel.title}</h4>
+                            <div class="related-meta">${rel.source} · ${rel.time}</div>
+                        </div>
                     </div>
-                </div>
-                <div class="related-card" onclick="location.href='/news/detail.html'">
-                    <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&h=180&fit=crop" alt="相关新闻 2" class="related-image">
-                    <div class="related-body">
-                        <h4 class="related-title">多地发布高温津贴标准，6-9 月可领这笔钱</h4>
-                        <div class="related-meta">工人日报 · 12 小时前</div>
-                    </div>
-                </div>
-                <div class="related-card" onclick="location.href='/news/detail.html'">
-                    <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&h=180&fit=crop" alt="相关新闻 3" class="related-image">
-                    <div class="related-body">
-                        <h4 class="related-title">2026 年养老金实现"22 连涨"，涨幅 3.5%</h4>
-                        <div class="related-meta">央视新闻 · 3 天前</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                `;
+            }).join('');
+        }
+        
+        loadNews();
+    </script>
 </body>
 </html>
