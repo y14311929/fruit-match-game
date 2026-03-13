@@ -6,97 +6,63 @@
     <title>学习提升 - 打工人之家</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .back-link { display: inline-block; color: white; text-decoration: none; margin-bottom: 20px; font-size: 1.1em; }
-        h1 { color: white; font-size: 2.5em; text-align: center; margin-bottom: 10px; }
-        .subtitle { text-align: center; color: white; opacity: 0.9; margin-bottom: 40px; font-size: 1.2em; }
-        .category-tabs { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
-        .tab { padding: 12px 30px; background: rgba(255,255,255,0.2); border: none; border-radius: 25px; color: white; font-size: 1em; font-weight: 600; cursor: pointer; transition: all 0.3s; }
-        .tab.active { background: white; color: #667eea; }
-        .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; }
-        .course-card { background: rgba(255,255,255,0.95); border-radius: 15px; overflow: hidden; transition: all 0.3s; cursor: pointer; }
-        .course-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
-        .course-cover { height: 180px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; font-size: 5em; }
-        .course-body { padding: 25px; }
-        .course-category { display: inline-block; padding: 5px 15px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border-radius: 20px; font-size: 0.85em; font-weight: bold; margin-bottom: 15px; }
-        .course-title { font-size: 1.3em; font-weight: bold; color: #333; margin-bottom: 10px; }
-        .course-desc { color: #666; line-height: 1.6; margin-bottom: 15px; font-size: 0.95em; }
-        .course-meta { display: flex; justify-content: space-between; align-items: center; padding-top: 15px; border-top: 1px solid #e0e0e0; color: #999; font-size: 0.9em; }
-        .course-stats { display: flex; gap: 15px; }
-        .stat { display: flex; align-items: center; gap: 5px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; min-height: 100vh; padding: 20px; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .back-link { display: inline-block; color: #667eea; text-decoration: none; margin-bottom: 20px; font-size: 1.1em; font-weight: 600; }
+        .page-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 50px 30px; border-radius: 20px; margin-bottom: 30px; text-align: center; }
+        .page-header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .page-header p { font-size: 1.2em; opacity: 0.9; }
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 25px; margin-bottom: 30px; }
+        .news-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.08); transition: all 0.3s; cursor: pointer; text-decoration: none; color: inherit; display: block; }
+        .news-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
+        .news-image { width: 100%; height: 240px; object-fit: cover; background: #f0f0f0; }
+        .news-body { padding: 25px; }
+        .news-badge { display: inline-block; padding: 5px 15px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border-radius: 20px; font-size: 0.85em; font-weight: 600; margin-bottom: 12px; }
+        .news-title { font-size: 1.3em; font-weight: bold; color: #333; margin-bottom: 12px; line-height: 1.4; }
+        .news-summary { color: #666; line-height: 1.8; font-size: 0.95em; margin-bottom: 15px; }
+        .news-meta { display: flex; justify-content: space-between; align-items: center; padding-top: 15px; border-top: 1px solid #e0e0e0; color: #999; font-size: 0.9em; }
+        .news-source { font-weight: 600; color: #667eea; }
+        @media (max-width: 768px) { .news-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <div class="container">
         <a href="/" class="back-link">← 返回首页</a>
-        <h1>📚 学习提升</h1>
-        <p class="subtitle">投资自己，是最好的投资</p>
-        <div class="category-tabs" id="categoryTabs"></div>
-        <div class="course-grid" id="courseGrid"></div>
+        <div class="page-header">
+            <h1>📚 学习提升</h1>
+            <p>15+ 精品课程，涵盖技术、设计、管理、语言等七大类</p>
+        </div>
+        <div class="news-grid" id="newsGrid"></div>
     </div>
     <script>
-        const categories = [
-            { id: 'all', name: '全部课程' },
-            { id: 'tech', name: '💻 技术技能' },
-            { id: 'design', name: '🎨 设计创意' },
-            { id: 'business', name: '💼 商业管理' },
-            { id: 'language', name: '🗣️ 语言学习' },
-            { id: 'soft', name: '🤝 软技能' },
-            { id: 'cert', name: '📜 证书考试' }
+        const newsData = [
+            { id: 1, badge: '🔥 热门', title: 'Python 编程从入门到精通，12.5w 人已学习', summary: '适合零基础，30 天掌握 Python 核心技能，自动化办公、数据分析都能搞定！', image: 'https://picsum.photos/seed/learn1/600/400', source: '👥 12.5w 学习', time: '⭐ 4.9 分' },
+            { id: 2, badge: '💎 推荐', title: 'UI/UX 设计全栈课程，从零基础到接单', summary: '掌握 Figma、Sketch 等设计工具，做出让人惊艳的设计作品！', image: 'https://picsum.photos/seed/learn2/600/400', source: '👥 5.2w 学习', time: '⭐ 4.7 分' },
+            { id: 3, badge: '📜 认证', title: '项目管理 PMP 认证，拿下证书升职加薪', summary: '系统学习项目管理知识体系，通过 PMP 认证考试，提升职场竞争力！', image: 'https://picsum.photos/seed/learn3/600/400', source: '👥 3.5w 学习', time: '⭐ 4.9 分' },
+            { id: 4, badge: '🆕 新课', title: '数据分析大师课，Excel+SQL+Python', summary: '成为企业抢手的数据分析人才，搭建数据指标体系，输出分析报告！', image: 'https://picsum.photos/seed/learn4/600/400', source: '👥 6.7w 学习', time: '⭐ 4.8 分' },
+            { id: 5, badge: '🔥 热门', title: '新媒体运营实战，公众号 + 小红书 + 抖音', summary: '从 0 到 1 打造爆款，掌握全平台运营技巧，副业接单月入过万！', image: 'https://picsum.photos/seed/learn5/600/400', source: '👥 9.2w 学习', time: '⭐ 4.7 分' },
+            { id: 6, badge: '💎 推荐', title: '商务英语进阶，外企面试轻松应对', summary: '职场英语、邮件写作、会议口语，全面提升商务英语能力！', image: 'https://picsum.photos/seed/learn6/600/400', source: '👥 7.8w 学习', time: '⭐ 4.8 分' },
+            { id: 7, badge: '🆕 新课', title: '高效沟通技巧，学会向上管理', summary: '跨部门协作、职场沟通、演讲表达，成为职场沟通高手！', image: 'https://picsum.photos/seed/learn7/600/400', source: '👥 11.2w 学习', time: '⭐ 4.8 分' },
+            { id: 8, badge: '📜 认证', title: '心理咨询师认证，帮助他人也治愈自己', summary: '学习心理学知识，考取国家认证，副业首选！', image: 'https://picsum.photos/seed/learn8/600/400', source: '👥 8.9w 学习', time: '⭐ 4.9 分' }
         ];
-        const courses = [
-            { id: 1, category: 'tech', title: 'Python 编程从入门到精通', desc: '适合零基础，30 天掌握 Python 核心技能，自动化办公、数据分析都能搞定！', icon: '🐍', students: '12.5w', rating: 4.9, duration: '60 课时' },
-            { id: 2, category: 'tech', title: '前端开发实战训练营', desc: 'HTML+CSS+JavaScript+Vue，完成 10 个真实项目，毕业就能上岗！', icon: '🌐', students: '8.3w', rating: 4.8, duration: '90 课时' },
-            { id: 3, category: 'tech', title: '数据分析大师课', desc: 'Excel+SQL+Python+Tableau，成为企业抢手的数据分析人才！', icon: '📊', students: '6.7w', rating: 4.9, duration: '80 课时' },
-            { id: 4, category: 'design', title: 'UI/UX 设计全栈课程', desc: '从零基础到接单，掌握 Figma、Sketch，做出让人惊艳的设计！', icon: '🎨', students: '5.2w', rating: 4.7, duration: '70 课时' },
-            { id: 5, category: 'design', title: '短视频剪辑实战', desc: 'Pr+ 剪映，学会爆款视频制作，副业接单月入过万！', icon: '🎬', students: '15.8w', rating: 4.8, duration: '40 课时' },
-            { id: 6, category: 'business', title: '项目管理 PMP 认证', desc: '系统学习项目管理，拿下 PMP 证书，升职加薪不是梦！', icon: '📋', students: '3.5w', rating: 4.9, duration: '50 课时' },
-            { id: 7, category: 'business', title: '新媒体运营实战', desc: '公众号、小红书、抖音全平台运营，从 0 到 1 打造爆款！', icon: '📱', students: '9.2w', rating: 4.7, duration: '45 课时' },
-            { id: 8, category: 'language', title: '商务英语进阶', desc: '职场英语、邮件写作、会议口语，外企面试轻松应对！', icon: '🗣️', students: '7.8w', rating: 4.8, duration: '60 课时' },
-            { id: 9, category: 'language', title: '日语从入门到 N1', desc: '系统学习日语，通关 N1，日企就业/留学必备！', icon: '🇯🇵', students: '4.3w', rating: 4.9, duration: '120 课时' },
-            { id: 10, category: 'soft', title: '高效沟通技巧', desc: '学会向上管理、跨部门协作，成为职场沟通高手！', icon: '💬', students: '11.2w', rating: 4.8, duration: '30 课时' },
-            { id: 11, category: 'soft', title: '时间管理与效率提升', desc: '告别拖延症，掌握番茄工作法，效率翻倍准时下班！', icon: '⏰', students: '13.5w', rating: 4.9, duration: '25 课时' },
-            { id: 12, category: 'soft', title: '职场演讲与表达', desc: '克服紧张，逻辑清晰，让你的每次发言都闪闪发光！', icon: '🎤', students: '6.8w', rating: 4.7, duration: '35 课时' },
-            { id: 13, category: 'cert', title: '人力资源管理师', desc: '系统学习 HR 知识，考取国家认证，转行 HR 必备！', icon: '👥', students: '4.5w', rating: 4.8, duration: '80 课时' },
-            { id: 14, category: 'cert', title: '心理咨询师认证', desc: '学习心理学知识，帮助他人也治愈自己，副业首选！', icon: '🧠', students: '8.9w', rating: 4.9, duration: '100 课时' },
-            { id: 15, category: 'tech', title: 'AI 大模型应用开发', desc: '掌握 ChatGPT API、LangChain，成为 AI 时代稀缺人才！', icon: '🤖', students: '5.6w', rating: 4.9, duration: '50 课时' }
-        ];
-        let currentCategory = 'all';
-        function renderTabs() {
-            document.getElementById('categoryTabs').innerHTML = categories.map(cat => 
-                `<button class="tab ${cat.id === currentCategory ? 'active' : ''}" onclick="filterCategory('${cat.id}')">${cat.name}</button>`
-            ).join('');
-        }
-        function filterCategory(catId) {
-            currentCategory = catId;
-            renderTabs();
-            renderCourses();
-        }
-        function renderCourses() {
-            const grid = document.getElementById('courseGrid');
-            const filtered = currentCategory === 'all' ? courses : courses.filter(c => c.category === currentCategory);
-            grid.innerHTML = filtered.map(course => `
-                <div class="course-card">
-                    <div class="course-cover">${course.icon}</div>
-                    <div class="course-body">
-                        <span class="course-category">${categories.find(c => c.id === course.category)?.name}</span>
-                        <h3 class="course-title">${course.title}</h3>
-                        <p class="course-desc">${course.desc}</p>
-                        <div class="course-meta">
-                            <div class="course-stats">
-                                <span class="stat">👥 ${course.students}</span>
-                                <span class="stat">⭐ ${course.rating}</span>
-                                <span class="stat">🕐 ${course.duration}</span>
-                            </div>
-                            <span style="color: #667eea; font-weight: 600;">立即学习 →</span>
+        function renderNews() {
+            const grid = document.getElementById('newsGrid');
+            grid.innerHTML = newsData.map(news => `
+                <a href="/learning/detail.html?id=${news.id}" class="news-card">
+                    <img src="${news.image}" alt="${news.title}" class="news-image">
+                    <div class="news-body">
+                        <span class="news-badge">${news.badge}</span>
+                        <h3 class="news-title">${news.title}</h3>
+                        <p class="news-summary">${news.summary}</p>
+                        <div class="news-meta">
+                            <span class="news-source">${news.source}</span>
+                            <span>${news.time}</span>
                         </div>
                     </div>
-                </div>
+                </a>
             `).join('');
         }
-        renderTabs();
-        renderCourses();
+        renderNews();
     </script>
 </body>
 </html>

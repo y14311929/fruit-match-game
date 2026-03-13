@@ -6,127 +6,63 @@
     <title>法律援助 - 打工人之家</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .back-link { display: inline-block; color: white; text-decoration: none; margin-bottom: 20px; font-size: 1.1em; }
-        h1 { color: white; font-size: 2.5em; text-align: center; margin-bottom: 10px; }
-        .subtitle { text-align: center; color: white; opacity: 0.9; margin-bottom: 40px; font-size: 1.2em; }
-        .section { background: rgba(255,255,255,0.95); border-radius: 20px; padding: 35px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
-        .section-header { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #f0f0f0; }
-        .section-icon { font-size: 2.5em; }
-        .section-title { font-size: 1.8em; color: #333; font-weight: bold; }
-        .news-list { list-style: none; }
-        .news-item { padding: 20px; margin-bottom: 15px; background: #fafafa; border-radius: 15px; border-left: 4px solid #667eea; transition: all 0.3s; cursor: pointer; }
-        .news-item:hover { background: #f0f0f0; transform: translateX(5px); }
-        .news-title { font-size: 1.2em; font-weight: bold; color: #333; margin-bottom: 10px; }
-        .news-summary { color: #666; line-height: 1.6; margin-bottom: 15px; }
-        .news-meta { display: flex; justify-content: space-between; color: #999; font-size: 0.9em; }
-        .help-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 25px; }
-        .help-card { padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px; }
-        .help-card h3 { font-size: 1.3em; margin-bottom: 15px; }
-        .help-card p { line-height: 1.6; opacity: 0.95; margin-bottom: 20px; }
-        .help-card .btn { display: inline-block; padding: 12px 30px; background: white; color: #667eea; text-decoration: none; border-radius: 25px; font-weight: 600; transition: transform 0.3s; }
-        .help-card .btn:hover { transform: translateY(-2px); }
-        .faq-list { list-style: none; }
-        .faq-item { margin-bottom: 20px; padding: 20px; background: #f9f9f9; border-radius: 15px; }
-        .faq-question { font-size: 1.1em; font-weight: bold; color: #333; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-        .faq-answer { color: #666; line-height: 1.8; padding-left: 30px; }
-        .hotline { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-top: 30px; }
-        .hotline-number { font-size: 3em; font-weight: bold; margin: 15px 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; min-height: 100vh; padding: 20px; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .back-link { display: inline-block; color: #667eea; text-decoration: none; margin-bottom: 20px; font-size: 1.1em; font-weight: 600; }
+        .page-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 50px 30px; border-radius: 20px; margin-bottom: 30px; text-align: center; }
+        .page-header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .page-header p { font-size: 1.2em; opacity: 0.9; }
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 25px; margin-bottom: 30px; }
+        .news-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.08); transition: all 0.3s; cursor: pointer; text-decoration: none; color: inherit; display: block; }
+        .news-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
+        .news-image { width: 100%; height: 240px; object-fit: cover; background: #f0f0f0; }
+        .news-body { padding: 25px; }
+        .news-badge { display: inline-block; padding: 5px 15px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border-radius: 20px; font-size: 0.85em; font-weight: 600; margin-bottom: 12px; }
+        .news-title { font-size: 1.3em; font-weight: bold; color: #333; margin-bottom: 12px; line-height: 1.4; }
+        .news-summary { color: #666; line-height: 1.8; font-size: 0.95em; margin-bottom: 15px; }
+        .news-meta { display: flex; justify-content: space-between; align-items: center; padding-top: 15px; border-top: 1px solid #e0e0e0; color: #999; font-size: 0.9em; }
+        .news-source { font-weight: 600; color: #667eea; }
+        @media (max-width: 768px) { .news-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <div class="container">
         <a href="/" class="back-link">← 返回首页</a>
-        <h1>⚖️ 法律援助</h1>
-        <p class="subtitle">维护劳动者合法权益，我们与你同行</p>
-        
-        <!-- 劳动纠纷新闻 -->
-        <div class="section">
-            <div class="section-header">
-                <span class="section-icon">📰</span>
-                <h2 class="section-title">劳动纠纷新闻</h2>
-            </div>
-            <ul class="news-list" id="newsList"></ul>
+        <div class="page-header">
+            <h1>⚖️ 法律援助</h1>
+            <p>劳动纠纷案例、法律援助服务，维护你的合法权益</p>
         </div>
-        
-        <!-- 法律援助服务 -->
-        <div class="section">
-            <div class="section-header">
-                <span class="section-icon">🆘</span>
-                <h2 class="section-title">法律援助服务</h2>
-            </div>
-            <div class="help-grid">
-                <div class="help-card">
-                    <h3>📞 电话咨询</h3>
-                    <p>专业律师一对一电话解答，快速了解你的权益和维权方案。</p>
-                    <a href="tel:12348" class="btn">立即拨打</a>
-                </div>
-                <div class="help-card">
-                    <h3>💬 在线咨询</h3>
-                    <p>提交你的问题，律师会在 24 小时内详细回复，保护隐私。</p>
-                    <a href="#" class="btn">提交问题</a>
-                </div>
-                <div class="help-card">
-                    <h3>🏛️ 线下援助</h3>
-                    <p>预约当地法律援助中心，面对面咨询，准备仲裁/诉讼材料。</p>
-                    <a href="#" class="btn">预约咨询</a>
-                </div>
-                <div class="help-card">
-                    <h3>📋 文书代写</h3>
-                    <p>专业律师代写仲裁申请书、起诉状等法律文书，提高胜诉率。</p>
-                    <a href="#" class="btn">立即委托</a>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 常见问题 -->
-        <div class="section">
-            <div class="section-header">
-                <span class="section-icon">❓</span>
-                <h2 class="section-title">常见问题解答</h2>
-            </div>
-            <ul class="faq-list" id="faqList"></ul>
-        </div>
-        
-        <!-- 维权热线 -->
-        <div class="hotline">
-            <h2 style="font-size: 1.8em;">📞 全国法律援助热线</h2>
-            <div class="hotline-number">12348</div>
-            <p style="opacity: 0.9;">24 小时免费法律咨询服务</p>
-            <p style="margin-top: 15px; opacity: 0.8;">劳动监察投诉：12333 | 消费者维权：12315</p>
-        </div>
+        <div class="news-grid" id="newsGrid"></div>
     </div>
     <script>
         const newsData = [
-            { title: '公司拖欠工资 3 个月，员工如何维权？', summary: '北京某科技公司拖欠 20 名员工工资共计 50 万元，劳动监察大队介入后，员工成功追回全部欠薪。专家提醒：保留劳动合同、工资条、考勤记录等证据...', date: '2026-03-12', source: '工人日报' },
-            { title: '违法辞退赔偿 2N，员工获赔 15 万', summary: '上海某公司以"不能胜任工作"为由辞退员工，但未提供培训或调岗，被认定为违法解除劳动合同。仲裁委支持 2N 赔偿金，员工获赔 15 万元...', date: '2026-03-10', source: '劳动报' },
-            { title: '加班费怎么算？法院给出明确答案', summary: '广州某工厂员工常年加班却无加班费，起诉至法院。法院判决：工作日加班 150%、周末 200%、法定节假日 300%，公司补发加班费 8 万元...', date: '2026-03-08', source: '南方日报' },
-            { title: '未签劳动合同，双倍工资跑不了', summary: '深圳某公司入职半年未与员工签订书面劳动合同，员工申请仲裁。根据《劳动合同法》，公司需支付双倍工资差额，共计 6 万元...', date: '2026-03-05', source: '晶报' },
-            { title: '工伤认定流程详解，这些情况都算工伤', summary: '杭州员工上班途中遭遇车祸，公司不认可是工伤。律师解读：上下班途中非本人主要责任的交通事故属于工伤，应及时申请工伤认定...', date: '2026-03-03', source: '浙江日报' },
-            { title: '试用期被辞退，这些权益要知道', summary: '北京应届生试用期第 2 天被辞退，公司称"不符合录用条件"。律师提醒：试用期辞退公司需举证，否则属于违法解除，可主张赔偿金...', date: '2026-03-01', source: '中国青年报' }
+            { id: 1, badge: '案例', title: '违法辞退赔偿 2N，员工获赔 15 万', summary: '公司未提供培训或调岗直接辞退，被认定为违法解除劳动合同，需支付赔偿金。', image: 'https://picsum.photos/seed/legal1/600/400', source: '上海法院', time: '2 天前' },
+            { id: 2, badge: '热点', title: '加班费怎么算？法院给出明确答案', summary: '工作日 150%、周末 200%、法定节假日 300%，公司补发加班费 8 万元。', image: 'https://picsum.photos/seed/legal2/600/400', source: '广州法院', time: '4 天前' },
+            { id: 3, badge: '科普', title: '工伤认定流程详解，这些情况都算工伤', summary: '工作时间、工作场所因工作受伤，上下班途中非本人主要责任的交通事故。', image: 'https://picsum.photos/seed/legal3/600/400', source: '杭州法院', time: '6 天前' },
+            { id: 4, badge: '案例', title: '未签劳动合同，双倍工资跑不了', summary: '入职 1 个月未签书面合同，公司需支付双倍工资差额，共计 6 万元。', image: 'https://picsum.photos/seed/legal4/600/400', source: '深圳法院', time: '1 周前' },
+            { id: 5, badge: '热点', title: '试用期被辞退，这些权益要知道', summary: '试用期工资不低于转正工资 80%，辞退公司需举证"不符合录用条件"。', image: 'https://picsum.photos/seed/legal5/600/400', source: '北京法院', time: '1 周前' },
+            { id: 6, badge: '科普', title: '社保断缴影响大，这些权益会清零', summary: '医保断缴次月无法报销，购房购车资格可能受影响，应及时补缴。', image: 'https://picsum.photos/seed/legal6/600/400', source: '人社部', time: '2 周前' },
+            { id: 7, badge: '案例', title: '职场性骚扰，公司未尽义务需担责', summary: '公司未采取合理措施预防和制止性骚扰，需承担连带赔偿责任。', image: 'https://picsum.photos/seed/legal7/600/400', source: '上海法院', time: '2 周前' },
+            { id: 8, badge: '热点', title: '竞业限制补偿金，离职后也要给', summary: '竞业限制期限内，公司应按月给予劳动者经济补偿，否则限制无效。', image: 'https://picsum.photos/seed/legal8/600/400', source: '北京法院', time: '3 周前' }
         ];
-        const faqData = [
-            { q: '公司拖欠工资怎么办？', a: '①收集证据（劳动合同、工资条、考勤记录、银行流水）；②与公司协商；③向劳动监察大队投诉（12333）；④申请劳动仲裁；⑤提起诉讼。注意：仲裁时效为 1 年。' },
-            { q: '被违法辞退能赔多少钱？', a: '违法解除劳动合同，赔偿金 = 2N（N 为工作年限）。工作不满半年算 0.5 年，满半年不满 1 年算 1 年。例如：月薪 1 万，工作 3 年，赔偿金 = 2×3×1 万 = 6 万。' },
-            { q: '加班费怎么计算？', a: '时薪 = 月薪÷21.75÷8。工作日加班：时薪×150%；周末加班：时薪×200%（不能补休）；法定节假日加班：时薪×300%。保留加班证据（打卡记录、工作沟通记录等）。' },
-            { q: '没签劳动合同怎么办？', a: '入职 1 个月内公司应签书面合同。超过 1 个月未签，可主张双倍工资（最多 11 个月）。超过 1 年未签，视为已订立无固定期限劳动合同。' },
-            { q: '工伤怎么认定？', a: '①工作时间、工作场所因工作受伤；②上下班途中非本人主要责任的交通事故；③患职业病。应在事故发生 30 日内由单位申请，单位不申请的可自行申请。' },
-            { q: '试用期有哪些权益？', a: '①试用期工资不低于转正工资 80%；②试用期必须缴纳社保；③试用期包含在劳动合同期限内；④试用期辞退公司需举证"不符合录用条件"。' }
-        ];
-        document.getElementById('newsList').innerHTML = newsData.map(news => `
-            <li class="news-item">
-                <div class="news-title">${news.title}</div>
-                <div class="news-summary">${news.summary}</div>
-                <div class="news-meta"><span>${news.source}</span><span>${news.date}</span></div>
-            </li>
-        `).join('');
-        document.getElementById('faqList').innerHTML = faqData.map(faq => `
-            <li class="faq-item">
-                <div class="faq-question">❓ ${faq.q}</div>
-                <div class="faq-answer">${faq.a}</div>
-            </li>
-        `).join('');
+        function renderNews() {
+            const grid = document.getElementById('newsGrid');
+            grid.innerHTML = newsData.map(news => `
+                <a href="/legal/detail.html?id=${news.id}" class="news-card">
+                    <img src="${news.image}" alt="${news.title}" class="news-image">
+                    <div class="news-body">
+                        <span class="news-badge">${news.badge}</span>
+                        <h3 class="news-title">${news.title}</h3>
+                        <p class="news-summary">${news.summary}</p>
+                        <div class="news-meta">
+                            <span class="news-source">${news.source}</span>
+                            <span>${news.time}</span>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+        }
+        renderNews();
     </script>
 </body>
 </html>

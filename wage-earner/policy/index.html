@@ -5,348 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>劳务政策 - 打工人之家</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .back-link {
-            display: inline-block;
-            color: white;
-            text-decoration: none;
-            margin-bottom: 20px;
-            font-size: 1.1em;
-        }
-        
-        .back-link:hover {
-            text-decoration: underline;
-        }
-        
-        h1 {
-            color: white;
-            font-size: 2.5em;
-            text-align: center;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .subtitle {
-            text-align: center;
-            color: white;
-            opacity: 0.9;
-            margin-bottom: 40px;
-            font-size: 1.2em;
-        }
-        
-        .search-box {
-            background: rgba(255,255,255,0.95);
-            padding: 30px;
-            border-radius: 20px;
-            margin-bottom: 40px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        
-        .search-box select,
-        .search-box input {
-            padding: 15px 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1em;
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .search-btn {
-            padding: 15px 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-        
-        .search-btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        .policy-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-        }
-        
-        .policy-card {
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            padding: 30px;
-            color: #333;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            border-left: 5px solid #667eea;
-        }
-        
-        .policy-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-        
-        .policy-type {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: bold;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        .policy-title {
-            font-size: 1.4em;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .policy-content {
-            color: #666;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            max-height: 150px;
-            overflow-y: auto;
-        }
-        
-        .policy-meta {
-            display: flex;
-            justify-content: space-between;
-            padding-top: 15px;
-            border-top: 1px solid #e0e0e0;
-            color: #999;
-            font-size: 0.9em;
-        }
-        
-        .policy-region {
-            font-weight: 600;
-            color: #667eea;
-        }
-        
-        .filter-tags {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-        
-        .filter-tag {
-            padding: 10px 25px;
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-        
-        .filter-tag:hover,
-        .filter-tag.active {
-            background: rgba(255,255,255,0.3);
-            border-color: white;
-        }
-        
-        @media (max-width: 768px) {
-            .policy-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; min-height: 100vh; padding: 20px; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .back-link { display: inline-block; color: #667eea; text-decoration: none; margin-bottom: 20px; font-size: 1.1em; font-weight: 600; }
+        .page-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 50px 30px; border-radius: 20px; margin-bottom: 30px; text-align: center; }
+        .page-header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .page-header p { font-size: 1.2em; opacity: 0.9; }
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 25px; margin-bottom: 30px; }
+        .news-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.08); transition: all 0.3s; cursor: pointer; text-decoration: none; color: inherit; display: block; }
+        .news-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
+        .news-image { width: 100%; height: 240px; object-fit: cover; background: #f0f0f0; }
+        .news-body { padding: 25px; }
+        .news-badge { display: inline-block; padding: 5px 15px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border-radius: 20px; font-size: 0.85em; font-weight: 600; margin-bottom: 12px; }
+        .news-title { font-size: 1.3em; font-weight: bold; color: #333; margin-bottom: 12px; line-height: 1.4; }
+        .news-summary { color: #666; line-height: 1.8; font-size: 0.95em; margin-bottom: 15px; }
+        .news-meta { display: flex; justify-content: space-between; align-items: center; padding-top: 15px; border-top: 1px solid #e0e0e0; color: #999; font-size: 0.9em; }
+        .news-source { font-weight: 600; color: #667eea; }
+        @media (max-width: 768px) { .news-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <div class="container">
         <a href="/" class="back-link">← 返回首页</a>
-        
-        <h1>📜 劳务政策大全</h1>
-        <p class="subtitle">了解各地政策，维护自身权益</p>
-        
-        <div class="filter-tags">
-            <div class="filter-tag active" onclick="filterPolicy('all')">全部</div>
-            <div class="filter-tag" onclick="filterPolicy('salary')">薪资福利</div>
-            <div class="filter-tag" onclick="filterPolicy('social')">社保公积金</div>
-            <div class="filter-tag" onclick="filterPolicy('leave')">休假制度</div>
-            <div class="filter-tag" onclick="filterPolicy('contract')">劳动合同</div>
-            <div class="filter-tag" onclick="filterPolicy('safety')">劳动保护</div>
+        <div class="page-header">
+            <h1>📜 劳务政策</h1>
+            <p>汇总各地劳务政策，包括薪资福利、社保公积金、休假制度等</p>
         </div>
-        
-        <div class="search-box">
-            <select id="regionSelect">
-                <option value="">选择地区</option>
-                <option value="beijing">北京</option>
-                <option value="shanghai">上海</option>
-                <option value="guangzhou">广东</option>
-                <option value="shenzhen">深圳</option>
-                <option value="hangzhou">浙江</option>
-                <option value="other">其他</option>
-            </select>
-            <input type="text" id="searchInput" placeholder="搜索政策关键词...">
-            <button class="search-btn" onclick="searchPolicy()">🔍 搜索</button>
-        </div>
-        
-        <div class="policy-grid" id="policyGrid">
-            <!-- 政策内容由 JS 动态加载 -->
-        </div>
+        <div class="news-grid" id="newsGrid"></div>
     </div>
-    
     <script>
-        const policyData = [
-            {
-                type: "salary",
-                typeName: "薪资福利",
-                title: "最低工资标准调整通知",
-                content: "自 2026 年 1 月 1 日起，调整最低工资标准：一类地区每月 2360 元，二类地区每月 2100 元。用人单位支付给劳动者的工资不得低于当地最低工资标准。",
-                region: "beijing",
-                regionName: "北京",
-                date: "2026-01-15"
-            },
-            {
-                type: "social",
-                typeName: "社保公积金",
-                title: "住房公积金缴存比例调整",
-                content: "单位和职工住房公积金缴存比例下限均为 5%，上限为 12%。单位可在 5%-12% 区间内自主确定缴存比例。困难企业可申请降低缴存比例或缓缴。",
-                region: "shanghai",
-                regionName: "上海",
-                date: "2026-02-01"
-            },
-            {
-                type: "leave",
-                typeName: "休假制度",
-                title: "带薪年休假实施办法",
-                content: "职工累计工作已满 1 年不满 10 年的，年休假 5 天；已满 10 年不满 20 年的，年休假 10 天；已满 20 年的，年休假 15 天。单位确因工作需要不能安排休假的，应支付 300% 工资报酬。",
-                region: "beijing",
-                regionName: "北京",
-                date: "2026-01-20"
-            },
-            {
-                type: "contract",
-                typeName: "劳动合同",
-                title: "劳动合同签订规范",
-                content: "用人单位自用工之日起即与劳动者建立劳动关系，应当订立书面劳动合同。已建立劳动关系未同时订立书面劳动合同的，应当自用工之日起一个月内订立。",
-                region: "shenzhen",
-                regionName: "深圳",
-                date: "2026-02-10"
-            },
-            {
-                type: "safety",
-                typeName: "劳动保护",
-                title: "高温津贴发放标准",
-                content: "每年 6 月至 9 月，用人单位安排劳动者从事露天岗位工作以及不能采取有效措施将工作场所温度降低到 33℃以下的，应当发放高温津贴。标准为每人每月 150 元。",
-                region: "guangzhou",
-                regionName: "广东",
-                date: "2026-03-01"
-            },
-            {
-                type: "salary",
-                typeName: "薪资福利",
-                title: "加班工资计算基数",
-                content: "工作日延长工作时间的，支付不低于工资的 150% 的工资报酬；休息日安排工作又不能补休的，支付不低于工资的 200% 的工资报酬；法定休假日安排工作的，支付不低于工资的 300% 的工资报酬。",
-                region: "shanghai",
-                regionName: "上海",
-                date: "2026-01-25"
-            },
-            {
-                type: "social",
-                typeName: "社保公积金",
-                title: "灵活就业人员参保政策",
-                content: "灵活就业人员可以个人身份参加企业职工基本养老保险和职工基本医疗保险。养老保险缴费比例为 20%，医疗保险缴费比例按当地规定执行。",
-                region: "hangzhou",
-                regionName: "浙江",
-                date: "2026-02-15"
-            },
-            {
-                type: "leave",
-                typeName: "休假制度",
-                title: "产假及陪产假规定",
-                content: "女职工生育享受 98 天产假，其中产前可以休假 15 天。符合法律法规规定生育的夫妻，女方除享受国家规定的产假外，享受 60 天奖励假，男方享受 15 天陪产假。",
-                region: "beijing",
-                regionName: "北京",
-                date: "2026-01-10"
-            }
+        const newsData = [
+            { id: 1, badge: '最新', title: '住房公积金缴存比例调整，5%-12% 可自主选择', summary: '上海最新发布，单位可在区间内自主确定缴存比例，困难企业可申请降低或缓缴。', image: 'https://picsum.photos/seed/policy1/600/400', source: '上海公积金中心', time: '1 天前' },
+            { id: 2, badge: '热门', title: '最低工资标准调整，一类地区每月 2360 元', summary: '自 2026 年 1 月 1 日起，调整最低工资标准，北京、上海等地领跑全国。', image: 'https://picsum.photos/seed/policy2/600/400', source: '北京市人社局', time: '3 天前' },
+            { id: 3, badge: '重要', title: '带薪年休假实施办法，未休年假可获 3 倍工资', summary: '职工累计工作已满 1 年不满 10 年的，年休假 5 天；已满 10 年不满 20 年的，年休假 10 天。', image: 'https://picsum.photos/seed/policy3/600/400', source: '人社部', time: '5 天前' },
+            { id: 4, badge: '最新', title: '高温津贴标准发布，6-9 月每月 180-300 元', summary: '北京、上海、广东等地发布高温津贴标准，用人单位应按规定发放。', image: 'https://picsum.photos/seed/policy4/600/400', source: '工人日报', time: '1 周前' },
+            { id: 5, badge: '热门', title: '社保缴费基数调整，上下限同步提高', summary: '多地发布社保缴费基数上下限标准，工资低于下限的按下限缴纳。', image: 'https://picsum.photos/seed/policy5/600/400', source: '人社部', time: '1 周前' },
+            { id: 6, badge: '重要', title: '劳动合同法实施条例，这些情况需支付补偿金', summary: '用人单位解除劳动合同，符合法定情形的需支付经济补偿金。', image: 'https://picsum.photos/seed/policy6/600/400', source: '人社部', time: '2 周前' },
+            { id: 7, badge: '最新', title: '女职工劳动保护特别规定，产假 98 天', summary: '女职工生育享受 98 天产假，难产的增加 15 天，多胞胎每多一胎增加 15 天。', image: 'https://picsum.photos/seed/policy7/600/400', source: '国务院', time: '2 周前' },
+            { id: 8, badge: '热门', title: '个人所得税专项附加扣除标准提高', summary: '3 岁以下婴幼儿照护、子女教育、赡养老人等专项附加扣除标准提高。', image: 'https://picsum.photos/seed/policy8/600/400', source: '税务总局', time: '3 周前' }
         ];
-        
-        function renderPolicies(data) {
-            const grid = document.getElementById('policyGrid');
-            grid.innerHTML = '';
-            
-            data.forEach(policy => {
-                const card = document.createElement('div');
-                card.className = 'policy-card';
-                card.innerHTML = `
-                    <span class="policy-type">${policy.typeName}</span>
-                    <div class="policy-title">${policy.title}</div>
-                    <div class="policy-content">${policy.content}</div>
-                    <div class="policy-meta">
-                        <span class="policy-region">${policy.regionName}</span>
-                        <span>${policy.date}</span>
+        function renderNews() {
+            const grid = document.getElementById('newsGrid');
+            grid.innerHTML = newsData.map(news => `
+                <a href="/policy/detail.html?id=${news.id}" class="news-card">
+                    <img src="${news.image}" alt="${news.title}" class="news-image">
+                    <div class="news-body">
+                        <span class="news-badge">${news.badge}</span>
+                        <h3 class="news-title">${news.title}</h3>
+                        <p class="news-summary">${news.summary}</p>
+                        <div class="news-meta">
+                            <span class="news-source">${news.source}</span>
+                            <span>${news.time}</span>
+                        </div>
                     </div>
-                `;
-                grid.appendChild(card);
-            });
+                </a>
+            `).join('');
         }
-        
-        function filterPolicy(type) {
-            // 更新标签状态
-            document.querySelectorAll('.filter-tag').forEach(tag => {
-                tag.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            if (type === 'all') {
-                renderPolicies(policyData);
-            } else {
-                const filtered = policyData.filter(p => p.type === type);
-                renderPolicies(filtered);
-            }
-        }
-        
-        function searchPolicy() {
-            const region = document.getElementById('regionSelect').value;
-            const keyword = document.getElementById('searchInput').value.toLowerCase();
-            
-            let filtered = policyData;
-            
-            if (region) {
-                filtered = filtered.filter(p => p.region === region);
-            }
-            
-            if (keyword) {
-                filtered = filtered.filter(p => 
-                    p.title.toLowerCase().includes(keyword) ||
-                    p.content.toLowerCase().includes(keyword)
-                );
-            }
-            
-            renderPolicies(filtered);
-        }
-        
-        // 初始加载
-        renderPolicies(policyData);
+        renderNews();
     </script>
 </body>
 </html>
