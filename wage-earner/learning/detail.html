@@ -7,91 +7,134 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; min-height: 100vh; padding: 20px; }
-        .container { max-width: 1000px; margin: 0 auto; }
-        .back-link { display: inline-block; color: #667eea; text-decoration: none; margin-bottom: 20px; font-size: 1.1em; font-weight: 600; }
-        .article { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
-        .article-cover { width: 100%; height: 500px; object-fit: cover; }
-        .article-body { padding: 50px; }
-        .article-badge { display: inline-block; padding: 8px 20px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border-radius: 25px; font-size: 0.9em; font-weight: 600; margin-bottom: 20px; }
-        .article-title { font-size: 2.5em; font-weight: bold; color: #333; margin-bottom: 20px; line-height: 1.3; }
-        .article-meta { display: flex; gap: 30px; color: #999; font-size: 0.95em; margin-bottom: 30px; padding-bottom: 30px; border-bottom: 2px solid #f0f0f0; }
-        .article-meta span { display: flex; align-items: center; gap: 8px; }
-        .article-content { line-height: 2; color: #444; font-size: 1.05em; }
-        .article-content p { margin-bottom: 25px; }
-        .article-content h2 { font-size: 1.8em; color: #333; margin: 40px 0 20px 0; }
-        .article-image { width: 100%; margin: 30px 0; border-radius: 15px; overflow: hidden; }
-        .article-image img { width: 100%; height: auto; min-height: 300px; object-fit: cover; }
-        .image-caption { text-align: center; color: #999; font-size: 0.9em; padding: 15px; background: #f9f9f9; }
-        .article-tags { display: flex; gap: 10px; flex-wrap: wrap; margin: 40px 0; padding-top: 30px; border-top: 2px solid #f0f0f0; }
-        .tag { padding: 8px 20px; background: rgba(17,153,142,0.1); color: #11998e; border-radius: 25px; font-size: 0.9em; font-weight: 600; }
-        .related-news { margin-top: 50px; padding-top: 50px; border-top: 2px solid #f0f0f0; }
-        .related-news h3 { font-size: 1.8em; color: #333; margin-bottom: 25px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .back-link { display: inline-block; color: #11998e; text-decoration: none; margin-bottom: 20px; font-size: 1.1em; font-weight: 600; }
+        .course-header { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        .course-cover { width: 100%; height: 400px; object-fit: cover; }
+        .course-info { padding: 40px; }
+        .course-badge { display: inline-block; padding: 8px 20px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border-radius: 25px; font-size: 0.9em; font-weight: 600; margin-bottom: 15px; }
+        .course-title { font-size: 2.5em; font-weight: bold; color: #333; margin-bottom: 15px; }
+        .course-meta { display: flex; gap: 30px; color: #999; font-size: 1em; margin-bottom: 25px; }
+        .course-meta span { display: flex; align-items: center; gap: 8px; }
+        .course-desc { line-height: 1.8; color: #666; font-size: 1.05em; margin-bottom: 30px; }
+        .course-tabs { display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 2px solid #e0e0e0; padding-bottom: 15px; }
+        .course-tab { padding: 10px 25px; background: #f0f0f0; border: none; border-radius: 25px; cursor: pointer; font-weight: 600; color: #666; transition: all 0.3s; }
+        .course-tab.active { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .syllabus-item { background: white; border-radius: 15px; padding: 25px; margin-bottom: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+        .syllabus-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .syllabus-title { font-size: 1.2em; font-weight: bold; color: #333; }
+        .syllabus-count { color: #11998e; font-weight: 600; }
+        .syllabus-list { list-style: none; }
+        .syllabus-list li { padding: 12px 15px; margin-bottom: 8px; background: #f9f9f9; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .syllabus-list li:hover { background: #f0f0f0; }
+        .video-item { background: white; border-radius: 15px; overflow: hidden; margin-bottom: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+        .video-thumbnail { width: 100%; height: 200px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); display: flex; align-items: center; justify-content: center; font-size: 4em; color: white; cursor: pointer; }
+        .video-info { padding: 20px; }
+        .video-title { font-size: 1.1em; font-weight: bold; color: #333; margin-bottom: 10px; }
+        .video-meta { display: flex; gap: 20px; color: #999; font-size: 0.9em; }
+        .ebook-item { background: white; border-radius: 15px; padding: 25px; margin-bottom: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); display: flex; gap: 20px; align-items: center; }
+        .ebook-icon { font-size: 3em; }
+        .ebook-info { flex: 1; }
+        .ebook-title { font-size: 1.1em; font-weight: bold; color: #333; margin-bottom: 8px; }
+        .ebook-meta { color: #999; font-size: 0.9em; margin-bottom: 10px; }
+        .download-btn { padding: 8px 20px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: 600; }
+        .related-courses { margin-top: 40px; padding-top: 40px; border-top: 2px solid #e0e0e0; }
+        .related-courses h3 { font-size: 1.8em; color: #333; margin-bottom: 25px; }
         .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .related-card { background: #f9f9f9; border-radius: 15px; overflow: hidden; transition: all 0.3s; cursor: pointer; }
-        .related-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .related-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.08); cursor: pointer; transition: all 0.3s; }
+        .related-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
         .related-image { width: 100%; height: 180px; object-fit: cover; }
         .related-body { padding: 20px; }
-        .related-title { font-size: 1.1em; font-weight: bold; color: #333; margin-bottom: 10px; line-height: 1.4; }
+        .related-title { font-size: 1.1em; font-weight: bold; color: #333; margin-bottom: 10px; }
         .related-meta { color: #999; font-size: 0.85em; }
-        @media (max-width: 768px) { .article-body { padding: 25px; } .article-cover { height: 300px; } .article-title { font-size: 1.8em; } .related-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .course-info { padding: 25px; } .course-title { font-size: 1.8em; } .related-grid { grid-template-columns: 1fr; } .ebook-item { flex-direction: column; } }
     </style>
 </head>
 <body>
     <div class="container">
         <a href="/learning/" class="back-link">← 返回课程列表</a>
-        <article class="article">
-            <img id="coverImage" src="" alt="课程封面" class="article-cover">
-            <div class="article-body">
-                <span id="badge" class="article-badge"></span>
-                <h1 id="title" class="article-title"></h1>
-                <div class="article-meta">
-                    <span id="students"></span>
-                    <span id="rating"></span>
+        
+        <article class="course-header">
+            <img id="courseCover" src="" alt="课程封面" class="course-cover">
+            <div class="course-info">
+                <span id="courseBadge" class="course-badge"></span>
+                <h1 id="courseTitle" class="course-title"></h1>
+                <div class="course-meta">
+                    <span id="courseStudents"></span>
+                    <span id="courseRating"></span>
+                    <span id="courseCategory"></span>
                 </div>
-                <div id="content" class="article-content"></div>
-                <div class="article-tags" id="tags"></div>
+                <p id="courseDesc" class="course-desc"></p>
+                
+                <div class="course-tabs">
+                    <button class="course-tab active" onclick="switchTab('syllabus')">📚 课程目录</button>
+                    <button class="course-tab" onclick="switchTab('videos')">🎬 视频课程</button>
+                    <button class="course-tab" onclick="switchTab('ebooks')">📖 电子书</button>
+                </div>
+                
+                <!-- 课程目录 -->
+                <div id="syllabus" class="tab-content active"></div>
+                
+                <!-- 视频课程 -->
+                <div id="videos" class="tab-content"></div>
+                
+                <!-- 电子书 -->
+                <div id="ebooks" class="tab-content"></div>
             </div>
         </article>
-        <div class="related-news">
+        
+        <div class="related-courses">
             <h3>📚 相关课程</h3>
             <div class="related-grid" id="relatedGrid"></div>
         </div>
     </div>
+    
     <script>
         const courseData = {
-            1: { badge: '🔥 热门', title: 'Python 编程从入门到精通', students: '👥 12.5w 学习', rating: '⭐ 4.9 分', cover: 'https://picsum.photos/seed/learn1c/1200/500', content: '<p><strong>【课程介绍】</strong> 适合零基础的 Python 编程课程，30 天掌握 Python 核心技能。</p><div class="article-image"><img src="https://picsum.photos/seed/l1i1/800/400"><div class="image-caption">Python 编程课程</div></div><h2>📚 课程内容</h2><p>课程涵盖 Python 基础语法、数据结构、文件操作、网络爬虫、数据分析等核心内容。</p><div class="article-image"><img src="https://picsum.photos/seed/l1i2/800/400"><div class="image-caption">课程内容大纲</div></div><h2>💡 适合人群</h2><p>零基础学员、想转行 IT 的职场人士、需要自动化办公的上班族、对数据分析感兴趣的同学。</p><div class="article-image"><img src="https://picsum.photos/seed/l1i3/800/400"><div class="image-caption">适合人群</div></div><h2>🎯 学习目标</h2><p>学完本课程，你将掌握 Python 编程基础，能够独立编写 Python 程序，进行数据分析和自动化办公。</p><div class="article-image"><img src="https://picsum.photos/seed/l1i4/800/400"><div class="image-caption">学习目标</div></div>', tags: ['#Python', '#编程', '#数据分析', '#自动化办公'], related: [2, 4, 5] },
-            2: { badge: '💎 推荐', title: 'UI/UX 设计全栈课程', students: '👥 5.2w 学习', rating: '⭐ 4.7 分', cover: 'https://picsum.photos/seed/learn2c/1200/500', content: '<p><strong>【课程介绍】</strong> 从零基础到接单，掌握 Figma、Sketch 等设计工具。</p><div class="article-image"><img src="https://picsum.photos/seed/l2i1/800/400"><div class="image-caption">UI/UX 设计课程</div></div><h2>📚 课程内容</h2><p>课程涵盖设计基础、色彩理论、版式设计、Figma 工具使用、Sketch 工具使用、项目实战等。</p><div class="article-image"><img src="https://picsum.photos/seed/l2i2/800/400"><div class="image-caption">课程内容</div></div><h2>💡 适合人群</h2><p>设计爱好者、想转行设计的职场人士、需要提升设计能力的产品经理、想接设计兼职的同学。</p><div class="article-image"><img src="https://picsum.photos/seed/l2i3/800/400"><div class="image-caption">适合人群</div></div><h2>🎯 学习目标</h2><p>学完本课程，你将掌握 UI/UX 设计核心技能，能够独立完成设计项目，开始接单赚钱。</p><div class="article-image"><img src="https://picsum.photos/seed/l2i4/800/400"><div class="image-caption">学习目标</div></div>', tags: ['#UI 设计', '#UX 设计', '#Figma', '#设计接单'], related: [1, 3, 7] },
-            3: { badge: '📜 认证', title: '项目管理 PMP 认证', students: '👥 3.5w 学习', rating: '⭐ 4.9 分', cover: 'https://picsum.photos/seed/learn3c/1200/500', content: '<p><strong>【课程介绍】</strong> 系统学习项目管理知识体系，通过 PMP 认证考试。</p><div class="article-image"><img src="https://picsum.photos/seed/l3i1/800/400"><div class="image-caption">PMP 认证课程</div></div><h2>📚 课程内容</h2><p>课程涵盖项目管理五大过程组、十大知识领域、PMP 考试技巧、实战案例分析等。</p><div class="article-image"><img src="https://picsum.photos/seed/l3i2/800/400"><div class="image-caption">课程内容</div></div><h2>💡 适合人群</h2><p>项目经理、想转行项目管理的职场人士、需要提升管理能力的团队领导、想考 PMP 证书的同学。</p><div class="article-image"><img src="https://picsum.photos/seed/l3i3/800/400"><div class="image-caption">适合人群</div></div><h2>🎯 学习目标</h2><p>学完本课程，你将掌握项目管理核心知识，顺利通过 PMP 认证考试，提升职场竞争力。</p><div class="article-image"><img src="https://picsum.photos/seed/l3i4/800/400"><div class="image-caption">学习目标</div></div>', tags: ['#PMP', '#项目管理', '#认证考试', '#职场提升'], related: [1, 5, 7] },
-            4: { badge: '🆕 新课', title: '数据分析大师课', students: '👥 6.7w 学习', rating: '⭐ 4.8 分', cover: 'https://picsum.photos/seed/learn4c/1200/500', content: '<p><strong>【课程介绍】</strong> 成为企业抢手的数据分析人才，Excel+SQL+Python 全栈学习。</p><div class="article-image"><img src="https://picsum.photos/seed/l4i1/800/400"><div class="image-caption">数据分析课程</div></div><h2>📚 课程内容</h2><p>课程涵盖 Excel 高级应用、SQL 数据库查询、Python 数据分析、数据可视化、业务分析实战等。</p><div class="article-image"><img src="https://picsum.photos/seed/l4i2/800/400"><div class="image-caption">课程内容</div></div><h2>💡 适合人群</h2><p>数据分析师、运营人员、产品经理、想转行数据分析的职场人士。</p><div class="article-image"><img src="https://picsum.photos/seed/l4i3/800/400"><div class="image-caption">适合人群</div></div><h2>🎯 学习目标</h2><p>学完本课程，你将掌握数据分析全栈技能，能够独立完成数据分析项目。</p><div class="article-image"><img src="https://picsum.photos/seed/l4i4/800/400"><div class="image-caption">学习目标</div></div>', tags: ['#数据分析', '#Excel', '#SQL', '#Python'], related: [1, 5, 8] },
-            5: { badge: '🔥 热门', title: '新媒体运营实战', students: '👥 9.2w 学习', rating: '⭐ 4.7 分', cover: 'https://picsum.photos/seed/learn5c/1200/500', content: '<p><strong>【课程介绍】</strong> 从 0 到 1 打造爆款，掌握全平台运营技巧。</p><div class="article-image"><img src="https://picsum.photos/seed/l5i1/800/400"><div class="image-caption">新媒体运营课程</div></div><h2>📚 课程内容</h2><p>课程涵盖公众号运营、小红书运营、抖音运营、内容创作、粉丝增长、变现模式等。</p><div class="article-image"><img src="https://picsum.photos/seed/l5i2/800/400"><div class="image-caption">课程内容</div></div><h2>💡 适合人群</h2><p>新媒体运营人员、想副业做自媒体的职场人士、想打造个人 IP 的创业者。</p><div class="article-image"><img src="https://picsum.photos/seed/l5i3/800/400"><div class="image-caption">适合人群</div></div><h2>🎯 学习目标</h2><p>学完本课程，你将掌握新媒体运营核心技能，能够独立运营账号，实现变现。</p><div class="article-image"><img src="https://picsum.photos/seed/l5i4/800/400"><div class="image-caption">学习目标</div></div>', tags: ['#新媒体', '#公众号', '#小红书', '#抖音'], related: [2, 7, 8] },
-            6: { badge: '💎 推荐', title: '商务英语进阶', students: '👥 7.8w 学习', rating: '⭐ 4.8 分', cover: 'https://picsum.photos/seed/learn6c/1200/500', content: '<p><strong>【课程介绍】</strong> 职场英语、邮件写作、会议口语，全面提升商务英语能力。</p><div class="article-image"><img src="https://picsum.photos/seed/l6i1/800/400"><div class="image-caption">商务英语课程</div></div><h2>📚 课程内容</h2><p>课程涵盖商务邮件写作、电话会议口语、商务谈判技巧、英文简历面试等。</p><div class="article-image"><img src="https://picsum.photos/seed/l6i2/800/400"><div class="image-caption">课程内容</div></div><h2>💡 适合人群</h2><p>外企员工、想进外企的职场人士、需要与外国客户沟通的商务人士。</p><div class="article-image"><img src="https://picsum.photos/seed/l6i3/800/400"><div class="image-caption">适合人群</div></div><h2>🎯 学习目标</h2><p>学完本课程，你将能够流利进行商务沟通，轻松应对外企面试。</p><div class="article-image"><img src="https://picsum.photos/seed/l6i4/800/400"><div class="image-caption">学习目标</div></div>', tags: ['#商务英语', '#职场英语', '#邮件写作', '#外企面试'], related: [1, 7, 8] },
-            7: { badge: '🆕 新课', title: '高效沟通技巧', students: '👥 11.2w 学习', rating: '⭐ 4.8 分', cover: 'https://picsum.photos/seed/learn7c/1200/500', content: '<p><strong>【课程介绍】</strong> 跨部门协作、职场沟通、演讲表达，成为职场沟通高手。</p><div class="article-image"><img src="https://picsum.photos/seed/l7i1/800/400"><div class="image-caption">沟通技巧课程</div></div><h2>📚 课程内容</h2><p>课程涵盖沟通基础、向上管理、跨部门协作、演讲表达、冲突处理等。</p><div class="article-image"><img src="https://picsum.photos/seed/l7i2/800/400"><div class="image-caption">课程内容</div></div><h2>💡 适合人群</h2><p>职场人士、团队领导、需要提升沟通能力的所有人。</p><div class="article-image"><img src="https://picsum.photos/seed/l7i3/800/400"><div class="image-caption">适合人群</div></div><h2>🎯 学习目标</h2><p>学完本课程，你将掌握高效沟通技巧，成为职场沟通高手。</p><div class="article-image"><img src="https://picsum.photos/seed/l7i4/800/400"><div class="image-caption">学习目标</div></div>', tags: ['#沟通技巧', '#向上管理', '#演讲表达', '#职场技能'], related: [3, 5, 8] },
-            8: { badge: '📜 认证', title: '心理咨询师认证', students: '👥 8.9w 学习', rating: '⭐ 4.9 分', cover: 'https://picsum.photos/seed/learn8c/1200/500', content: '<p><strong>【课程介绍】</strong> 学习心理学知识，考取国家认证，副业首选。</p><div class="article-image"><img src="https://picsum.photos/seed/l8i1/800/400"><div class="image-caption">心理咨询师课程</div></div><h2>📚 课程内容</h2><p>课程涵盖心理学基础、咨询技巧、心理评估、案例分析、认证考试辅导等。</p><div class="article-image"><img src="https://picsum.photos/seed/l8i2/800/400"><div class="image-caption">课程内容</div></div><h2>💡 适合人群</h2><p>想从事心理咨询的人士、想帮助他人的职场人士、想发展副业的同学。</p><div class="article-image"><img src="https://picsum.photos/seed/l8i3/800/400"><div class="image-caption">适合人群</div></div><h2>🎯 学习目标</h2><p>学完本课程，你将掌握心理咨询核心技能，考取国家认证，开始接咨询个案。</p><div class="article-image"><img src="https://picsum.photos/seed/l8i4/800/400"><div class="image-caption">学习目标</div></div>', tags: ['#心理咨询', '#认证考试', '#副业', '#心理学'], related: [3, 6, 7] }
+            1: { badge: '🔥 热门', title: 'Python 编程从入门到精通', students: '👥 12.5w 学习', rating: '⭐ 4.9 分', category: '📁 技术技能', cover: 'https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=1200&h=400&fit=crop', desc: '适合零基础的 Python 编程课程，30 天掌握 Python 核心技能，自动化办公、数据分析都能搞定！课程包含 60 课时，从基础语法到实战项目，循序渐进，让你轻松入门 Python。', syllabus: [{ chapter: '第一章：Python 基础入门', lessons: ['Python 安装与环境配置', '第一个 Python 程序', '变量与数据类型', '运算符与表达式', '输入与输出'], count: '5 课时' }, { chapter: '第二章：流程控制', lessons: ['条件判断 if-else', '循环结构 for 循环', '循环结构 while 循环', 'break 与 continue', '嵌套循环'], count: '5 课时' }, { chapter: '第三章：数据结构', lessons: ['列表 List 详解', '元组 Tuple 详解', '字典 Dict 详解', '集合 Set 详解', '数据结构应用场景'], count: '5 课时' }, { chapter: '第四章：函数与模块', lessons: ['函数定义与调用', '参数传递', '返回值', 'Lambda 表达式', '模块导入与使用'], count: '5 课时' }, { chapter: '第五章：文件操作', lessons: ['文件读写操作', 'CSV 文件处理', 'JSON 文件处理', '异常处理', '实战：数据清洗'], count: '5 课时' }, { chapter: '第六章：实战项目', lessons: ['项目 1：自动化办公脚本', '项目 2：网络爬虫入门', '项目 3：数据分析可视化', '项目 4：API 接口调用', '结业项目'], count: '5 课时' }], videos: [{ title: '01. Python 安装与环境配置', duration: '15:30', views: '12.5w', icon: '🎬' }, { title: '02. 第一个 Python 程序', duration: '12:45', views: '11.8w', icon: '🎬' }, { title: '03. 变量与数据类型详解', duration: '18:20', views: '10.2w', icon: '🎬' }, { title: '04. 条件判断 if-else 实战', duration: '20:15', views: '9.5w', icon: '🎬' }, { title: '05. for 循环与 while 循环', duration: '22:30', views: '8.9w', icon: '🎬' }, { title: '06. 列表 List 完全指南', duration: '25:40', views: '8.2w', icon: '🎬' }, { title: '07. 字典 Dict 应用场景', duration: '19:50', views: '7.8w', icon: '🎬' }, { title: '08. 函数定义与参数传递', duration: '23:15', views: '7.5w', icon: '🎬' }], ebooks: [{ title: 'Python 快速入门指南', pages: '120 页', size: '5.2 MB', icon: '📖' }, { title: 'Python 数据结构详解', pages: '180 页', size: '8.5 MB', icon: '📖' }, { title: 'Python 实战项目合集', pages: '250 页', size: '12.3 MB', icon: '📖' }, { title: 'Python 自动化办公手册', pages: '200 页', size: '9.8 MB', icon: '📖' }], related: [2, 4, 7] },
+            2: { badge: '💎 推荐', title: 'UI/UX 设计全栈课程', students: '👥 5.2w 学习', rating: '⭐ 4.7 分', category: '📁 设计创意', cover: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=400&fit=crop', desc: '从零基础到接单，掌握 Figma、Sketch 等设计工具，做出让人惊艳的设计！课程包含 70 课时，涵盖设计基础、工具使用、项目实战，帮你从零开始成为 UI/UX 设计师。', syllabus: [{ chapter: '第一章：设计基础', lessons: ['设计原则与理论', '色彩理论基础', '版式设计基础', '字体设计基础', '构图与布局'], count: '5 课时' }, { chapter: '第二章：Figma 工具', lessons: ['Figma 界面介绍', '基础形状与路径', '组件与变体', '自动布局详解', '原型交互设计'], count: '5 课时' }, { chapter: '第三章：Sketch 工具', lessons: ['Sketch 界面介绍', '符号与组件', '插件使用指南', '设计规范制定', '导出与交付'], count: '5 课时' }, { chapter: '第四章：UI 设计实战', lessons: ['移动端界面设计', '网页界面设计', '图标设计', '设计系统搭建', '设计评审与迭代'], count: '5 课时' }, { chapter: '第五章：UX 设计实战', lessons: ['用户研究方法', '用户画像创建', '信息架构设计', '交互流程设计', '可用性测试'], count: '5 课时' }, { chapter: '第六章：接单与变现', lessons: ['作品集制作', '接单平台介绍', '报价技巧', '客户沟通技巧', '自由职业指南'], count: '5 课时' }], videos: [{ title: '01. 设计原则与理论入门', duration: '18:30', views: '5.2w', icon: '🎬' }, { title: '02. Figma 界面完全介绍', duration: '15:45', views: '4.8w', icon: '🎬' }, { title: '03. 色彩理论实战应用', duration: '22:20', views: '4.5w', icon: '🎬' }, { title: '04. 组件与变体详解', duration: '25:15', views: '4.2w', icon: '🎬' }, { title: '05. 自动布局完全指南', duration: '28:30', views: '3.9w', icon: '🎬' }, { title: '06. 移动端界面设计实战', duration: '35:40', views: '3.5w', icon: '🎬' }, { title: '07. 设计系统从 0 到 1', duration: '42:50', views: '3.2w', icon: '🎬' }, { title: '08. 作品集制作指南', duration: '30:15', views: '3.0w', icon: '🎬' }], ebooks: [{ title: 'UI 设计入门指南', pages: '150 页', size: '8.5 MB', icon: '📖' }, { title: 'Figma 完全手册', pages: '200 页', size: '12.3 MB', icon: '📖' }, { title: '设计系统搭建指南', pages: '180 页', size: '10.5 MB', icon: '📖' }, { title: 'UI/UX 设计师接单手册', pages: '120 页', size: '6.8 MB', icon: '📖' }], related: [1, 5, 7] },
+            3: { badge: '📜 认证', title: '项目管理 PMP 认证', students: '👥 3.5w 学习', rating: '⭐ 4.9 分', category: '📁 商业管理', cover: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=400&fit=crop', desc: '系统学习项目管理知识体系，通过 PMP 认证考试，提升职场竞争力！课程包含 50 课时，涵盖 PMP 考试全部知识点，配合真题练习，助你顺利通过 PMP 认证。', syllabus: [{ chapter: '第一章：项目管理基础', lessons: ['项目管理概述', '项目经理角色', '项目生命周期', '项目干系人管理', '项目管理过程组'], count: '5 课时' }, { chapter: '第二章：项目整合管理', lessons: ['项目章程制定', '项目管理计划', '项目执行指导', '监控项目工作', '变更控制管理'], count: '5 课时' }, { chapter: '第三章：项目范围管理', lessons: ['需求收集与管理', '范围定义', 'WBS 工作分解', '范围确认', '范围控制'], count: '5 课时' }, { chapter: '第四章：项目进度管理', lessons: ['活动定义与排序', '活动资源估算', '活动持续时间估算', '进度计划制定', '进度控制'], count: '5 课时' }, { chapter: '第五章：项目成本管理', lessons: ['成本估算', '成本预算', '成本控制', '挣值管理', '成本绩效分析'], count: '5 课时' }, { chapter: '第六章：PMP 考试冲刺', lessons: ['考试大纲解读', '真题练习讲解', '答题技巧', '模拟考试', '考前冲刺'], count: '5 课时' }], videos: [{ title: '01. 项目管理概述与 PMP 介绍', duration: '20:30', views: '3.5w', icon: '🎬' }, { title: '02. 项目生命周期详解', duration: '18:45', views: '3.2w', icon: '🎬' }, { title: '03. 项目章程制定指南', duration: '22:20', views: '3.0w', icon: '🎬' }, { title: '04. WBS 工作分解实战', duration: '25:15', views: '2.8w', icon: '🎬' }, { title: '05. 进度计划制定方法', duration: '28:30', views: '2.6w', icon: '🎬' }, { title: '06. 挣值管理完全指南', duration: '32:40', views: '2.4w', icon: '🎬' }, { title: '07. PMP 真题讲解 (一)', duration: '45:50', views: '2.2w', icon: '🎬' }, { title: '08. PMP 真题讲解 (二)', duration: '48:15', views: '2.0w', icon: '🎬' }], ebooks: [{ title: 'PMP 考试大纲详解', pages: '100 页', size: '5.5 MB', icon: '📖' }, { title: '项目管理知识体系指南', pages: '350 页', size: '18.5 MB', icon: '📖' }, { title: 'PMP 真题集 (含解析)', pages: '280 页', size: '15.2 MB', icon: '📖' }, { title: 'PMP 考试冲刺手册', pages: '150 页', size: '8.8 MB', icon: '📖' }], related: [5, 7, 8] },
+            4: { badge: '🆕 新课', title: '数据分析大师课', students: '👥 6.7w 学习', rating: '⭐ 4.8 分', category: '📁 技术技能', cover: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=400&fit=crop', desc: '成为企业抢手的数据分析人才，Excel+SQL+Python 全栈学习！课程包含 80 课时，从 Excel 基础到 Python 数据分析，系统掌握数据分析全流程技能。', syllabus: [{ chapter: '第一章：Excel 数据分析', lessons: ['Excel 基础操作', '函数与公式', '数据透视表', '图表制作', 'Power Query'], count: '5 课时' }, { chapter: '第二章：SQL 数据库', lessons: ['SQL 基础语法', '数据查询 SELECT', '数据过滤 WHERE', '数据聚合 GROUP BY', '多表连接 JOIN'], count: '5 课时' }, { chapter: '第三章：Python 基础', lessons: ['Python 安装配置', '基础语法', '数据结构', '函数与模块', '文件操作'], count: '5 课时' }, { chapter: '第四章：数据分析库', lessons: ['NumPy 数组操作', 'Pandas 数据处理', '数据清洗技巧', '数据转换方法', '数据合并技巧'], count: '5 课时' }, { chapter: '第五章：数据可视化', lessons: ['Matplotlib 基础', 'Seaborn 统计图表', 'Plotly 交互图表', '仪表板制作', '可视化报告'], count: '5 课时' }, { chapter: '第六章：实战项目', lessons: ['电商数据分析', '用户行为分析', '销售预测分析', 'A/B 测试分析', '结业项目'], count: '5 课时' }], videos: [{ title: '01. Excel 数据透视表完全指南', duration: '25:30', views: '6.7w', icon: '🎬' }, { title: '02. SQL 基础查询详解', duration: '22:45', views: '6.2w', icon: '🎬' }, { title: '03. Python 数据结构入门', duration: '28:20', views: '5.8w', icon: '🎬' }, { title: '04. Pandas 数据处理实战', duration: '35:15', views: '5.5w', icon: '🎬' }, { title: '05. 数据清洗完整流程', duration: '32:30', views: '5.2w', icon: '🎬' }, { title: '06. Matplotlib 可视化入门', duration: '30:40', views: '4.9w', icon: '🎬' }, { title: '07. 电商数据分析实战', duration: '45:50', views: '4.5w', icon: '🎬' }, { title: '08. 用户行为分析方法', duration: '38:15', views: '4.2w', icon: '🎬' }], ebooks: [{ title: 'Excel 数据分析手册', pages: '180 页', size: '9.5 MB', icon: '📖' }, { title: 'SQL 从入门到精通', pages: '220 页', size: '12.3 MB', icon: '📖' }, { title: 'Python 数据分析指南', pages: '280 页', size: '15.8 MB', icon: '📖' }, { title: '数据可视化最佳实践', pages: '150 页', size: '8.5 MB', icon: '📖' }], related: [1, 5, 7] },
+            5: { badge: '🔥 热门', title: '新媒体运营实战', students: '👥 9.2w 学习', rating: '⭐ 4.7 分', category: '📁 商业管理', cover: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&h=400&fit=crop', desc: '从 0 到 1 打造爆款，掌握公众号、小红书、抖音全平台运营技巧！课程包含 45 课时，涵盖内容创作、粉丝增长、变现模式，帮你从 0 开始做新媒体。', syllabus: [{ chapter: '第一章：新媒体基础', lessons: ['新媒体概述', '平台规则解读', '账号定位方法', '竞品分析方法', '运营工具介绍'], count: '5 课时' }, { chapter: '第二章：公众号运营', lessons: ['公众号定位', '内容选题方法', '爆款标题技巧', '排版设计规范', '粉丝增长策略'], count: '5 课时' }, { chapter: '第三章：小红书运营', lessons: ['小红书平台特点', '笔记创作技巧', '封面设计方法', '关键词优化', '种草文案写作'], count: '5 课时' }, { chapter: '第四章：抖音运营', lessons: ['抖音算法机制', '短视频策划', '拍摄剪辑技巧', '热门话题追踪', '直播带货入门'], count: '5 课时' }, { chapter: '第五章：内容创作', lessons: ['文案写作技巧', '图片处理方法', '视频剪辑基础', '内容日历规划', '热点借势方法'], count: '5 课时' }, { chapter: '第六章：变现模式', lessons: ['广告变现', '知识付费', '电商带货', '社群运营', '个人 IP 打造'], count: '5 课时' }], videos: [{ title: '01. 新媒体运营入门指南', duration: '18:30', views: '9.2w', icon: '🎬' }, { title: '02. 公众号爆款标题技巧', duration: '22:45', views: '8.5w', icon: '🎬' }, { title: '03. 小红书笔记创作方法', duration: '25:20', views: '7.8w', icon: '🎬' }, { title: '04. 抖音算法完全解读', duration: '28:15', views: '7.2w', icon: '🎬' }, { title: '05. 短视频策划与拍摄', duration: '32:30', views: '6.8w', icon: '🎬' }, { title: '06. 文案写作完全指南', duration: '30:40', views: '6.5w', icon: '🎬' }, { title: '07. 粉丝增长实战方法', duration: '35:50', views: '6.2w', icon: '🎬' }, { title: '08. 新媒体变现模式', duration: '28:15', views: '5.9w', icon: '🎬' }], ebooks: [{ title: '新媒体运营入门手册', pages: '120 页', size: '6.5 MB', icon: '📖' }, { title: '爆款文案写作指南', pages: '180 页', size: '9.8 MB', icon: '📖' }, { title: '小红书运营完全指南', pages: '150 页', size: '8.2 MB', icon: '📖' }, { title: '抖音短视频创作手册', pages: '200 页', size: '11.5 MB', icon: '📖' }], related: [2, 6, 7] },
+            6: { badge: '💎 推荐', title: '商务英语进阶', students: '👥 7.8w 学习', rating: '⭐ 4.8 分', category: '📁 语言学习', cover: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=1200&h=400&fit=crop', desc: '职场英语、邮件写作、会议口语，全面提升商务英语能力！课程包含 60 课时，涵盖商务场景全方面英语应用，助你轻松应对外企面试和商务沟通。', syllabus: [{ chapter: '第一章：商务基础英语', lessons: ['商务英语概述', '商务词汇积累', '商务语法要点', '商务发音技巧', '商务听力训练'], count: '5 课时' }, { chapter: '第二章：商务邮件写作', lessons: ['邮件格式规范', '开场白与结尾', '请求与回复', '投诉与道歉', '会议邀请邮件'], count: '5 课时' }, { chapter: '第三章：电话会议英语', lessons: ['电话礼仪', '会议开场', '表达观点', '提问与回答', '会议总结'], count: '5 课时' }, { chapter: '第四章：商务演讲', lessons: ['演讲结构设计', '开场白技巧', '数据呈现', '互动技巧', '问答环节'], count: '5 课时' }, { chapter: '第五章：商务谈判', lessons: ['谈判准备', '开场陈述', '讨价还价', '达成共识', '合同签订'], count: '5 课时' }, { chapter: '第六章：外企面试', lessons: ['自我介绍', '常见问题回答', '薪资谈判', '提问环节', '面试礼仪'], count: '5 课时' }], videos: [{ title: '01. 商务英语基础入门', duration: '20:30', views: '7.8w', icon: '🎬' }, { title: '02. 商务邮件写作指南', duration: '25:45', views: '7.2w', icon: '🎬' }, { title: '03. 电话会议英语实战', duration: '28:20', views: '6.8w', icon: '🎬' }, { title: '04. 商务演讲完全指南', duration: '32:15', views: '6.5w', icon: '🎬' }, { title: '05. 商务谈判技巧', duration: '35:30', views: '6.2w', icon: '🎬' }, { title: '06. 外企面试全攻略', duration: '38:40', views: '5.9w', icon: '🎬' }, { title: '07. 商务社交英语', duration: '25:50', views: '5.5w', icon: '🎬' }, { title: '08. 跨文化沟通技巧', duration: '30:15', views: '5.2w', icon: '🎬' }], ebooks: [{ title: '商务英语常用词汇手册', pages: '200 页', size: '10.5 MB', icon: '📖' }, { title: '商务邮件写作模板', pages: '150 页', size: '8.2 MB', icon: '📖' }, { title: '商务英语口语指南', pages: '180 页', size: '9.8 MB', icon: '📖' }, { title: '外企面试完全指南', pages: '120 页', size: '6.5 MB', icon: '📖' }], related: [1, 5, 7] },
+            7: { badge: '🆕 新课', title: '高效沟通技巧', students: '👥 11.2w 学习', rating: '⭐ 4.8 分', category: '📁 软技能', cover: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1200&h=400&fit=crop', desc: '跨部门协作、职场沟通、演讲表达，成为职场沟通高手！课程包含 30 课时，涵盖沟通基础、向上管理、演讲表达等核心技能，帮你成为职场沟通达人。', syllabus: [{ chapter: '第一章：沟通基础', lessons: ['沟通的重要性', '沟通模型解析', '倾听技巧', '表达技巧', '非语言沟通'], count: '5 课时' }, { chapter: '第二章：向上管理', lessons: ['了解上级期望', '工作汇报技巧', '争取资源方法', '处理上级批评', '建立信任关系'], count: '5 课时' }, { chapter: '第三章：跨部门协作', lessons: ['跨部门沟通障碍', '协作流程设计', '利益平衡方法', '冲突处理技巧', '建立协作机制'], count: '5 课时' }, { chapter: '第四章：演讲表达', lessons: ['演讲结构设计', '开场白技巧', '故事叙述方法', '肢体语言运用', '克服紧张情绪'], count: '5 课时' }, { chapter: '第五章：会议沟通', lessons: ['会议准备', '会议主持技巧', '有效发言', '会议决策', '会议跟进'], count: '5 课时' }, { chapter: '第六章：实战演练', lessons: ['工作汇报演练', '跨部门会议模拟', '演讲实战', '谈判模拟', '综合考核'], count: '5 课时' }], videos: [{ title: '01. 沟通基础与模型', duration: '18:30', views: '11.2w', icon: '🎬' }, { title: '02. 倾听技巧完全指南', duration: '22:45', views: '10.5w', icon: '🎬' }, { title: '03. 向上管理实战方法', duration: '25:20', views: '9.8w', icon: '🎬' }, { title: '04. 工作汇报技巧', duration: '28:15', views: '9.2w', icon: '🎬' }, { title: '05. 跨部门沟通障碍突破', duration: '30:30', views: '8.8w', icon: '🎬' }, { title: '06. 演讲结构设计', duration: '32:40', views: '8.5w', icon: '🎬' }, { title: '07. 克服紧张情绪', duration: '25:50', views: '8.2w', icon: '🎬' }, { title: '08. 会议主持技巧', duration: '28:15', views: '7.9w', icon: '🎬' }], ebooks: [{ title: '高效沟通入门手册', pages: '120 页', size: '6.5 MB', icon: '📖' }, { title: '向上管理完全指南', pages: '150 页', size: '8.2 MB', icon: '📖' }, { title: '演讲表达技巧', pages: '180 页', size: '9.8 MB', icon: '📖' }, { title: '跨部门协作指南', pages: '130 页', size: '7.2 MB', icon: '📖' }], related: [3, 5, 8] },
+            8: { badge: '📜 认证', title: '心理咨询师认证', students: '👥 8.9w 学习', rating: '⭐ 4.9 分', category: '📁 证书考试', cover: 'https://images.unsplash.com/photo-1573497019200-936e1e00f936?w=1200&h=400&fit=crop', desc: '学习心理学知识，考取国家认证，帮助他人也治愈自己！课程包含 100 课时，涵盖心理学基础、咨询技巧、认证考试辅导，助你成为专业心理咨询师。', syllabus: [{ chapter: '第一章：心理学基础', lessons: ['心理学概述', '发展心理学', '社会心理学', '人格心理学', '变态心理学'], count: '5 课时' }, { chapter: '第二章：咨询理论基础', lessons: ['精神分析理论', '行为主义理论', '人本主义理论', '认知理论', '整合取向'], count: '5 课时' }, { chapter: '第三章：咨询技巧', lessons: ['建立关系技巧', '倾听技巧', '提问技巧', '反馈技巧', '面质技巧'], count: '5 课时' }, { chapter: '第四章：心理评估', lessons: ['心理测验使用', '访谈技巧', '观察方法', '评估报告撰写', '诊断标准'], count: '5 课时' }, { chapter: '第五章：常见心理问题', lessons: ['焦虑障碍', '抑郁障碍', '人格障碍', '适应障碍', '危机干预'], count: '5 课时' }, { chapter: '第六章：认证考试', lessons: ['考试大纲解读', '真题练习', '案例分析', '模拟考试', '考前冲刺'], count: '5 课时' }], videos: [{ title: '01. 心理学基础入门', duration: '25:30', views: '8.9w', icon: '🎬' }, { title: '02. 精神分析理论详解', duration: '32:45', views: '8.2w', icon: '🎬' }, { title: '03. 咨询关系建立技巧', duration: '28:20', views: '7.8w', icon: '🎬' }, { title: '04. 倾听与提问技巧', duration: '30:15', views: '7.5w', icon: '🎬' }, { title: '05. 心理评估方法', duration: '35:30', views: '7.2w', icon: '🎬' }, { title: '06. 焦虑障碍诊疗', duration: '38:40', views: '6.9w', icon: '🎬' }, { title: '07. 抑郁障碍诊疗', duration: '40:50', views: '6.5w', icon: '🎬' }, { title: '08. 认证考试冲刺', duration: '45:15', views: '6.2w', icon: '🎬' }], ebooks: [{ title: '心理学基础入门', pages: '250 页', size: '13.5 MB', icon: '📖' }, { title: '心理咨询技巧手册', pages: '200 页', size: '11.2 MB', icon: '📖' }, { title: '常见心理问题诊疗', pages: '300 页', size: '16.8 MB', icon: '📖' }, { title: '心理咨询师认证考试指南', pages: '220 页', size: '12.5 MB', icon: '📖' }], related: [3, 6, 7] }
         };
         const courseList = [
-            { id: 1, title: 'Python 编程从入门到精通', image: 'https://picsum.photos/seed/learn1/400/180', students: '12.5w 学习', rating: '4.9 分' },
-            { id: 2, title: 'UI/UX 设计全栈课程', image: 'https://picsum.photos/seed/learn2/400/180', students: '5.2w 学习', rating: '4.7 分' },
-            { id: 3, title: '项目管理 PMP 认证', image: 'https://picsum.photos/seed/learn3/400/180', students: '3.5w 学习', rating: '4.9 分' },
-            { id: 4, title: '数据分析大师课', image: 'https://picsum.photos/seed/learn4/400/180', students: '6.7w 学习', rating: '4.8 分' },
-            { id: 5, title: '新媒体运营实战', image: 'https://picsum.photos/seed/learn5/400/180', students: '9.2w 学习', rating: '4.7 分' },
-            { id: 6, title: '商务英语进阶', image: 'https://picsum.photos/seed/learn6/400/180', students: '7.8w 学习', rating: '4.8 分' },
-            { id: 7, title: '高效沟通技巧', image: 'https://picsum.photos/seed/learn7/400/180', students: '11.2w 学习', rating: '4.8 分' },
-            { id: 8, title: '心理咨询师认证', image: 'https://picsum.photos/seed/learn8/400/180', students: '8.9w 学习', rating: '4.9 分' }
+            { id: 1, title: 'Python 编程从入门到精通', image: 'https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=400&h=180&fit=crop', students: '12.5w 学习', rating: '4.9 分' },
+            { id: 2, title: 'UI/UX 设计全栈课程', image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=180&fit=crop', students: '5.2w 学习', rating: '4.7 分' },
+            { id: 3, title: '项目管理 PMP 认证', image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=180&fit=crop', students: '3.5w 学习', rating: '4.9 分' },
+            { id: 4, title: '数据分析大师课', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=180&fit=crop', students: '6.7w 学习', rating: '4.8 分' },
+            { id: 5, title: '新媒体运营实战', image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=180&fit=crop', students: '9.2w 学习', rating: '4.7 分' },
+            { id: 6, title: '商务英语进阶', image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&h=180&fit=crop', students: '7.8w 学习', rating: '4.8 分' },
+            { id: 7, title: '高效沟通技巧', image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&h=180&fit=crop', students: '11.2w 学习', rating: '4.8 分' },
+            { id: 8, title: '心理咨询师认证', image: 'https://images.unsplash.com/photo-1573497019200-936e1e00f936?w=400&h=180&fit=crop', students: '8.9w 学习', rating: '4.9 分' }
         ];
         function loadCourse() {
             const params = new URLSearchParams(window.location.search);
             const id = parseInt(params.get('id') || '1');
             const course = courseData[id];
             if (!course) { document.body.innerHTML = '<div style="text-align:center;padding:100px;"><h1>课程不存在</h1><a href="/learning/" style="color:#11998e;">返回课程列表</a></div>'; return; }
-            document.getElementById('coverImage').src = course.cover;
-            document.getElementById('badge').textContent = course.badge;
-            document.getElementById('title').textContent = course.title;
-            document.getElementById('students').textContent = course.students;
-            document.getElementById('rating').textContent = course.rating;
-            document.getElementById('content').innerHTML = course.content;
-            document.getElementById('tags').innerHTML = course.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+            document.getElementById('courseCover').src = course.cover;
+            document.getElementById('courseBadge').textContent = course.badge;
+            document.getElementById('courseTitle').textContent = course.title;
+            document.getElementById('courseStudents').textContent = course.students;
+            document.getElementById('courseRating').textContent = course.rating;
+            document.getElementById('courseCategory').textContent = course.category;
+            document.getElementById('courseDesc').textContent = course.desc;
+            document.getElementById('syllabus').innerHTML = course.syllabus.map((chapter, i) => `<div class="syllabus-item"><div class="syllabus-header"><span class="syllabus-title">${chapter.chapter}</span><span class="syllabus-count">${chapter.count}</span></div><ul class="syllabus-list">${chapter.lessons.map(lesson => `<li><span>${lesson}</span><span>▶️ 观看</span></li>`).join('')}</ul></div>`).join('');
+            document.getElementById('videos').innerHTML = course.videos.map(video => `<div class="video-item"><div class="video-thumbnail">${video.icon}</div><div class="video-info"><h4 class="video-title">${video.title}</h4><div class="video-meta"><span>⏱️ ${video.duration}</span><span>👁️ ${video.views}次观看</span></div></div></div>`).join('');
+            document.getElementById('ebooks').innerHTML = course.ebooks.map(ebook => `<div class="ebook-item"><span class="ebook-icon">${ebook.icon}</span><div class="ebook-info"><h4 class="ebook-title">${ebook.title}</h4><div class="ebook-meta">📄 ${ebook.pages} | 💾 ${ebook.size}</div></div><button class="download-btn" onclick="alert('📥 开始下载：${ebook.title}')">下载</button></div>`).join('');
             const relatedGrid = document.getElementById('relatedGrid');
             relatedGrid.innerHTML = course.related.map(relId => { const rel = courseList.find(c => c.id === relId); return `<div class="related-card" onclick="location.href='/learning/detail.html?id=${relId}'"><img src="${rel.image}" alt="${rel.title}" class="related-image"><div class="related-body"><h4 class="related-title">${rel.title}</h4><div class="related-meta">${rel.students} · ${rel.rating}</div></div></div>`; }).join('');
+        }
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.course-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            event.target.classList.add('active');
         }
         loadCourse();
     </script>
