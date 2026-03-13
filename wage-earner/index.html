@@ -52,7 +52,7 @@
         /* 新闻卡片 - 图文并茂 */
         .news-card { border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; transition: all 0.3s; background: white; }
         .news-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
-        .news-image { width: 100%; height: 200px; object-fit: cover; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; font-size: 4em; }
+        .news-image { width: 100%; height: 200px; object-fit: cover; }
         .news-body { padding: 20px; }
         .news-badge { display: inline-block; padding: 4px 12px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border-radius: 20px; font-size: 0.8em; font-weight: 600; margin-bottom: 12px; }
         .news-title { font-size: 1.15em; font-weight: bold; color: #333; margin-bottom: 10px; line-height: 1.4; }
@@ -71,7 +71,7 @@
         /* 课程卡片 - 实物图 */
         .course-card { border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; transition: all 0.3s; background: white; }
         .course-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
-        .course-image { width: 100%; height: 180px; object-fit: cover; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); display: flex; align-items: center; justify-content: center; font-size: 4em; }
+        .course-image { width: 100%; height: 180px; object-fit: cover; }
         .course-body { padding: 20px; }
         .course-category { display: inline-block; padding: 5px 15px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border-radius: 20px; font-size: 0.85em; font-weight: 600; margin-bottom: 12px; }
         .course-title { font-size: 1.15em; font-weight: bold; color: #333; margin-bottom: 10px; line-height: 1.4; }
@@ -144,7 +144,7 @@
     <!-- 主导航 -->
     <nav class="main-nav">
         <div class="nav-inner">
-            <a href="/" class="logo">👩‍💼 打工人之家</a>
+            <a href="/" class="logo"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=60&h=60&fit=crop&crop=face" style="width:50px;height:50px;border-radius:50%;border:2px solid white;" alt="Logo"> 打工人之家</a>
             <div class="nav-menu">
                 <a href="/">首页</a>
                 <a href="/news/">新闻</a>
@@ -163,7 +163,7 @@
         <div class="carousel-section">
             <div class="carousel">
                 <div class="carousel-slide active">
-                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 100%; display: flex; align-items: center; justify-content: center; font-size: 8em;">🎮</div>
+                    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1400&h=450&fit=crop" alt="游戏中心" style="width:100%;height:100%;object-fit:cover;">
                     <div class="carousel-content">
                         <div class="carousel-title">摸鱼游戏中心上线</div>
                         <div class="carousel-desc">水果消消乐、贪吃蛇大作战，工作累了随时放松！</div>
@@ -171,7 +171,7 @@
                     </div>
                 </div>
                 <div class="carousel-slide">
-                    <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); height: 100%; display: flex; align-items: center; justify-content: center; font-size: 8em;">🛠️</div>
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1400&h=450&fit=crop" alt="职场工具" style="width:100%;height:100%;object-fit:cover;">
                     <div class="carousel-content">
                         <div class="carousel-title">职场工具大全</div>
                         <div class="carousel-desc">薪资计算器、加班费计算器，维护你的合法权益！</div>
@@ -179,7 +179,7 @@
                     </div>
                 </div>
                 <div class="carousel-slide">
-                    <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 100%; display: flex; align-items: center; justify-content: center; font-size: 8em;">📚</div>
+                    <img src="https://images.unsplash.com/photo-1513258496098-88260592296c?w=1400&h=450&fit=crop" alt="学习提升" style="width:100%;height:100%;object-fit:cover;">
                     <div class="carousel-content">
                         <div class="carousel-title">15+ 精品课程免费学</div>
                         <div class="carousel-desc">技术、设计、管理、语言，投资自己永不贬值！</div>
@@ -202,7 +202,7 @@
             </div>
             <div class="grid-3">
                 <div class="news-card">
-                    <div class="news-image">📊</div>
+                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400&h=200&fit=crop" alt="最低工资" class="news-image" style="background:none;">
                     <div class="news-body">
                         <span class="news-badge">热门</span>
                         <h3 class="news-title">2026 年多地调整最低工资标准，看看你的城市涨了多少？</h3>
@@ -214,7 +214,7 @@
                     </div>
                 </div>
                 <div class="news-card">
-                    <div class="news-image">📜</div>
+                    <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=200&fit=crop" alt="法律权益" class="news-image" style="background:none;">
                     <div class="news-body">
                         <span class="news-badge">重要</span>
                         <h3 class="news-title">九部门发文：保障新就业形态劳动者权益</h3>
@@ -226,7 +226,7 @@
                     </div>
                 </div>
                 <div class="news-card">
-                    <div class="news-image">🎓</div>
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=200&fit=crop" alt="高校毕业生" class="news-image" style="background:none;">
                     <div class="news-body">
                         <span class="news-badge">最新</span>
                         <h3 class="news-title">2026 届高校毕业生规模预计达 1187 万人</h3>
@@ -285,7 +285,7 @@
             </div>
             <div class="grid-3">
                 <div class="course-card">
-                    <div class="course-image">💻</div>
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=180&fit=crop" alt="Python 编程" class="course-image" style="background:none;">
                     <div class="course-body">
                         <span class="course-category">技术技能</span>
                         <h3 class="course-title">Python 编程从入门到精通</h3>
@@ -300,7 +300,7 @@
                     </div>
                 </div>
                 <div class="course-card">
-                    <div class="course-image">🎨</div>
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=180&fit=crop" alt="UI 设计" class="course-image" style="background:none;">
                     <div class="course-body">
                         <span class="course-category">设计创意</span>
                         <h3 class="course-title">UI/UX 设计全栈课程</h3>
@@ -315,7 +315,7 @@
                     </div>
                 </div>
                 <div class="course-card">
-                    <div class="course-image">💼</div>
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=180&fit=crop" alt="项目管理" class="course-image" style="background:none;">
                     <div class="course-body">
                         <span class="course-category">商业管理</span>
                         <h3 class="course-title">项目管理 PMP 认证</h3>
