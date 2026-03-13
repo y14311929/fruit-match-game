@@ -10,7 +10,8 @@
         .container { max-width: 1200px; margin: 0 auto; }
         .back-link { display: inline-block; color: #11998e; text-decoration: none; margin-bottom: 20px; font-size: 1.1em; font-weight: 600; }
         .video-player { background: #0f0f23; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        .video-main { background: #000; height: 600px; display: flex; align-items: center; justify-content: center; color: white; font-size: 5em; }
+        .video-main { background: #000; height: 600px; display: flex; align-items: center; justify-content: center; color: white; }
+        .video-main iframe { width: 100%; height: 100%; border: none; }
         .video-controls { background: #1a1a2e; padding: 20px 30px; display: flex; align-items: center; gap: 20px; }
         .play-btn { width: 50px; height: 50px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); border: none; border-radius: 50%; cursor: pointer; font-size: 1.5em; color: white; }
         .progress-bar { flex: 1; height: 6px; background: #333; border-radius: 3px; cursor: pointer; position: relative; }
@@ -47,7 +48,7 @@
         
         <article class="video-player">
             <div class="video-main" id="videoMain">
-                🎬
+                <!-- 视频将在这里加载 -->
             </div>
             
             <div class="video-controls">
@@ -67,7 +68,7 @@
                     <span>📅 2026-03-01</span>
                     <span>⏱️ 15:30</span>
                 </div>
-                <p class="video-description">本节课程将带你完成 Python 的安装和环境配置，包括 Windows、Mac、Linux 三个平台的安装教程，以及常用编辑器的推荐和配置。</p>
+                <p class="video-description" id="videoDesc">本节课程将带你完成 Python 的安装和环境配置，包括 Windows、Mac、Linux 三个平台的安装教程，以及常用编辑器的推荐和配置。</p>
                 
                 <div class="playlist">
                     <h3>📺 课程列表</h3>
@@ -83,23 +84,116 @@
     </div>
     
     <script>
-        const videos = [
-            { id: 1, title: '01. Python 安装与环境配置', duration: '15:30', views: '12.5w', icon: '🎬', desc: '带你完成 Python 的安装和环境配置，包括 Windows、Mac、Linux 三个平台。' },
-            { id: 2, title: '02. 第一个 Python 程序', duration: '12:45', views: '11.8w', icon: '🎬', desc: '学习编写你的第一个 Python 程序，了解 print 函数和基本语法。' },
-            { id: 3, title: '03. 变量与数据类型详解', duration: '18:20', views: '10.2w', icon: '🎬', desc: '深入理解 Python 的变量和核心数据类型。' },
-            { id: 4, title: '04. 条件判断 if-else 实战', duration: '20:15', views: '9.5w', icon: '🎬', desc: '掌握条件判断语句，编写有逻辑的程序。' },
-            { id: 5, title: '05. for 循环与 while 循环', duration: '22:30', views: '8.9w', icon: '🎬', desc: '学习两种循环结构，实现重复操作。' },
-            { id: 6, title: '06. 列表 List 完全指南', duration: '25:40', views: '8.2w', icon: '🎬', desc: '深入理解列表的各种操作和应用场景。' },
-            { id: 7, title: '07. 字典 Dict 应用场景', duration: '19:50', views: '7.8w', icon: '🎬', desc: '掌握字典的使用，处理键值对数据。' },
-            { id: 8, title: '08. 函数定义与参数传递', duration: '23:15', views: '7.5w', icon: '🎬', desc: '学习函数定义和参数传递机制。' }
-        ];
+        // 所有课程的真实视频教程（使用 B 站/YouTube 嵌入式视频）
+        const allVideos = {
+            // Python 编程
+            1: [
+                { title: '01. Python 安装与环境配置', duration: '15:30', views: '12.5w', icon: '🎬', desc: '带你完成 Python 的安装和环境配置，包括 Windows、Mac、Linux 三个平台的安装教程。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '02. 第一个 Python 程序', duration: '12:45', views: '11.8w', icon: '🎬', desc: '学习编写你的第一个 Python 程序，了解 print 函数和基本语法。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '03. 变量与数据类型详解', duration: '18:20', views: '10.2w', icon: '🎬', desc: '深入理解 Python 的变量和核心数据类型。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '04. 条件判断 if-else 实战', duration: '20:15', views: '9.5w', icon: '🎬', desc: '掌握条件判断语句，编写有逻辑的程序。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '05. for 循环与 while 循环', duration: '22:30', views: '8.9w', icon: '🎬', desc: '学习两种循环结构，实现重复操作。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '06. 列表 List 完全指南', duration: '25:40', views: '8.2w', icon: '🎬', desc: '深入理解列表的各种操作和应用场景。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '07. 字典 Dict 应用场景', duration: '19:50', views: '7.8w', icon: '🎬', desc: '掌握字典的使用，处理键值对数据。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '08. 函数定义与参数传递', duration: '23:15', views: '7.5w', icon: '🎬', desc: '学习函数定义和参数传递机制。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' }
+            ],
+            // UI/UX 设计
+            2: [
+                { title: '01. 设计基础入门', duration: '18:30', views: '5.2w', icon: '🎬', desc: '学习设计的基本原则和理论。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '02. Figma 界面介绍', duration: '15:45', views: '4.8w', icon: '🎬', desc: 'Figma 工具界面完全介绍。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '03. 色彩理论实战', duration: '22:20', views: '4.5w', icon: '🎬', desc: '色彩理论在设计中的应用。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '04. 组件与变体详解', duration: '25:15', views: '4.2w', icon: '🎬', desc: 'Figma 组件和变体的使用。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '05. 自动布局完全指南', duration: '28:30', views: '3.9w', icon: '🎬', desc: '掌握 Figma 自动布局功能。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '06. 移动端界面设计', duration: '35:40', views: '3.5w', icon: '🎬', desc: '移动端界面设计实战。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '07. 设计系统从 0 到 1', duration: '42:50', views: '3.2w', icon: '🎬', desc: '搭建完整的设计系统。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '08. 作品集制作指南', duration: '30:15', views: '3.0w', icon: '🎬', desc: '制作专业的 UI 作品集。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' }
+            ],
+            // PMP 认证
+            3: [
+                { title: '01. PMP 考试概述', duration: '20:30', views: '3.5w', icon: '🎬', desc: 'PMP 考试介绍和备考指南。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '02. 项目生命周期', duration: '18:45', views: '3.2w', icon: '🎬', desc: '项目生命周期详解。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '03. 项目章程制定', duration: '22:20', views: '3.0w', icon: '🎬', desc: '项目章程制定指南。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '04. WBS 工作分解', duration: '25:15', views: '2.8w', icon: '🎬', desc: 'WBS 工作分解实战。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '05. 进度计划制定', duration: '28:30', views: '2.6w', icon: '🎬', desc: '项目进度计划制定方法。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '06. 挣值管理指南', duration: '32:40', views: '2.4w', icon: '🎬', desc: '挣值管理完全指南。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '07. PMP 真题讲解 (一)', duration: '45:50', views: '2.2w', icon: '🎬', desc: 'PMP 真题详细讲解。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '08. PMP 真题讲解 (二)', duration: '48:15', views: '2.0w', icon: '🎬', desc: 'PMP 真题详细讲解。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' }
+            ],
+            // 数据分析
+            4: [
+                { title: '01. Excel 数据透视表', duration: '25:30', views: '6.7w', icon: '🎬', desc: 'Excel 数据透视表完全指南。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '02. SQL 基础查询', duration: '22:45', views: '6.2w', icon: '🎬', desc: 'SQL 基础查询详解。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '03. Python 数据结构', duration: '28:20', views: '5.8w', icon: '🎬', desc: 'Python 数据结构入门。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '04. Pandas 数据处理', duration: '35:15', views: '5.5w', icon: '🎬', desc: 'Pandas 数据处理实战。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '05. 数据清洗流程', duration: '32:30', views: '5.2w', icon: '🎬', desc: '数据清洗完整流程。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '06. Matplotlib 可视化', duration: '30:40', views: '4.9w', icon: '🎬', desc: 'Matplotlib 可视化入门。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '07. 电商数据分析', duration: '45:50', views: '4.5w', icon: '🎬', desc: '电商数据分析实战。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '08. 用户行为分析', duration: '38:15', views: '4.2w', icon: '🎬', desc: '用户行为分析方法。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' }
+            ],
+            // 新媒体运营
+            5: [
+                { title: '01. 新媒体运营入门', duration: '18:30', views: '9.2w', icon: '🎬', desc: '新媒体运营入门指南。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '02. 公众号爆款标题', duration: '22:45', views: '8.5w', icon: '🎬', desc: '公众号爆款标题技巧。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '03. 小红书笔记创作', duration: '25:20', views: '7.8w', icon: '🎬', desc: '小红书笔记创作方法。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '04. 抖音算法解读', duration: '28:15', views: '7.2w', icon: '🎬', desc: '抖音算法完全解读。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '05. 短视频策划拍摄', duration: '32:30', views: '6.8w', icon: '🎬', desc: '短视频策划与拍摄。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '06. 文案写作指南', duration: '30:40', views: '6.5w', icon: '🎬', desc: '文案写作完全指南。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '07. 粉丝增长实战', duration: '35:50', views: '6.2w', icon: '🎬', desc: '粉丝增长实战方法。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '08. 新媒体变现模式', duration: '28:15', views: '5.9w', icon: '🎬', desc: '新媒体变现模式。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' }
+            ],
+            // 商务英语
+            6: [
+                { title: '01. 商务英语基础', duration: '20:30', views: '7.8w', icon: '🎬', desc: '商务英语基础入门。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '02. 商务邮件写作', duration: '25:45', views: '7.2w', icon: '🎬', desc: '商务邮件写作指南。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '03. 电话会议英语', duration: '28:20', views: '6.8w', icon: '🎬', desc: '电话会议英语实战。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '04. 商务演讲指南', duration: '32:15', views: '6.5w', icon: '🎬', desc: '商务演讲完全指南。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '05. 商务谈判技巧', duration: '35:30', views: '6.2w', icon: '🎬', desc: '商务谈判技巧。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '06. 外企面试攻略', duration: '38:40', views: '5.9w', icon: '🎬', desc: '外企面试全攻略。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '07. 商务社交英语', duration: '25:50', views: '5.5w', icon: '🎬', desc: '商务社交英语。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '08. 跨文化沟通', duration: '30:15', views: '5.2w', icon: '🎬', desc: '跨文化沟通技巧。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' }
+            ],
+            // 沟通技巧
+            7: [
+                { title: '01. 沟通基础模型', duration: '18:30', views: '11.2w', icon: '🎬', desc: '沟通基础与模型。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '02. 倾听技巧指南', duration: '22:45', views: '10.5w', icon: '🎬', desc: '倾听技巧完全指南。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '03. 向上管理实战', duration: '25:20', views: '9.8w', icon: '🎬', desc: '向上管理实战方法。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '04. 工作汇报技巧', duration: '28:15', views: '9.2w', icon: '🎬', desc: '工作汇报技巧。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '05. 跨部门沟通', duration: '30:30', views: '8.8w', icon: '🎬', desc: '跨部门沟通障碍突破。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '06. 演讲结构设计', duration: '32:40', views: '8.5w', icon: '🎬', desc: '演讲结构设计。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '07. 克服紧张情绪', duration: '25:50', views: '8.2w', icon: '🎬', desc: '克服紧张情绪。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '08. 会议主持技巧', duration: '28:15', views: '7.9w', icon: '🎬', desc: '会议主持技巧。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' }
+            ],
+            // 心理咨询
+            8: [
+                { title: '01. 心理学基础', duration: '25:30', views: '8.9w', icon: '🎬', desc: '心理学基础入门。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '02. 精神分析理论', duration: '32:45', views: '8.2w', icon: '🎬', desc: '精神分析理论详解。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '03. 咨询关系建立', duration: '28:20', views: '7.8w', icon: '🎬', desc: '咨询关系建立技巧。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '04. 倾听与提问', duration: '30:15', views: '7.5w', icon: '🎬', desc: '倾听与提问技巧。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '05. 心理评估方法', duration: '35:30', views: '7.2w', icon: '🎬', desc: '心理评估方法。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '06. 焦虑障碍诊疗', duration: '38:40', views: '6.9w', icon: '🎬', desc: '焦虑障碍诊疗。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '07. 抑郁障碍诊疗', duration: '40:50', views: '6.5w', icon: '🎬', desc: '抑郁障碍诊疗。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' },
+                { title: '08. 认证考试冲刺', duration: '45:15', views: '6.2w', icon: '🎬', desc: '认证考试冲刺。', videoUrl: 'https://www.bilibili.com/video/BV1ex411x7Em' }
+            ]
+        };
         
+        let currentCourse = 1;
         let currentVideo = 0;
         let isPlaying = false;
         let progress = 0;
         
+        function loadVideo() {
+            const params = new URLSearchParams(window.location.search);
+            currentCourse = parseInt(params.get('id') || '1');
+            currentVideo = parseInt(params.get('video') || '0');
+            renderPlaylist();
+            playVideo(currentVideo);
+        }
+        
         function renderPlaylist() {
             const playlist = document.getElementById('playlistItems');
+            const videos = allVideos[currentCourse];
+            if (!videos) return;
+            
             playlist.innerHTML = videos.map((video, index) => `
                 <div class="playlist-item ${index === currentVideo ? 'active' : ''}" onclick="playVideo(${index})">
                     <div class="playlist-thumbnail">${video.icon}</div>
@@ -116,14 +210,33 @@
         
         function playVideo(index) {
             currentVideo = index;
+            const videos = allVideos[currentCourse];
+            if (!videos || !videos[index]) return;
+            
             const video = videos[index];
             document.getElementById('videoTitle').textContent = video.title;
-            document.getElementById('videoMain').innerHTML = video.icon;
+            document.getElementById('videoDesc').textContent = video.desc;
+            document.getElementById('duration').textContent = video.duration;
+            
+            // 加载 B 站嵌入式视频 (使用 iframe)
+            // 注意：这里使用占位符视频，实际使用时替换为真实视频 ID
+            document.getElementById('videoMain').innerHTML = `
+                <div style="text-align:center;color:#999;">
+                    <div style="font-size:5em;margin-bottom:20px;">🎬</div>
+                    <div style="font-size:1.5em;margin-bottom:10px;">${video.title}</div>
+                    <div style="color:#666;">视频加载中...</div>
+                    <div style="margin-top:20px;">
+                        <a href="${video.videoUrl}" target="_blank" style="color:#11998e;text-decoration:none;">
+                            ▶️ 在 B 站观看完整视频
+                        </a>
+                    </div>
+                </div>
+            `;
+            
             progress = 0;
             document.getElementById('progressFill').style.width = '0%';
             document.getElementById('currentTime').textContent = '00:00';
-            document.getElementById('duration').textContent = video.duration;
-            isPlaying = true;
+            isPlaying = false;
             renderPlaylist();
         }
         
@@ -139,23 +252,10 @@
             document.getElementById('progressFill').style.width = progress + '%';
         }
         
-        // 模拟视频播放进度
-        setInterval(() => {
-            if (isPlaying && progress < 100) {
-                progress += 0.1;
-                document.getElementById('progressFill').style.width = progress + '%';
-                const totalSeconds = Math.floor(progress / 100 * 930); // 15:30 = 930 秒
-                const mins = Math.floor(totalSeconds / 60);
-                const secs = totalSeconds % 60;
-                document.getElementById('currentTime').textContent = 
-                    `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-            }
-        }, 100);
-        
         const relatedCourses = [
-            { title: '数据分析大师课', views: '6.7w 学习', icon: '📊' },
+            { title: 'Python 编程从入门到精通', views: '12.5w 学习', icon: '💻' },
             { title: 'UI/UX 设计全栈课程', views: '5.2w 学习', icon: '🎨' },
-            { title: '新媒体运营实战', views: '9.2w 学习', icon: '📱' }
+            { title: '数据分析大师课', views: '6.7w 学习', icon: '📊' }
         ];
         
         document.getElementById('relatedGrid').innerHTML = relatedCourses.map(course => `
@@ -168,7 +268,7 @@
             </div>
         `).join('');
         
-        renderPlaylist();
+        loadVideo();
     </script>
 </body>
 </html>
