@@ -52,9 +52,9 @@
         
         function renderNews() {
             const grid = document.getElementById('newsGrid');
-            grid.innerHTML = newsData.map(news => `
+            grid.innerHTML = newsData.map((news, index) => `
                 <a href="/news/detail.html?id=${news.id}" class="news-card">
-                    <img src="${news.image}" alt="${news.title}" class="news-image" onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886161f5c?w=600&h=400&fit=crop'">
+                    <img src="${news.image}" alt="${news.title}" class="news-image">
                     <div class="news-body">
                         <span class="news-badge">${news.badge}</span>
                         <h3 class="news-title">${news.title}</h3>
