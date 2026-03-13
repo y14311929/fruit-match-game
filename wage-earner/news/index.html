@@ -15,7 +15,7 @@
         .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 25px; margin-bottom: 30px; }
         .news-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.08); transition: all 0.3s; cursor: pointer; text-decoration: none; color: inherit; display: block; }
         .news-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
-        .news-image { width: 100%; height: 240px; object-fit: cover; }
+        .news-image { width: 100%; height: 240px; object-fit: cover; background: #f0f0f0; }
         .news-body { padding: 25px; }
         .news-badge { display: inline-block; padding: 5px 15px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border-radius: 20px; font-size: 0.85em; font-weight: 600; margin-bottom: 12px; }
         .news-title { font-size: 1.3em; font-weight: bold; color: #333; margin-bottom: 12px; line-height: 1.4; }
@@ -40,7 +40,7 @@
     
     <script>
         const newsData = [
-            { id: 1, badge: '热门', title: '2026 年多地调整最低工资标准，看看你的城市涨了多少？', summary: '近日，多个省份宣布调整最低工资标准，平均涨幅约 10%。其中，上海、北京、深圳等地领跑全国。', image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&h=400&fit=crop', source: '人社部官网', time: '2 小时前' },
+            { id: 1, badge: '热门', title: '2026 年多地调整最低工资标准，看看你的城市涨了多少？', summary: '近日，多个省份宣布调整最低工资标准，平均涨幅约 10%。其中，上海、北京、深圳等地领跑全国。', image: 'https://images.unsplash.com/photo-1554224154-82c9f2c9f2c9?w=600&h=400&fit=crop', source: '人社部官网', time: '2 小时前' },
             { id: 2, badge: '重要', title: '九部门发文：保障新就业形态劳动者权益', summary: '人社部等九部门联合发布指导意见，明确平台企业用工责任，完善社保政策。', image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&h=400&fit=crop', source: '新华网', time: '5 小时前' },
             { id: 3, badge: '最新', title: '2026 届高校毕业生规模预计达 1187 万人', summary: '教育部数据显示，2026 届全国普通高校毕业生规模预计 1187 万人，同比增加 23 万人。', image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&h=400&fit=crop', source: '教育部', time: '8 小时前' },
             { id: 4, badge: '热门', title: '多地发布高温津贴标准，6-9 月可领这笔钱', summary: '随着夏季来临，多地发布高温津贴发放标准。按规定，用人单位应发放高温津贴。', image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&h=400&fit=crop', source: '工人日报', time: '12 小时前' },
@@ -54,7 +54,7 @@
             const grid = document.getElementById('newsGrid');
             grid.innerHTML = newsData.map(news => `
                 <a href="/news/detail.html?id=${news.id}" class="news-card">
-                    <img src="${news.image}" alt="${news.title}" class="news-image">
+                    <img src="${news.image}" alt="${news.title}" class="news-image" onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886161f5c?w=600&h=400&fit=crop'">
                     <div class="news-body">
                         <span class="news-badge">${news.badge}</span>
                         <h3 class="news-title">${news.title}</h3>
