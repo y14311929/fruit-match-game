@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频课程 - 打工人之家</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #1a1a2e; min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .back-link { display: inline-block; color: #11998e; text-decoration: none; margin-bottom: 20px; font-size: 1.1em; font-weight: 600; }
+        .video-player { background: #0f0f23; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .video-main { background: #000; height: 600px; display: flex; align-items: center; justify-content: center; color: white; font-size: 5em; }
+        .video-controls { background: #1a1a2e; padding: 20px 30px; display: flex; align-items: center; gap: 20px; }
+        .play-btn { width: 50px; height: 50px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); border: none; border-radius: 50%; cursor: pointer; font-size: 1.5em; color: white; }
+        .progress-bar { flex: 1; height: 6px; background: #333; border-radius: 3px; cursor: pointer; position: relative; }
+        .progress-fill { height: 100%; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); border-radius: 3px; width: 0%; }
+        .time-display { color: #999; font-size: 0.9em; }
+        .video-info { padding: 30px; background: #1a1a2e; }
+        .video-title { font-size: 1.8em; color: white; margin-bottom: 15px; }
+        .video-meta { display: flex; gap: 30px; color: #999; margin-bottom: 20px; }
+        .video-description { color: #ccc; line-height: 1.8; }
+        .playlist { margin-top: 30px; }
+        .playlist h3 { color: white; margin-bottom: 20px; font-size: 1.5em; }
+        .playlist-item { display: flex; gap: 15px; padding: 15px; background: #1a1a2e; border-radius: 10px; margin-bottom: 10px; cursor: pointer; transition: all 0.3s; }
+        .playlist-item:hover { background: #2a2a3e; }
+        .playlist-item.active { background: #2a2a3e; border-left: 4px solid #11998e; }
+        .playlist-thumbnail { width: 160px; height: 90px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 2em; color: white; flex-shrink: 0; }
+        .playlist-info { flex: 1; }
+        .playlist-title { color: white; font-size: 1.1em; margin-bottom: 8px; }
+        .playlist-meta { color: #999; font-size: 0.9em; display: flex; gap: 20px; }
+        .related-videos { margin-top: 40px; }
+        .related-videos h3 { color: white; margin-bottom: 20px; font-size: 1.5em; }
+        .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .related-card { background: #1a1a2e; border-radius: 15px; overflow: hidden; cursor: pointer; transition: all 0.3s; }
+        .related-card:hover { transform: translateY(-5px); }
+        .related-thumbnail { width: 100%; height: 150px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); display: flex; align-items: center; justify-content: center; font-size: 3em; color: white; }
+        .related-info { padding: 15px; }
+        .related-title { color: white; font-size: 1em; margin-bottom: 8px; }
+        .related-meta { color: #999; font-size: 0.85em; }
+        @media (max-width: 768px) { .video-main { height: 300px; } .related-grid { grid-template-columns: 1fr; } .playlist-thumbnail { width: 120px; height: 70px; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/learning/" class="back-link">← 返回课程列表</a>
+        
+        <article class="video-player">
+            <div class="video-main" id="videoMain">
+                🎬
+            </div>
+            
+            <div class="video-controls">
+                <button class="play-btn" onclick="togglePlay()">▶</button>
+                <div class="progress-bar" onclick="seek(event)">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="time-display">
+                    <span id="currentTime">00:00</span> / <span id="duration">15:30</span>
+                </div>
+            </div>
+            
+            <div class="video-info">
+                <h1 class="video-title" id="videoTitle">01. Python 安装与环境配置</h1>
+                <div class="video-meta">
+                    <span>👁️ 12.5w 次观看</span>
+                    <span>📅 2026-03-01</span>
+                    <span>⏱️ 15:30</span>
+                </div>
+                <p class="video-description">本节课程将带你完成 Python 的安装和环境配置，包括 Windows、Mac、Linux 三个平台的安装教程，以及常用编辑器的推荐和配置。</p>
+                
+                <div class="playlist">
+                    <h3>📺 课程列表</h3>
+                    <div id="playlistItems"></div>
+                </div>
+            </div>
+        </article>
+        
+        <div class="related-videos">
+            <h3>🎬 相关课程</h3>
+            <div class="related-grid" id="relatedGrid"></div>
+        </div>
+    </div>
+    
+    <script>
+        const videos = [
+            { id: 1, title: '01. Python 安装与环境配置', duration: '15:30', views: '12.5w', icon: '🎬', desc: '带你完成 Python 的安装和环境配置，包括 Windows、Mac、Linux 三个平台。' },
+            { id: 2, title: '02. 第一个 Python 程序', duration: '12:45', views: '11.8w', icon: '🎬', desc: '学习编写你的第一个 Python 程序，了解 print 函数和基本语法。' },
+            { id: 3, title: '03. 变量与数据类型详解', duration: '18:20', views: '10.2w', icon: '🎬', desc: '深入理解 Python 的变量和核心数据类型。' },
+            { id: 4, title: '04. 条件判断 if-else 实战', duration: '20:15', views: '9.5w', icon: '🎬', desc: '掌握条件判断语句，编写有逻辑的程序。' },
+            { id: 5, title: '05. for 循环与 while 循环', duration: '22:30', views: '8.9w', icon: '🎬', desc: '学习两种循环结构，实现重复操作。' },
+            { id: 6, title: '06. 列表 List 完全指南', duration: '25:40', views: '8.2w', icon: '🎬', desc: '深入理解列表的各种操作和应用场景。' },
+            { id: 7, title: '07. 字典 Dict 应用场景', duration: '19:50', views: '7.8w', icon: '🎬', desc: '掌握字典的使用，处理键值对数据。' },
+            { id: 8, title: '08. 函数定义与参数传递', duration: '23:15', views: '7.5w', icon: '🎬', desc: '学习函数定义和参数传递机制。' }
+        ];
+        
+        let currentVideo = 0;
+        let isPlaying = false;
+        let progress = 0;
+        
+        function renderPlaylist() {
+            const playlist = document.getElementById('playlistItems');
+            playlist.innerHTML = videos.map((video, index) => `
+                <div class="playlist-item ${index === currentVideo ? 'active' : ''}" onclick="playVideo(${index})">
+                    <div class="playlist-thumbnail">${video.icon}</div>
+                    <div class="playlist-info">
+                        <h4 class="playlist-title">${video.title}</h4>
+                        <div class="playlist-meta">
+                            <span>⏱️ ${video.duration}</span>
+                            <span>👁️ ${video.views}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function playVideo(index) {
+            currentVideo = index;
+            const video = videos[index];
+            document.getElementById('videoTitle').textContent = video.title;
+            document.getElementById('videoMain').innerHTML = video.icon;
+            progress = 0;
+            document.getElementById('progressFill').style.width = '0%';
+            document.getElementById('currentTime').textContent = '00:00';
+            document.getElementById('duration').textContent = video.duration;
+            isPlaying = true;
+            renderPlaylist();
+        }
+        
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            document.querySelector('.play-btn').textContent = isPlaying ? '⏸' : '▶';
+        }
+        
+        function seek(event) {
+            const bar = event.target.closest('.progress-bar');
+            const rect = bar.getBoundingClientRect();
+            progress = ((event.clientX - rect.left) / rect.width) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+        
+        // 模拟视频播放进度
+        setInterval(() => {
+            if (isPlaying && progress < 100) {
+                progress += 0.1;
+                document.getElementById('progressFill').style.width = progress + '%';
+                const totalSeconds = Math.floor(progress / 100 * 930); // 15:30 = 930 秒
+                const mins = Math.floor(totalSeconds / 60);
+                const secs = totalSeconds % 60;
+                document.getElementById('currentTime').textContent = 
+                    `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+        }, 100);
+        
+        const relatedCourses = [
+            { title: '数据分析大师课', views: '6.7w 学习', icon: '📊' },
+            { title: 'UI/UX 设计全栈课程', views: '5.2w 学习', icon: '🎨' },
+            { title: '新媒体运营实战', views: '9.2w 学习', icon: '📱' }
+        ];
+        
+        document.getElementById('relatedGrid').innerHTML = relatedCourses.map(course => `
+            <div class="related-card">
+                <div class="related-thumbnail">${course.icon}</div>
+                <div class="related-info">
+                    <h4 class="related-title">${course.title}</h4>
+                    <div class="related-meta">👥 ${course.views}</div>
+                </div>
+            </div>
+        `).join('');
+        
+        renderPlaylist();
+    </script>
+</body>
+</html>

@@ -115,6 +115,7 @@
         function loadCourse() {
             const params = new URLSearchParams(window.location.search);
             const id = parseInt(params.get('id') || '1');
+            const courseId = id;
             const course = courseData[id];
             if (!course) { document.body.innerHTML = '<div style="text-align:center;padding:100px;"><h1>课程不存在</h1><a href="/learning/" style="color:#11998e;">返回课程列表</a></div>'; return; }
             document.getElementById('courseCover').src = course.cover;
@@ -124,9 +125,9 @@
             document.getElementById('courseRating').textContent = course.rating;
             document.getElementById('courseCategory').textContent = course.category;
             document.getElementById('courseDesc').textContent = course.desc;
-            document.getElementById('syllabus').innerHTML = course.syllabus.map((chapter, i) => `<div class="syllabus-item"><div class="syllabus-header"><span class="syllabus-title">${chapter.chapter}</span><span class="syllabus-count">${chapter.count}</span></div><ul class="syllabus-list">${chapter.lessons.map(lesson => `<li><span>${lesson}</span><span>▶️ 观看</span></li>`).join('')}</ul></div>`).join('');
-            document.getElementById('videos').innerHTML = course.videos.map(video => `<div class="video-item"><div class="video-thumbnail">${video.icon}</div><div class="video-info"><h4 class="video-title">${video.title}</h4><div class="video-meta"><span>⏱️ ${video.duration}</span><span>👁️ ${video.views}次观看</span></div></div></div>`).join('');
-            document.getElementById('ebooks').innerHTML = course.ebooks.map(ebook => `<div class="ebook-item"><span class="ebook-icon">${ebook.icon}</span><div class="ebook-info"><h4 class="ebook-title">${ebook.title}</h4><div class="ebook-meta">📄 ${ebook.pages} | 💾 ${ebook.size}</div></div><button class="download-btn" onclick="alert('📥 开始下载：${ebook.title}')">下载</button></div>`).join('');
+            document.getElementById('syllabus').innerHTML = course.syllabus.map((chapter, i) => `<div class="syllabus-item"><div class="syllabus-header"><span class="syllabus-title">${chapter.chapter}</span><span class="syllabus-count">${chapter.count}</span></div><ul class="syllabus-list">${chapter.lessons.map((lesson, j) => `<li><span>${lesson}</span><a href="/learning/video.html?id=${courseId}&video=${i*5+j}" style="color:#11998e;text-decoration:none;font-weight:600;">▶️ 观看</a></li>`).join('')}</ul></div>`).join('');
+            document.getElementById('videos').innerHTML = course.videos.map((video, i) => `<div class="video-item"><div class="video-thumbnail" onclick="location.href='/learning/video.html?id=${courseId}&video=${i}'" style="cursor:pointer;">${video.icon}</div><div class="video-info"><h4 class="video-title"><a href="/learning/video.html?id=${courseId}&video=${i}" style="color:#333;text-decoration:none;">${video.title}</a></h4><div class="video-meta"><span>⏱️ ${video.duration}</span><span>👁️ ${video.views}次观看</span></div></div></div>`).join('');
+            document.getElementById('ebooks').innerHTML = course.ebooks.map((ebook, i) => `<div class="ebook-item"><span class="ebook-icon">${ebook.icon}</span><div class="ebook-info"><h4 class="ebook-title"><a href="/learning/ebook.html?id=${courseId}&ebook=${i}" style="color:#333;text-decoration:none;">${ebook.title}</a></h4><div class="ebook-meta">📄 ${ebook.pages} | 💾 ${ebook.size}</div></div><a href="/learning/ebook.html?id=${courseId}&ebook=${i}" class="download-btn" style="text-decoration:none;">阅读</a></div>`).join('');
             const relatedGrid = document.getElementById('relatedGrid');
             relatedGrid.innerHTML = course.related.map(relId => { const rel = courseList.find(c => c.id === relId); return `<div class="related-card" onclick="location.href='/learning/detail.html?id=${relId}'"><img src="${rel.image}" alt="${rel.title}" class="related-image"><div class="related-body"><h4 class="related-title">${rel.title}</h4><div class="related-meta">${rel.students} · ${rel.rating}</div></div></div>`; }).join('');
         }
