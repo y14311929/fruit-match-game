@@ -5,399 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>求职招聘 - 打工人之家</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .back-link {
-            display: inline-block;
-            color: white;
-            text-decoration: none;
-            margin-bottom: 20px;
-            font-size: 1.1em;
-        }
-        
-        .back-link:hover {
-            text-decoration: underline;
-        }
-        
-        h1 {
-            color: white;
-            font-size: 2.5em;
-            text-align: center;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .subtitle {
-            text-align: center;
-            color: white;
-            opacity: 0.9;
-            margin-bottom: 40px;
-            font-size: 1.2em;
-        }
-        
-        .search-box {
-            background: rgba(255,255,255,0.95);
-            padding: 30px;
-            border-radius: 20px;
-            margin-bottom: 40px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .search-box input,
-        .search-box select {
-            padding: 15px 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1em;
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .search-btn {
-            padding: 15px 40px;
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .jobs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 25px;
-        }
-        
-        .job-card {
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            padding: 30px;
-            color: #333;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            border-top: 4px solid #11998e;
-        }
-        
-        .job-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-        
-        .job-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 15px;
-        }
-        
-        .job-title {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #333;
-            flex: 1;
-        }
-        
-        .job-salary {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #11998e;
-            white-space: nowrap;
-        }
-        
-        .job-company {
-            font-size: 1.1em;
-            color: #667eea;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-        
-        .job-details {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-            color: #666;
-            font-size: 0.95em;
-        }
-        
-        .job-detail-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .job-desc {
-            color: #666;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-        
-        .job-tags {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-        
-        .job-tag {
-            padding: 5px 15px;
-            background: rgba(17,153,142,0.1);
-            color: #11998e;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 600;
-        }
-        
-        .apply-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-        
-        .apply-btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        .job-meta {
-            display: flex;
-            justify-content: space-between;
-            padding-top: 15px;
-            border-top: 1px solid #e0e0e0;
-            color: #999;
-            font-size: 0.9em;
-        }
-        
-        @media (max-width: 768px) {
-            .jobs-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .back-link { display: inline-block; color: white; text-decoration: none; margin-bottom: 20px; font-size: 1.1em; }
+        .tabs { display: flex; gap: 15px; margin-bottom: 30px; }
+        .tab { padding: 15px 35px; background: rgba(255,255,255,0.2); border: none; border-radius: 30px; color: white; font-size: 1.1em; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .tab.active { background: white; color: #667eea; }
+        .content-section { background: rgba(255,255,255,0.95); border-radius: 20px; padding: 40px; }
+        .jobs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 25px; margin-top: 30px; }
+        .job-card { border: 1px solid #e0e0e0; border-radius: 15px; padding: 25px; background: white; transition: all 0.3s; }
+        .job-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); border-color: #667eea; }
+        .job-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px; }
+        .job-title { font-size: 1.4em; font-weight: bold; color: #333; }
+        .job-salary { font-size: 1.3em; font-weight: bold; color: #11998e; }
+        .job-company { color: #667eea; font-size: 1.1em; font-weight: 600; margin-bottom: 15px; }
+        .job-details { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; color: #666; font-size: 0.95em; }
+        .job-detail-item { display: flex; align-items: center; gap: 5px; }
+        .job-tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .job-tag { padding: 5px 15px; background: rgba(17,153,142,0.1); color: #11998e; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+        .job-desc { color: #666; line-height: 1.6; margin-bottom: 20px; }
+        .apply-btn { display: block; width: 100%; padding: 15px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none; border-radius: 10px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: transform 0.3s; }
+        .apply-btn:hover { transform: translateY(-2px); }
+        .job-meta { display: flex; justify-content: space-between; padding-top: 15px; border-top: 1px solid #e0e0e0; color: #999; font-size: 0.9em; margin-top: 15px; }
+        .publish-btn { position: fixed; bottom: 30px; right: 30px; padding: 18px 35px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; border-radius: 30px; font-size: 1.1em; font-weight: bold; cursor: pointer; box-shadow: 0 10px 30px rgba(240,147,251,0.4); transition: transform 0.3s; }
+        .publish-btn:hover { transform: translateY(-3px); }
     </style>
 </head>
 <body>
     <div class="container">
         <a href="/" class="back-link">← 返回首页</a>
         
-        <h1>💼 求职招聘</h1>
-        <p class="subtitle">好工作，等你来发现</p>
-        
-        <div class="search-box">
-            <input type="text" id="jobSearch" placeholder="搜索职位、公司...">
-            <select id="citySelect">
-                <option value="">期望城市</option>
-                <option value="beijing">北京</option>
-                <option value="shanghai">上海</option>
-                <option value="guangzhou">广州</option>
-                <option value="shenzhen">深圳</option>
-                <option value="hangzhou">杭州</option>
-            </select>
-            <select id="salarySelect">
-                <option value="">薪资范围</option>
-                <option value="5k-10k">5k-10k</option>
-                <option value="10k-20k">10k-20k</option>
-                <option value="20k-50k">20k-50k</option>
-                <option value="50k+">50k 以上</option>
-            </select>
-            <button class="search-btn" onclick="searchJobs()">🔍 搜索</button>
+        <div style="text-align: center; color: white; margin-bottom: 40px;">
+            <h1 style="font-size: 2.5em; margin-bottom: 10px;">💼 求职招聘</h1>
+            <p style="font-size: 1.2em; opacity: 0.9;">好工作，等你来发现</p>
         </div>
         
-        <div class="jobs-grid" id="jobsGrid">
-            <!-- 职位内容由 JS 动态加载 -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('jobs')">📋 全部职位</button>
+            <button class="tab" onclick="switchTab('tech')">💻 技术类</button>
+            <button class="tab" onclick="switchTab('product')">📱 产品运营</button>
+            <button class="tab" onclick="switchTab('design')">🎨 设计类</button>
+        </div>
+        
+        <div class="content-section">
+            <div class="jobs-grid" id="jobsGrid"></div>
         </div>
     </div>
     
+    <button class="publish-btn" onclick="location.href='/publish-job.html'">📝 发布职位</button>
+    
     <script>
-        const jobData = [
-            {
-                title: "前端开发工程师",
-                company: "某互联网大厂",
-                salary: "25k-40k",
-                city: "beijing",
-                cityName: "北京",
-                experience: "3-5 年",
-                education: "本科",
-                tags: ["五险一金", "年终奖", "弹性工作"],
-                desc: "负责公司核心产品的前端开发，参与技术选型和架构设计，优化用户体验。要求精通 React/Vue，有大型项目经验。",
-                date: "今天"
-            },
-            {
-                title: "产品经理",
-                company: "知名科技公司",
-                salary: "30k-50k",
-                city: "shanghai",
-                cityName: "上海",
-                experience: "5-10 年",
-                education: "本科",
-                tags: ["六险一金", "股票期权", "带薪年假"],
-                desc: "负责产品规划和设计，协调研发、设计、运营团队，推动产品迭代。要求有 B 端产品经验，逻辑清晰。",
-                date: "今天"
-            },
-            {
-                title: "数据分析师",
-                company: "电商公司",
-                salary: "20k-35k",
-                city: "shenzhen",
-                cityName: "深圳",
-                experience: "2-4 年",
-                education: "本科",
-                tags: ["五险一金", "餐补", "定期体检"],
-                desc: "负责业务数据分析，搭建数据指标体系，输出分析报告。要求精通 SQL、Python，有电商经验优先。",
-                date: "昨天"
-            },
-            {
-                title: "UI/UX设计师",
-                company: "创业公司",
-                salary: "15k-25k",
-                city: "hangzhou",
-                cityName: "杭州",
-                experience: "2-4 年",
-                education: "本科",
-                tags: ["五险一金", "弹性工作", "团队氛围好"],
-                desc: "负责产品 UI 设计和用户体验优化，参与设计系统建设。要求精通 Figma/Sketch，有完整项目经验。",
-                date: "昨天"
-            },
-            {
-                title: "后端开发工程师",
-                company: "金融科技公司",
-                salary: "25k-45k",
-                city: "beijing",
-                cityName: "北京",
-                experience: "3-5 年",
-                education: "本科",
-                tags: ["六险一金", "年终奖", "技术大牛"],
-                desc: "负责后端服务开发和架构优化，参与高并发系统设计。要求精通 Java/Go，有分布式系统经验。",
-                date: "2 天前"
-            },
-            {
-                title: "运营专员",
-                company: "新媒体公司",
-                salary: "8k-15k",
-                city: "guangzhou",
-                cityName: "广州",
-                experience: "1-3 年",
-                education: "大专",
-                tags: ["五险一金", "周末双休", "氛围轻松"],
-                desc: "负责新媒体账号运营，内容策划和发布，粉丝互动。要求有文案功底，熟悉各大平台规则。",
-                date: "3 天前"
-            },
-            {
-                title: "测试工程师",
-                company: "软件公司",
-                salary: "15k-25k",
-                city: "shanghai",
-                cityName: "上海",
-                experience: "2-4 年",
-                education: "本科",
-                tags: ["五险一金", "带薪年假", "培训机会"],
-                desc: "负责产品测试工作，编写测试用例，跟踪 Bug。要求熟悉自动化测试，有性能测试经验优先。",
-                date: "3 天前"
-            },
-            {
-                title: "人力资源专员",
-                company: "集团公司",
-                salary: "10k-18k",
-                city: "shenzhen",
-                cityName: "深圳",
-                experience: "2-4 年",
-                education: "本科",
-                tags: ["五险一金", "节日福利", "晋升空间"],
-                desc: "负责招聘、员工关系、培训等 HR 日常工作。要求有人力资源证书，沟通能力强。",
-                date: "1 周前"
-            }
+        const jobs = [
+            { id: 1, category: 'tech', title: '前端开发工程师', company: '某互联网大厂', salary: '25k-40k', city: '北京', experience: '3-5 年', education: '本科', tags: ['五险一金', '年终奖', '弹性工作'], desc: '负责公司核心产品的前端开发，参与技术选型和架构设计，优化用户体验。要求精通 React/Vue，有大型项目经验。', date: '今天' },
+            { id: 2, category: 'tech', title: '后端开发工程师', company: '金融科技公司', salary: '25k-45k', company: '金融科技公司', city: '北京', experience: '3-5 年', education: '本科', tags: ['六险一金', '年终奖', '技术大牛'], desc: '负责后端服务开发和架构优化，参与高并发系统设计。要求精通 Java/Go，有分布式系统经验。', date: '2 天前' },
+            { id: 3, category: 'tech', title: '数据分析师', company: '电商公司', salary: '20k-35k', city: '深圳', experience: '2-4 年', education: '本科', tags: ['五险一金', '餐补', '定期体检'], desc: '负责业务数据分析，搭建数据指标体系，输出分析报告。要求精通 SQL、Python，有电商经验优先。', date: '昨天' },
+            { id: 4, category: 'product', title: '产品经理', company: '知名科技公司', salary: '30k-50k', city: '上海', experience: '5-10 年', education: '本科', tags: ['六险一金', '股票期权', '带薪年假'], desc: '负责产品规划和设计，协调研发、设计、运营团队，推动产品迭代。要求有 B 端产品经验，逻辑清晰。', date: '今天' },
+            { id: 5, category: 'product', title: '运营专员', company: '新媒体公司', salary: '8k-15k', city: '广州', experience: '1-3 年', education: '大专', tags: ['五险一金', '周末双休', '氛围轻松'], desc: '负责新媒体账号运营，内容策划和发布，粉丝互动。要求有文案功底，熟悉各大平台规则。', date: '3 天前' },
+            { id: 6, category: 'design', title: 'UI/UX设计师', company: '创业公司', salary: '15k-25k', city: '杭州', experience: '2-4 年', education: '本科', tags: ['五险一金', '弹性工作', '团队氛围好'], desc: '负责产品 UI 设计和用户体验优化，参与设计系统建设。要求精通 Figma/Sketch，有完整项目经验。', date: '昨天' }
         ];
         
-        function renderJobs(data) {
+        function renderJobs(filter = 'all') {
             const grid = document.getElementById('jobsGrid');
-            grid.innerHTML = '';
-            
-            data.forEach(job => {
-                const card = document.createElement('div');
-                card.className = 'job-card';
-                card.innerHTML = `
+            const filtered = filter === 'all' ? jobs : jobs.filter(j => j.category === filter);
+            grid.innerHTML = filtered.map(job => `
+                <div class="job-card">
                     <div class="job-header">
-                        <div class="job-title">${job.title}</div>
+                        <h3 class="job-title">${job.title}</h3>
                         <div class="job-salary">${job.salary}</div>
                     </div>
                     <div class="job-company">${job.company}</div>
                     <div class="job-details">
-                        <div class="job-detail-item">📍 ${job.cityName}</div>
+                        <div class="job-detail-item">📍 ${job.city}</div>
                         <div class="job-detail-item">💼 ${job.experience}</div>
                         <div class="job-detail-item">🎓 ${job.education}</div>
                     </div>
                     <div class="job-tags">
                         ${job.tags.map(tag => `<span class="job-tag">${tag}</span>`).join('')}
                     </div>
-                    <div class="job-desc">${job.desc}</div>
-                    <button class="apply-btn" onclick="applyJob('${job.title}', '${job.company}')">📮 立即投递</button>
+                    <p class="job-desc">${job.desc}</p>
+                    <button class="apply-btn" onclick="applyJob(${job.id}, '${job.title}', '${job.company}')">📮 立即投递</button>
                     <div class="job-meta">
                         <span>发布于：${job.date}</span>
-                        <span>查看详情 →</span>
+                        <span>举报</span>
                     </div>
-                `;
-                grid.appendChild(card);
-            });
+                </div>
+            `).join('');
         }
         
-        function searchJobs() {
-            const keyword = document.getElementById('jobSearch').value.toLowerCase();
-            const city = document.getElementById('citySelect').value;
-            const salary = document.getElementById('salarySelect').value;
-            
-            let filtered = jobData;
-            
-            if (keyword) {
-                filtered = filtered.filter(job => 
-                    job.title.toLowerCase().includes(keyword) ||
-                    job.company.toLowerCase().includes(keyword) ||
-                    job.desc.toLowerCase().includes(keyword)
-                );
-            }
-            
-            if (city) {
-                filtered = filtered.filter(job => job.city === city);
-            }
-            
-            if (salary) {
-                filtered = filtered.filter(job => job.salary.includes(salary.replace('+', '')));
-            }
-            
-            renderJobs(filtered);
+        function switchTab(category) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            const map = { 'jobs': 'all', 'tech': 'tech', 'product': 'product', 'design': 'design' };
+            renderJobs(map[category]);
         }
         
-        function applyJob(title, company) {
-            alert(`📮 投递申请已提交！\n\n职位：${title}\n公司：${company}\n\nHR 会在 3 个工作日内联系你，请保持电话畅通～`);
+        function applyJob(id, title, company) {
+            localStorage.setItem('applyJob', JSON.stringify({ id, title, company }));
+            location.href = '/apply.html';
         }
         
-        // 初始加载
-        renderJobs(jobData);
+        renderJobs();
     </script>
 </body>
 </html>
