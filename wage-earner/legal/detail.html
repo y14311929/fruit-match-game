@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>案例详情 - 打工人之家</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; min-height: 100vh; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .back-link { display: inline-block; color: #667eea; text-decoration: none; margin-bottom: 20px; font-size: 1.1em; font-weight: 600; }
+        .article { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .article-cover { width: 100%; height: 500px; object-fit: cover; }
+        .article-body { padding: 50px; }
+        .article-badge { display: inline-block; padding: 8px 20px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border-radius: 25px; font-size: 0.9em; font-weight: 600; margin-bottom: 20px; }
+        .article-title { font-size: 2.5em; font-weight: bold; color: #333; margin-bottom: 20px; line-height: 1.3; }
+        .article-meta { display: flex; gap: 30px; color: #999; font-size: 0.95em; margin-bottom: 30px; padding-bottom: 30px; border-bottom: 2px solid #f0f0f0; }
+        .article-meta span { display: flex; align-items: center; gap: 8px; }
+        .article-content { line-height: 2; color: #444; font-size: 1.05em; }
+        .article-content p { margin-bottom: 25px; }
+        .article-content h2 { font-size: 1.8em; color: #333; margin: 40px 0 20px 0; }
+        .article-image { width: 100%; margin: 30px 0; border-radius: 15px; overflow: hidden; }
+        .article-image img { width: 100%; height: auto; min-height: 300px; object-fit: cover; }
+        .image-caption { text-align: center; color: #999; font-size: 0.9em; padding: 15px; background: #f9f9f9; }
+        .article-tags { display: flex; gap: 10px; flex-wrap: wrap; margin: 40px 0; padding-top: 30px; border-top: 2px solid #f0f0f0; }
+        .tag { padding: 8px 20px; background: rgba(240,147,251,0.1); color: #f093fb; border-radius: 25px; font-size: 0.9em; font-weight: 600; }
+        .related-news { margin-top: 50px; padding-top: 50px; border-top: 2px solid #f0f0f0; }
+        .related-news h3 { font-size: 1.8em; color: #333; margin-bottom: 25px; }
+        .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .related-card { background: #f9f9f9; border-radius: 15px; overflow: hidden; transition: all 0.3s; cursor: pointer; }
+        .related-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .related-image { width: 100%; height: 180px; object-fit: cover; }
+        .related-body { padding: 20px; }
+        .related-title { font-size: 1.1em; font-weight: bold; color: #333; margin-bottom: 10px; line-height: 1.4; }
+        .related-meta { color: #999; font-size: 0.85em; }
+        @media (max-width: 768px) { .article-body { padding: 25px; } .article-cover { height: 300px; } .article-title { font-size: 1.8em; } .related-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/legal/" class="back-link">← 返回案例列表</a>
+        <article class="article">
+            <img id="coverImage" src="" alt="案例封面" class="article-cover">
+            <div class="article-body">
+                <span id="badge" class="article-badge"></span>
+                <h1 id="title" class="article-title"></h1>
+                <div class="article-meta">
+                    <span id="source"></span>
+                    <span id="time"></span>
+                </div>
+                <div id="content" class="article-content"></div>
+                <div class="article-tags" id="tags"></div>
+            </div>
+        </article>
+        <div class="related-news">
+            <h3>⚖️ 相关案例</h3>
+            <div class="related-grid" id="relatedGrid"></div>
+        </div>
+    </div>
+    <script>
+        const legalData = {
+            1: { badge: '案例', title: '违法辞退赔偿 2N，员工获赔 15 万', source: '🏛️ 上海法院', time: '🕐 2 天前', cover: 'https://picsum.photos/seed/legal1c/1200/500', content: '<p><strong>【案情简介】</strong> 张某在某公司工作 3 年，公司以"不能胜任工作"为由将其辞退，未支付任何补偿。</p><div class="article-image"><img src="https://picsum.photos/seed/c1i1/800/400"><div class="image-caption">违法辞退案例</div></div><h2>📋 争议焦点</h2><p>公司未提供培训或调岗直接辞退，是否符合法律规定？</p><div class="article-image"><img src="https://picsum.photos/seed/c1i2/800/400"><div class="image-caption">争议焦点</div></div><h2>⚖️ 法院判决</h2><p>法院认定公司构成违法解除劳动合同，应支付赔偿金 2N，共计 15 万元。</p><div class="article-image"><img src="https://picsum.photos/seed/c1i3/800/400"><div class="image-caption">法院判决</div></div><h2>💡 律师提示</h2><p>公司以"不能胜任工作"为由辞退员工，需先提供培训或调岗，仍不能胜任的方可辞退，并需支付经济补偿金 N。</p><div class="article-image"><img src="https://picsum.photos/seed/c1i4/800/400"><div class="image-caption">律师提示</div></div>', tags: ['#违法辞退', '#2N 赔偿', '#劳动合同', '#劳动者权益'], related: [2, 4, 5] },
+            2: { badge: '热点', title: '加班费怎么算？法院给出明确答案', source: '🏛️ 广州法院', time: '🕐 4 天前', cover: 'https://picsum.photos/seed/legal2c/1200/500', content: '<p><strong>【案情简介】</strong> 李某在某工厂工作 5 年，常年加班但公司未支付加班费。</p><div class="article-image"><img src="https://picsum.photos/seed/c2i1/800/400"><div class="image-caption">加班费案例</div></div><h2>📋 加班费标准</h2><p>工作日加班 150%、周末加班 200%、法定节假日加班 300%。</p><div class="article-image"><img src="https://picsum.photos/seed/c2i2/800/400"><div class="image-caption">加班费计算标准</div></div><h2>⚖️ 法院判决</h2><p>法院认定公司应补发李某 5 年加班费，共计 8 万元。</p><div class="article-image"><img src="https://picsum.photos/seed/c2i3/800/400"><div class="image-caption">法院判决</div></div><h2>💡 律师提示</h2><p>劳动者应保留加班证据，如考勤记录、工作沟通记录等，以便维权。</p><div class="article-image"><img src="https://picsum.photos/seed/c2i4/800/400"><div class="image-caption">律师提示</div></div>', tags: ['#加班费', '#150%', '#200%', '#300%'], related: [1, 4, 6] },
+            3: { badge: '科普', title: '工伤认定流程详解，这些情况都算工伤', source: '🏛️ 杭州法院', time: '🕐 6 天前', cover: 'https://picsum.photos/seed/legal3c/1200/500', content: '<p><strong>【科普文章】</strong> 工伤认定是劳动者维权的重要环节。</p><div class="article-image"><img src="https://picsum.photos/seed/c3i1/800/400"><div class="image-caption">工伤认定流程</div></div><h2>📋 认定情形</h2><p>工作时间、工作场所因工作受伤；上下班途中非本人主要责任的交通事故；患职业病等。</p><div class="article-image"><img src="https://picsum.photos/seed/c3i2/800/400"><div class="image-caption">工伤认定情形</div></div><h2>⏰ 申请时限</h2><p>单位应在事故发生 30 日内申请，单位不申请的可自行申请，时限为 1 年。</p><div class="article-image"><img src="https://picsum.photos/seed/c3i3/800/400"><div class="image-caption">申请时限</div></div><h2>💡 律师提示</h2><p>劳动者应及时申请工伤认定，保留医疗记录、事故证明等证据。</p><div class="article-image"><img src="https://picsum.photos/seed/c3i4/800/400"><div class="image-caption">律师提示</div></div>', tags: ['#工伤认定', '#职业病', '#交通事故', '#维权'], related: [1, 5, 7] },
+            4: { badge: '案例', title: '未签劳动合同，双倍工资跑不了', source: '🏛️ 深圳法院', time: '🕐 1 周前', cover: 'https://picsum.photos/seed/legal4c/1200/500', content: '<p><strong>【案情简介】</strong> 王某入职某公司半年，公司一直未与其签订书面劳动合同。</p><div class="article-image"><img src="https://picsum.photos/seed/c4i1/800/400"><div class="image-caption">未签劳动合同案例</div></div><h2>📋 法律规定</h2><p>入职 1 个月内公司应签书面合同，超过 1 个月未签的可主张双倍工资。</p><div class="article-image"><img src="https://picsum.photos/seed/c4i2/800/400"><div class="image-caption">法律规定</div></div><h2>⚖️ 法院判决</h2><p>法院认定公司应支付王某 5 个月双倍工资差额，共计 6 万元。</p><div class="article-image"><img src="https://picsum.photos/seed/c4i3/800/400"><div class="image-caption">法院判决</div></div><h2>💡 律师提示</h2><p>劳动者入职后应及时签订劳动合同，如公司拒签可收集证据维权。</p><div class="article-image"><img src="https://picsum.photos/seed/c4i4/800/400"><div class="image-caption">律师提示</div></div>', tags: ['#劳动合同', '#双倍工资', '#入职', '#维权'], related: [1, 5, 6] },
+            5: { badge: '热点', title: '试用期被辞退，这些权益要知道', source: '🏛️ 北京法院', time: '🕐 1 周前', cover: 'https://picsum.photos/seed/legal5c/1200/500', content: '<p><strong>【案情简介】</strong> 应届生小李试用期第 2 天被公司辞退，公司称"不符合录用条件"。</p><div class="article-image"><img src="https://picsum.photos/seed/c5i1/800/400"><div class="image-caption">试用期辞退案例</div></div><h2>📋 试用期权益</h2><p>试用期工资不低于转正工资 80%；试用期必须缴纳社保；试用期包含在劳动合同期限内。</p><div class="article-image"><img src="https://picsum.photos/seed/c5i2/800/400"><div class="image-caption">试用期权益</div></div><h2>⚖️ 法院判决</h2><p>法院认定公司未举证"不符合录用条件"，构成违法解除，应支付赔偿金。</p><div class="article-image"><img src="https://picsum.photos/seed/c5i3/800/400"><div class="image-caption">法院判决</div></div><h2>💡 律师提示</h2><p>试用期辞退公司需举证"不符合录用条件"，否则属于违法解除。</p><div class="article-image"><img src="https://picsum.photos/seed/c5i4/800/400"><div class="image-caption">律师提示</div></div>', tags: ['#试用期', '#辞退', '#应届生', '#录用条件'], related: [1, 4, 6] },
+            6: { badge: '科普', title: '社保断缴影响大，这些权益会清零', source: '🏛️ 人社部', time: '🕐 2 周前', cover: 'https://picsum.photos/seed/legal6c/1200/500', content: '<p><strong>【科普文章】</strong> 社保断缴会影响多项权益。</p><div class="article-image"><img src="https://picsum.photos/seed/c6i1/800/400"><div class="image-caption">社保断缴影响</div></div><h2>📋 影响权益</h2><p>医保断缴次月无法报销；购房购车资格可能受影响；养老金累计年限中断等。</p><div class="article-image"><img src="https://picsum.photos/seed/c6i2/800/400"><div class="image-caption">影响权益</div></div><h2>⏰ 补缴政策</h2><p>社保断缴应及时补缴，部分地区允许个人补缴，部分地区需单位补缴。</p><div class="article-image"><img src="https://picsum.photos/seed/c6i3/800/400"><div class="image-caption">补缴政策</div></div><h2>💡 律师提示</h2><p>换工作时应注意社保衔接，避免断缴影响权益。</p><div class="article-image"><img src="https://picsum.photos/seed/c6i4/800/400"><div class="image-caption">律师提示</div></div>', tags: ['#社保', '#断缴', '#医保', '#养老金'], related: [2, 5, 8] },
+            7: { badge: '案例', title: '职场性骚扰，公司未尽义务需担责', source: '🏛️ 上海法院', time: '🕐 2 周前', cover: 'https://picsum.photos/seed/legal7c/1200/500', content: '<p><strong>【案情简介】</strong> 某女员工遭上司性骚扰，公司未采取合理措施预防和制止。</p><div class="article-image"><img src="https://picsum.photos/seed/c7i1/800/400"><div class="image-caption">职场性骚扰案例</div></div><h2>📋 法律规定</h2><p>公司应采取合理措施预防和制止性骚扰，否则需承担连带赔偿责任。</p><div class="article-image"><img src="https://picsum.photos/seed/c7i2/800/400"><div class="image-caption">法律规定</div></div><h2>⚖️ 法院判决</h2><p>法院认定公司未尽义务，判决公司与骚扰者共同承担赔偿责任。</p><div class="article-image"><img src="https://picsum.photos/seed/c7i3/800/400"><div class="image-caption">法院判决</div></div><h2>💡 律师提示</h2><p>遭遇职场性骚扰应及时收集证据，向公司投诉或报警。</p><div class="article-image"><img src="https://picsum.photos/seed/c7i4/800/400"><div class="image-caption">律师提示</div></div>', tags: ['#性骚扰', '#职场', '#公司责任', '#维权'], related: [1, 5, 8] },
+            8: { badge: '热点', title: '竞业限制补偿金，离职后也要给', source: '🏛️ 北京法院', time: '🕐 3 周前', cover: 'https://picsum.photos/seed/legal8c/1200/500', content: '<p><strong>【案情简介】</strong> 张某离职后遵守竞业限制，但公司未按月支付补偿金。</p><div class="article-image"><img src="https://picsum.photos/seed/c8i1/800/400"><div class="image-caption">竞业限制案例</div></div><h2>📋 法律规定</h2><p>竞业限制期限内，公司应按月给予劳动者经济补偿，否则限制无效。</p><div class="article-image"><img src="https://picsum.photos/seed/c8i2/800/400"><div class="image-caption">法律规定</div></div><h2>⚖️ 法院判决</h2><p>法院认定公司未支付补偿金，竞业限制条款无效，张某无需承担违约责任。</p><div class="article-image"><img src="https://picsum.photos/seed/c8i3/800/400"><div class="image-caption">法院判决</div></div><h2>💡 律师提示</h2><p>劳动者签署竞业限制协议时应注意补偿金条款，公司不支付可主张限制无效。</p><div class="article-image"><img src="https://picsum.photos/seed/c8i4/800/400"><div class="image-caption">律师提示</div></div>', tags: ['#竞业限制', '#补偿金', '#离职', '#违约责任'], related: [1, 4, 5] }
+        };
+        const legalList = [
+            { id: 1, title: '违法辞退赔偿 2N', image: 'https://picsum.photos/seed/legal1/400/180', source: '上海法院', time: '2 天前' },
+            { id: 2, title: '加班费怎么算', image: 'https://picsum.photos/seed/legal2/400/180', source: '广州法院', time: '4 天前' },
+            { id: 3, title: '工伤认定流程详解', image: 'https://picsum.photos/seed/legal3/400/180', source: '杭州法院', time: '6 天前' },
+            { id: 4, title: '未签劳动合同双倍工资', image: 'https://picsum.photos/seed/legal4/400/180', source: '深圳法院', time: '1 周前' },
+            { id: 5, title: '试用期被辞退权益', image: 'https://picsum.photos/seed/legal5/400/180', source: '北京法院', time: '1 周前' },
+            { id: 6, title: '社保断缴影响', image: 'https://picsum.photos/seed/legal6/400/180', source: '人社部', time: '2 周前' },
+            { id: 7, title: '职场性骚扰公司责任', image: 'https://picsum.photos/seed/legal7/400/180', source: '上海法院', time: '2 周前' },
+            { id: 8, title: '竞业限制补偿金', image: 'https://picsum.photos/seed/legal8/400/180', source: '北京法院', time: '3 周前' }
+        ];
+        function loadLegal() {
+            const params = new URLSearchParams(window.location.search);
+            const id = parseInt(params.get('id') || '1');
+            const legal = legalData[id];
+            if (!legal) { document.body.innerHTML = '<div style="text-align:center;padding:100px;"><h1>案例不存在</h1><a href="/legal/" style="color:#f093fb;">返回案例列表</a></div>'; return; }
+            document.getElementById('coverImage').src = legal.cover;
+            document.getElementById('badge').textContent = legal.badge;
+            document.getElementById('title').textContent = legal.title;
+            document.getElementById('source').textContent = legal.source;
+            document.getElementById('time').textContent = legal.time;
+            document.getElementById('content').innerHTML = legal.content;
+            document.getElementById('tags').innerHTML = legal.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+            const relatedGrid = document.getElementById('relatedGrid');
+            relatedGrid.innerHTML = legal.related.map(relId => { const rel = legalList.find(l => l.id === relId); return `<div class="related-card" onclick="location.href='/legal/detail.html?id=${relId}'"><img src="${rel.image}" alt="${rel.title}" class="related-image"><div class="related-body"><h4 class="related-title">${rel.title}</h4><div class="related-meta">${rel.source} · ${rel.time}</div></div></div>`; }).join('');
+        }
+        loadLegal();
+    </script>
+</body>
+</html>

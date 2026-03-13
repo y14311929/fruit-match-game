@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程详情 - 打工人之家</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; min-height: 100vh; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .back-link { display: inline-block; color: #667eea; text-decoration: none; margin-bottom: 20px; font-size: 1.1em; font-weight: 600; }
+        .article { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .article-cover { width: 100%; height: 500px; object-fit: cover; }
+        .article-body { padding: 50px; }
+        .article-badge { display: inline-block; padding: 8px 20px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border-radius: 25px; font-size: 0.9em; font-weight: 600; margin-bottom: 20px; }
+        .article-title { font-size: 2.5em; font-weight: bold; color: #333; margin-bottom: 20px; line-height: 1.3; }
+        .article-meta { display: flex; gap: 30px; color: #999; font-size: 0.95em; margin-bottom: 30px; padding-bottom: 30px; border-bottom: 2px solid #f0f0f0; }
+        .article-meta span { display: flex; align-items: center; gap: 8px; }
+        .article-content { line-height: 2; color: #444; font-size: 1.05em; }
+        .article-content p { margin-bottom: 25px; }
+        .article-content h2 { font-size: 1.8em; color: #333; margin: 40px 0 20px 0; }
+        .article-image { width: 100%; margin: 30px 0; border-radius: 15px; overflow: hidden; }
+        .article-image img { width: 100%; height: auto; min-height: 300px; object-fit: cover; }
+        .image-caption { text-align: center; color: #999; font-size: 0.9em; padding: 15px; background: #f9f9f9; }
+        .article-tags { display: flex; gap: 10px; flex-wrap: wrap; margin: 40px 0; padding-top: 30px; border-top: 2px solid #f0f0f0; }
+        .tag { padding: 8px 20px; background: rgba(17,153,142,0.1); color: #11998e; border-radius: 25px; font-size: 0.9em; font-weight: 600; }
+        .related-news { margin-top: 50px; padding-top: 50px; border-top: 2px solid #f0f0f0; }
+        .related-news h3 { font-size: 1.8em; color: #333; margin-bottom: 25px; }
+        .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .related-card { background: #f9f9f9; border-radius: 15px; overflow: hidden; transition: all 0.3s; cursor: pointer; }
+        .related-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .related-image { width: 100%; height: 180px; object-fit: cover; }
+        .related-body { padding: 20px; }
+        .related-title { font-size: 1.1em; font-weight: bold; color: #333; margin-bottom: 10px; line-height: 1.4; }
+        .related-meta { color: #999; font-size: 0.85em; }
+        @media (max-width: 768px) { .article-body { padding: 25px; } .article-cover { height: 300px; } .article-title { font-size: 1.8em; } .related-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/learning/" class="back-link">← 返回课程列表</a>
+        <article class="article">
+            <img id="coverImage" src="" alt="课程封面" class="article-cover">
+            <div class="article-body">
+                <span id="badge" class="article-badge"></span>
+                <h1 id="title" class="article-title"></h1>
+                <div class="article-meta">
+                    <span id="students"></span>
+                    <span id="rating"></span>
+                </div>
+                <div id="content" class="article-content"></div>
+                <div class="article-tags" id="tags"></div>
+            </div>
+        </article>
+        <div class="related-news">
+            <h3>📚 相关课程</h3>
+            <div class="related-grid" id="relatedGrid"></div>
+        </div>
+    </div>
+    <script>
+        const courseData = {
+            1: { badge: '🔥 热门', title: 'Python 编程从入门到精通', students: '👥 12.5w 学习', rating: '⭐ 4.9 分', cover: 'https://picsum.photos/seed/learn1c/1200/500', content: '<p><strong>【课程介绍】</strong> 适合零基础的 Python 编程课程，30 天掌握 Python 核心技能。</p><div class="article-image"><img src="https://picsum.photos/seed/l1i1/800/400"><div class="image-caption">Python 编程课程</div></div><h2>📚 课程内容</h2><p>课程涵盖 Python 基础语法、数据结构、文件操作、网络爬虫、数据分析等核心内容。</p><div class="article-image"><img src="https://picsum.photos/seed/l1i2/800/400"><div class="image-caption">课程内容大纲</div></div><h2>💡 适合人群</h2><p>零基础学员、想转行 IT 的职场人士、需要自动化办公的上班族、对数据分析感兴趣的同学。</p><div class="article-image"><img src="https://picsum.photos/seed/l1i3/800/400"><div class="image-caption">适合人群</div></div><h2>🎯 学习目标</h2><p>学完本课程，你将掌握 Python 编程基础，能够独立编写 Python 程序，进行数据分析和自动化办公。</p><div class="article-image"><img src="https://picsum.photos/seed/l1i4/800/400"><div class="image-caption">学习目标</div></div>', tags: ['#Python', '#编程', '#数据分析', '#自动化办公'], related: [2, 4, 5] },
+            2: { badge: '💎 推荐', title: 'UI/UX 设计全栈课程', students: '👥 5.2w 学习', rating: '⭐ 4.7 分', cover: 'https://picsum.photos/seed/learn2c/1200/500', content: '<p><strong>【课程介绍】</strong> 从零基础到接单，掌握 Figma、Sketch 等设计工具。</p><div class="article-image"><img src="https://picsum.photos/seed/l2i1/800/400"><div class="image-caption">UI/UX 设计课程</div></div><h2>📚 课程内容</h2><p>课程涵盖设计基础、色彩理论、版式设计、Figma 工具使用、Sketch 工具使用、项目实战等。</p><div class="article-image"><img src="https://picsum.photos/seed/l2i2/800/400"><div class="image-caption">课程内容</div></div><h2>💡 适合人群</h2><p>设计爱好者、想转行设计的职场人士、需要提升设计能力的产品经理、想接设计兼职的同学。</p><div class="article-image"><img src="https://picsum.photos/seed/l2i3/800/400"><div class="image-caption">适合人群</div></div><h2>🎯 学习目标</h2><p>学完本课程，你将掌握 UI/UX 设计核心技能，能够独立完成设计项目，开始接单赚钱。</p><div class="article-image"><img src="https://picsum.photos/seed/l2i4/800/400"><div class="image-caption">学习目标</div></div>', tags: ['#UI 设计', '#UX 设计', '#Figma', '#设计接单'], related: [1, 3, 7] },
+            3: { badge: '📜 认证', title: '项目管理 PMP 认证', students: '👥 3.5w 学习', rating: '⭐ 4.9 分', cover: 'https://picsum.photos/seed/learn3c/1200/500', content: '<p><strong>【课程介绍】</strong> 系统学习项目管理知识体系，通过 PMP 认证考试。</p><div class="article-image"><img src="https://picsum.photos/seed/l3i1/800/400"><div class="image-caption">PMP 认证课程</div></div><h2>📚 课程内容</h2><p>课程涵盖项目管理五大过程组、十大知识领域、PMP 考试技巧、实战案例分析等。</p><div class="article-image"><img src="https://picsum.photos/seed/l3i2/800/400"><div class="image-caption">课程内容</div></div><h2>💡 适合人群</h2><p>项目经理、想转行项目管理的职场人士、需要提升管理能力的团队领导、想考 PMP 证书的同学。</p><div class="article-image"><img src="https://picsum.photos/seed/l3i3/800/400"><div class="image-caption">适合人群</div></div><h2>🎯 学习目标</h2><p>学完本课程，你将掌握项目管理核心知识，顺利通过 PMP 认证考试，提升职场竞争力。</p><div class="article-image"><img src="https://picsum.photos/seed/l3i4/800/400"><div class="image-caption">学习目标</div></div>', tags: ['#PMP', '#项目管理', '#认证考试', '#职场提升'], related: [1, 5, 7] },
+            4: { badge: '🆕 新课', title: '数据分析大师课', students: '👥 6.7w 学习', rating: '⭐ 4.8 分', cover: 'https://picsum.photos/seed/learn4c/1200/500', content: '<p><strong>【课程介绍】</strong> 成为企业抢手的数据分析人才，Excel+SQL+Python 全栈学习。</p><div class="article-image"><img src="https://picsum.photos/seed/l4i1/800/400"><div class="image-caption">数据分析课程</div></div><h2>📚 课程内容</h2><p>课程涵盖 Excel 高级应用、SQL 数据库查询、Python 数据分析、数据可视化、业务分析实战等。</p><div class="article-image"><img src="https://picsum.photos/seed/l4i2/800/400"><div class="image-caption">课程内容</div></div><h2>💡 适合人群</h2><p>数据分析师、运营人员、产品经理、想转行数据分析的职场人士。</p><div class="article-image"><img src="https://picsum.photos/seed/l4i3/800/400"><div class="image-caption">适合人群</div></div><h2>🎯 学习目标</h2><p>学完本课程，你将掌握数据分析全栈技能，能够独立完成数据分析项目。</p><div class="article-image"><img src="https://picsum.photos/seed/l4i4/800/400"><div class="image-caption">学习目标</div></div>', tags: ['#数据分析', '#Excel', '#SQL', '#Python'], related: [1, 5, 8] },
+            5: { badge: '🔥 热门', title: '新媒体运营实战', students: '👥 9.2w 学习', rating: '⭐ 4.7 分', cover: 'https://picsum.photos/seed/learn5c/1200/500', content: '<p><strong>【课程介绍】</strong> 从 0 到 1 打造爆款，掌握全平台运营技巧。</p><div class="article-image"><img src="https://picsum.photos/seed/l5i1/800/400"><div class="image-caption">新媒体运营课程</div></div><h2>📚 课程内容</h2><p>课程涵盖公众号运营、小红书运营、抖音运营、内容创作、粉丝增长、变现模式等。</p><div class="article-image"><img src="https://picsum.photos/seed/l5i2/800/400"><div class="image-caption">课程内容</div></div><h2>💡 适合人群</h2><p>新媒体运营人员、想副业做自媒体的职场人士、想打造个人 IP 的创业者。</p><div class="article-image"><img src="https://picsum.photos/seed/l5i3/800/400"><div class="image-caption">适合人群</div></div><h2>🎯 学习目标</h2><p>学完本课程，你将掌握新媒体运营核心技能，能够独立运营账号，实现变现。</p><div class="article-image"><img src="https://picsum.photos/seed/l5i4/800/400"><div class="image-caption">学习目标</div></div>', tags: ['#新媒体', '#公众号', '#小红书', '#抖音'], related: [2, 7, 8] },
+            6: { badge: '💎 推荐', title: '商务英语进阶', students: '👥 7.8w 学习', rating: '⭐ 4.8 分', cover: 'https://picsum.photos/seed/learn6c/1200/500', content: '<p><strong>【课程介绍】</strong> 职场英语、邮件写作、会议口语，全面提升商务英语能力。</p><div class="article-image"><img src="https://picsum.photos/seed/l6i1/800/400"><div class="image-caption">商务英语课程</div></div><h2>📚 课程内容</h2><p>课程涵盖商务邮件写作、电话会议口语、商务谈判技巧、英文简历面试等。</p><div class="article-image"><img src="https://picsum.photos/seed/l6i2/800/400"><div class="image-caption">课程内容</div></div><h2>💡 适合人群</h2><p>外企员工、想进外企的职场人士、需要与外国客户沟通的商务人士。</p><div class="article-image"><img src="https://picsum.photos/seed/l6i3/800/400"><div class="image-caption">适合人群</div></div><h2>🎯 学习目标</h2><p>学完本课程，你将能够流利进行商务沟通，轻松应对外企面试。</p><div class="article-image"><img src="https://picsum.photos/seed/l6i4/800/400"><div class="image-caption">学习目标</div></div>', tags: ['#商务英语', '#职场英语', '#邮件写作', '#外企面试'], related: [1, 7, 8] },
+            7: { badge: '🆕 新课', title: '高效沟通技巧', students: '👥 11.2w 学习', rating: '⭐ 4.8 分', cover: 'https://picsum.photos/seed/learn7c/1200/500', content: '<p><strong>【课程介绍】</strong> 跨部门协作、职场沟通、演讲表达，成为职场沟通高手。</p><div class="article-image"><img src="https://picsum.photos/seed/l7i1/800/400"><div class="image-caption">沟通技巧课程</div></div><h2>📚 课程内容</h2><p>课程涵盖沟通基础、向上管理、跨部门协作、演讲表达、冲突处理等。</p><div class="article-image"><img src="https://picsum.photos/seed/l7i2/800/400"><div class="image-caption">课程内容</div></div><h2>💡 适合人群</h2><p>职场人士、团队领导、需要提升沟通能力的所有人。</p><div class="article-image"><img src="https://picsum.photos/seed/l7i3/800/400"><div class="image-caption">适合人群</div></div><h2>🎯 学习目标</h2><p>学完本课程，你将掌握高效沟通技巧，成为职场沟通高手。</p><div class="article-image"><img src="https://picsum.photos/seed/l7i4/800/400"><div class="image-caption">学习目标</div></div>', tags: ['#沟通技巧', '#向上管理', '#演讲表达', '#职场技能'], related: [3, 5, 8] },
+            8: { badge: '📜 认证', title: '心理咨询师认证', students: '👥 8.9w 学习', rating: '⭐ 4.9 分', cover: 'https://picsum.photos/seed/learn8c/1200/500', content: '<p><strong>【课程介绍】</strong> 学习心理学知识，考取国家认证，副业首选。</p><div class="article-image"><img src="https://picsum.photos/seed/l8i1/800/400"><div class="image-caption">心理咨询师课程</div></div><h2>📚 课程内容</h2><p>课程涵盖心理学基础、咨询技巧、心理评估、案例分析、认证考试辅导等。</p><div class="article-image"><img src="https://picsum.photos/seed/l8i2/800/400"><div class="image-caption">课程内容</div></div><h2>💡 适合人群</h2><p>想从事心理咨询的人士、想帮助他人的职场人士、想发展副业的同学。</p><div class="article-image"><img src="https://picsum.photos/seed/l8i3/800/400"><div class="image-caption">适合人群</div></div><h2>🎯 学习目标</h2><p>学完本课程，你将掌握心理咨询核心技能，考取国家认证，开始接咨询个案。</p><div class="article-image"><img src="https://picsum.photos/seed/l8i4/800/400"><div class="image-caption">学习目标</div></div>', tags: ['#心理咨询', '#认证考试', '#副业', '#心理学'], related: [3, 6, 7] }
+        };
+        const courseList = [
+            { id: 1, title: 'Python 编程从入门到精通', image: 'https://picsum.photos/seed/learn1/400/180', students: '12.5w 学习', rating: '4.9 分' },
+            { id: 2, title: 'UI/UX 设计全栈课程', image: 'https://picsum.photos/seed/learn2/400/180', students: '5.2w 学习', rating: '4.7 分' },
+            { id: 3, title: '项目管理 PMP 认证', image: 'https://picsum.photos/seed/learn3/400/180', students: '3.5w 学习', rating: '4.9 分' },
+            { id: 4, title: '数据分析大师课', image: 'https://picsum.photos/seed/learn4/400/180', students: '6.7w 学习', rating: '4.8 分' },
+            { id: 5, title: '新媒体运营实战', image: 'https://picsum.photos/seed/learn5/400/180', students: '9.2w 学习', rating: '4.7 分' },
+            { id: 6, title: '商务英语进阶', image: 'https://picsum.photos/seed/learn6/400/180', students: '7.8w 学习', rating: '4.8 分' },
+            { id: 7, title: '高效沟通技巧', image: 'https://picsum.photos/seed/learn7/400/180', students: '11.2w 学习', rating: '4.8 分' },
+            { id: 8, title: '心理咨询师认证', image: 'https://picsum.photos/seed/learn8/400/180', students: '8.9w 学习', rating: '4.9 分' }
+        ];
+        function loadCourse() {
+            const params = new URLSearchParams(window.location.search);
+            const id = parseInt(params.get('id') || '1');
+            const course = courseData[id];
+            if (!course) { document.body.innerHTML = '<div style="text-align:center;padding:100px;"><h1>课程不存在</h1><a href="/learning/" style="color:#11998e;">返回课程列表</a></div>'; return; }
+            document.getElementById('coverImage').src = course.cover;
+            document.getElementById('badge').textContent = course.badge;
+            document.getElementById('title').textContent = course.title;
+            document.getElementById('students').textContent = course.students;
+            document.getElementById('rating').textContent = course.rating;
+            document.getElementById('content').innerHTML = course.content;
+            document.getElementById('tags').innerHTML = course.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+            const relatedGrid = document.getElementById('relatedGrid');
+            relatedGrid.innerHTML = course.related.map(relId => { const rel = courseList.find(c => c.id === relId); return `<div class="related-card" onclick="location.href='/learning/detail.html?id=${relId}'"><img src="${rel.image}" alt="${rel.title}" class="related-image"><div class="related-body"><h4 class="related-title">${rel.title}</h4><div class="related-meta">${rel.students} · ${rel.rating}</div></div></div>`; }).join('');
+        }
+        loadCourse();
+    </script>
+</body>
+</html>
