@@ -17,11 +17,13 @@
         .ebook-content { padding: 50px; line-height: 2; color: #333; font-size: 1.1em; min-height: 400px; }
         .ebook-content h1 { font-size: 2em; margin-bottom: 20px; color: #11998e; }
         .ebook-content h2 { font-size: 1.5em; margin: 30px 0 15px 0; color: #333; }
-        .ebook-content p { margin-bottom: 20px; }
+        .ebook-content h3 { font-size: 1.2em; margin: 20px 0 10px 0; color: #555; }
+        .ebook-content p { margin-bottom: 20px; text-align: justify; }
         .ebook-content ul { margin: 15px 0 15px 30px; }
         .ebook-content li { margin-bottom: 10px; }
         .ebook-content .tip { background: #e8f5e9; padding: 20px; border-radius: 10px; border-left: 4px solid #11998e; margin: 20px 0; }
-        .ebook-content .code { background: #f5f5f5; padding: 15px; border-radius: 8px; font-family: 'Courier New', monospace; overflow-x: auto; margin: 20px 0; white-space: pre; }
+        .ebook-content .code { background: #2d2d2d; color: #f8f8f2; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; overflow-x: auto; margin: 20px 0; white-space: pre; line-height: 1.5; }
+        .ebook-content .warning { background: #fff3e0; padding: 20px; border-radius: 10px; border-left: 4px solid #ff9800; margin: 20px 0; }
         .page-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; border-top: 1px solid #e0e0e0; background: #fafafa; }
         .page-btn { padding: 12px 30px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none; border-radius: 25px; cursor: pointer; font-weight: 600; font-size: 1em; }
         .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
@@ -62,42 +64,42 @@
     </div>
     
     <script>
-        // 所有课程的电子书内容 - 每个课程 2 本电子书
+        // 所有课程的电子书内容 - 每个课程 2 本电子书，每本 6 章完整内容
         const allEbooks = {
             // 1. Python 编程
             '1': [
                 { title: 'Python 快速入门指南', pages: '120 页', size: '5.2 MB', chapters: [
-                    { title: '第一章：Python 简介', content: '<h1>第一章：Python 简介</h1><h2>1.1 什么是 Python？</h2><p>Python 是一种高级编程语言，由 Guido van Rossum 于 1991 年创建。它以其简洁的语法和强大的功能而闻名，是目前最受欢迎的编程语言之一。</p><h2>1.2 Python 的特点</h2><ul><li><strong>简洁易读：</strong>Python 语法简洁，代码可读性强</li><li><strong>跨平台：</strong>支持 Windows、Mac、Linux 等操作系统</li><li><strong>丰富的库：</strong>拥有庞大的标准库和第三方库</li><li><strong>开源免费：</strong>完全免费，社区活跃</li></ul><div class="tip"><strong>💡 小贴士：</strong>Python 的名字来源于英国喜剧团体"蒙提·派森的飞行马戏团"，而不是蟒蛇。</div>' },
-                    { title: '第二章：环境配置', content: '<h1>第二章：环境配置</h1><h2>2.1 安装 Python</h2><p>访问 python.org 下载最新版本。Windows 用户建议勾选"Add Python to PATH"选项。</p><h2>2.2 选择编辑器</h2><ul><li><strong>VS Code：</strong>免费、轻量、插件丰富</li><li><strong>PyCharm：</strong>专业 Python IDE</li><li><strong>Jupyter Notebook：</strong>适合数据分析和学习</li></ul><div class="code">print("Hello, World!")\nprint("欢迎来到 Python 世界！")</div>' },
-                    { title: '第三章：基础语法', content: '<h1>第三章：基础语法</h1><h2>3.1 变量与数据类型</h2><div class="code">name = "Python"  # 字符串\nage = 30  # 整数\nprice = 19.99  # 浮点数\nis_active = True  # 布尔值</div><h2>3.2 运算符</h2><ul><li>算术运算符：+ - * / % ** //</li><li>比较运算符：== != > < >= <=</li><li>逻辑运算符：and or not</li></ul>' },
-                    { title: '第四章：数据结构', content: '<h1>第四章：数据结构</h1><h2>4.1 列表 List</h2><div class="code">fruits = ["apple", "banana", "orange"]\nfruits.append("grape")  # 添加元素\nprint(fruits[0])  # 访问元素</div><h2>4.2 字典 Dict</h2><div class="code">person = {"name": "张三", "age": 25}\nprint(person["name"])</div>' },
-                    { title: '第五章：函数与模块', content: '<h1>第五章：函数与模块</h1><h2>5.1 函数定义</h2><div class="code">def greet(name):\n    return f"Hello, {name}!"\n\nprint(greet("Python"))</div><h2>5.2 模块导入</h2><div class="code">import math\nfrom datetime import datetime\nprint(math.sqrt(16))</div>' },
-                    { title: '第六章：实战练习', content: '<h1>第六章：实战练习</h1><h2>6.1 项目一：计算器</h2><p>实现加减乘除基本功能。</p><h2>6.2 项目二：待办事项</h2><p>实现添加、删除、查看功能。</p><h2>6.3 项目三：数据分析</h2><p>使用 Pandas 分析数据。</p>' }
+                    { title: '第一章：Python 简介', content: '<h1>第一章：Python 简介</h1><h2>1.1 什么是 Python？</h2><p>Python 是一种高级编程语言，由 Guido van Rossum 于 1991 年创建。它以其简洁的语法和强大的功能而闻名，是目前最受欢迎的编程语言之一。</p><p>Python 的设计哲学强调代码的可读性和简洁性，它的语法允许程序员用更少的代码行表达概念，相比 C++ 或 Java 等语言，Python 代码通常更短。</p><h3>Python 的主要特点</h3><ul><li><strong>简洁易读：</strong>Python 语法简洁，代码可读性强，接近自然语言</li><li><strong>跨平台：</strong>支持 Windows、Mac、Linux 等操作系统</li><li><strong>丰富的库：</strong>拥有庞大的标准库和第三方库，涵盖各个领域</li><li><strong>开源免费：</strong>完全免费，社区活跃，有大量的学习资源</li><li><strong>应用广泛：</strong>Web 开发、数据分析、人工智能、自动化办公等</li></ul><div class="tip"><strong>💡 小贴士：</strong>Python 的名字来源于英国喜剧团体"蒙提·派森的飞行马戏团"（Monty Python\'s Flying Circus），而不是蟒蛇。Guido 是该喜剧团体的粉丝。</div><h2>1.2 Python 的应用领域</h2><h3>Web 开发</h3><p>使用 Django、Flask、FastAPI 等框架可以快速构建 Web 应用。许多知名网站如 Instagram、Pinterest 都是用 Python 开发的。</p><h3>数据分析</h3><p>Pandas、NumPy、Matplotlib 等库使 Python 成为数据分析的首选工具。数据科学家和分析师广泛使用 Python 进行数据处理和可视化。</p><h3>人工智能</h3><p>TensorFlow、PyTorch、Scikit-learn 等机器学习库让 Python 成为 AI 领域的主流语言。深度学习、自然语言处理、计算机视觉等领域都大量使用 Python。</p><h3>自动化办公</h3><p>Python 可以自动处理 Excel、Word、PDF 等文件，自动化日常办公任务，大大提高工作效率。</p><h3>网络爬虫</h3><p>使用 Scrapy、BeautifulSoup 等库可以编写网络爬虫，从网站获取数据。</p>' },
+                    { title: '第二章：环境配置', content: '<h1>第二章：环境配置</h1><h2>2.1 安装 Python</h2><p>首先需要从 Python 官网（python.org）下载最新版本的 Python。目前推荐使用 Python 3.10 或更高版本。</p><h3>Windows 安装</h3><p>1. 下载安装包并运行</p><p>2. <strong>重要：</strong>勾选"Add Python to PATH"选项，这样可以在命令行中直接使用 Python</p><p>3. 点击"Install Now"开始安装</p><p>4. 安装完成后，打开命令提示符，输入<code>python --version</code>验证安装</p><h3>Mac 安装</h3><p>Mac 系统通常预装了 Python，但建议使用 Homebrew 安装最新版本：</p><div class="code">brew install python</div><h3>Linux 安装</h3><div class="code">sudo apt update\nsudo apt install python3 python3-pip</div><h2>2.2 选择编辑器</h2><h3>VS Code（推荐）</h3><p>Visual Studio Code 是微软开发的免费代码编辑器，轻量且功能强大。</p><ul><li>安装 Python 扩展</li><li>支持代码高亮、自动补全</li><li>内置调试器</li><li>丰富的插件生态</li></ul><h3>PyCharm</h3><p>JetBrains 开发的专业 Python IDE，分为社区版（免费）和专业版（付费）。</p><ul><li>功能全面的 Python 开发环境</li><li>智能代码补全</li><li>强大的调试功能</li><li>集成版本控制</li></ul><h3>Jupyter Notebook</h3><p>适合数据分析和学习的交互式环境。</p><ul><li>可以边写代码边看结果</li><li>支持 Markdown 笔记</li><li>数据科学领域标准工具</li></ul><h2>2.3 第一个 Python 程序</h2><p>打开编辑器，创建第一个 Python 文件<code>hello.py</code>：</p><div class="code"># 这是你的第一个 Python 程序\nprint("Hello, World!")\nprint("欢迎来到 Python 世界！")\n\n# 简单的计算\na = 10\nb = 20\nprint(f"{a} + {b} = {a + b}")</div><p>运行程序：</p><div class="code">python hello.py</div><div class="tip"><strong>💡 小贴士：</strong><code>print()</code> 函数用于输出内容到屏幕，是 Python 中最常用的函数之一。</div>' },
+                    { title: '第三章：基础语法', content: '<h1>第三章：基础语法</h1><h2>3.1 变量与数据类型</h2><p>变量是存储数据的容器。在 Python 中，不需要声明变量类型，可以直接赋值。</p><div class="code"># 字符串\nname = "Python"\nmessage = \'Hello\'\n\n# 整数\nage = 30\ncount = 100\n\n# 浮点数\nprice = 19.99\npi = 3.14159\n\n# 布尔值\nis_active = True\nis_finished = False\n\n# 查看类型\nprint(type(name))  # &lt;class \'str\'&gt;\nprint(type(age))   # &lt;class \'int\'&gt;</div><h2>3.2 运算符</h2><h3>算术运算符</h3><div class="code">a = 10\nb = 3\n\nprint(a + b)  # 加法：13\nprint(a - b)  # 减法：7\nprint(a * b)  # 乘法：30\nprint(a / b)  # 除法：3.333...\nprint(a % b)  # 取余：1\nprint(a ** b) # 幂运算：1000\nprint(a // b) # 整除：3</div><h3>比较运算符</h3><div class="code">print(10 == 10)  # True\nprint(10 != 5)   # True\nprint(10 > 5)    # True\nprint(10 &lt; 5)    # False\nprint(10 &gt;= 10)   # True\nprint(10 &lt;= 5)    # False</div><h3>逻辑运算符</h3><div class="code">print(True and False)  # False\nprint(True or False)   # True\nprint(not True)        # False</div><h2>3.3 字符串操作</h2><div class="code">text = "Hello, Python!"\n\n# 字符串长度\nprint(len(text))  # 14\n\n# 字符串切片\nprint(text[0:5])   # Hello\nprint(text[7:])    # Python!\n\n# 字符串方法\nprint(text.lower())  # hello, python!\nprint(text.upper())  # HELLO, PYTHON!\nprint(text.replace("Python", "World"))  # Hello, World!</div><div class="warning"><strong>⚠️ 注意：</strong>Python 是大小写敏感的语言，<code>Variable</code>和<code>variable</code>是两个不同的变量。</div>' },
+                    { title: '第四章：数据结构', content: '<h1>第四章：数据结构</h1><h2>4.1 列表 List</h2><p>列表是 Python 中最常用的数据结构，用于存储有序的元素集合。</p><div class="code"># 创建列表\nfruits = ["apple", "banana", "orange"]\nnumbers = [1, 2, 3, 4, 5]\nmixed = [1, "hello", 3.14, True]\n\n# 访问元素\nprint(fruits[0])     # apple\nprint(fruits[-1])    # orange（最后一个）\n\n# 添加元素\nfruits.append("grape")      # 添加到末尾\nfruits.insert(1, "pear")    # 插入到指定位置\n\n# 删除元素\nfruits.remove("banana")     # 删除指定值\ndel fruits[0]               # 删除指定位置\n\n# 列表切片\nprint(fruits[1:3])  # 获取子列表\n\n# 列表推导式\nsquares = [x**2 for x in range(10)]\nprint(squares)  # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</div><h2>4.2 字典 Dict</h2><p>字典是键值对的集合，用于存储映射关系。</p><div class="code"># 创建字典\nperson = {\n    "name": "张三",\n    "age": 25,\n    "city": "北京"\n}\n\n# 访问值\nprint(person["name"])  # 张三\nprint(person.get("age"))  # 25\n\n# 添加/修改\nperson["email"] = "zhangsan@example.com"\nperson["age"] = 26\n\n# 删除\ndel person["city"]\n\n# 遍历\nfor key, value in person.items():\n    print(f"{key}: {value}")</div><h2>4.3 元组和集合</h2><div class="code"># 元组（不可变列表）\ncoordinates = (10, 20)\nprint(coordinates[0])  # 10\n\n# 集合（无序不重复）\nunique_numbers = {1, 2, 3, 3, 4}\nprint(unique_numbers)  # {1, 2, 3, 4}</div><div class="tip"><strong>💡 小贴士：</strong>列表适用于需要修改的场景，元组适用于不需要修改的场景，字典适用于需要键值映射的场景。</div>' },
+                    { title: '第五章：函数与模块', content: '<h1>第五章：函数与模块</h1><h2>5.1 函数定义</h2><p>函数是组织好的、可重复使用的代码块。</p><div class="code"># 定义函数\ndef greet(name):\n    """问候函数"""\n    return f"Hello, {name}!"\n\n# 调用函数\nmessage = greet("Python")\nprint(message)  # Hello, Python!\n\n# 带默认参数的函数\ndef introduce(name, age=18):\n    print(f"我叫{name}，今年{age}岁")\n\nintroduce("张三")      # 我叫张三，今年 18 岁\nintroduce("李四", 25)  # 我叫李四，今年 25 岁\n\n# 可变参数\ndef sum_all(*args):\n    return sum(args)\n\nprint(sum_all(1, 2, 3, 4))  # 10</div><h2>5.2 Lambda 表达式</h2><div class="code"># 匿名函数\nsquare = lambda x: x ** 2\nprint(square(5))  # 25\n\n# 配合 map 使用\nnumbers = [1, 2, 3, 4]\nsquared = list(map(lambda x: x**2, numbers))\nprint(squared)  # [1, 4, 9, 16]</div><h2>5.3 模块导入</h2><div class="code"># 导入整个模块\nimport math\nprint(math.sqrt(16))  # 4.0\n\n# 导入特定函数\nfrom datetime import datetime\nprint(datetime.now())\n\n# 导入并重命名\nimport numpy as np\n\n# 导入所有\nfrom math import *</div><h2>5.4 常用内置模块</h2><ul><li><code>os</code> - 操作系统接口</li><li><code>sys</code> - 系统相关功能</li><li><code>datetime</code> - 日期时间处理</li><li><code>json</code> - JSON 数据处理</li><li><code>random</code> - 随机数生成</li></ul><div class="tip"><strong>💡 小贴士：</strong>使用<code>pip install 包名</code>可以安装第三方库，如<code>pip install requests</code>。</div>' },
+                    { title: '第六章：实战练习', content: '<h1>第六章：实战练习</h1><h2>6.1 项目一：计算器</h2><p>实现一个简单的命令行计算器。</p><div class="code">def calculator():\n    print("=== 简单计算器 ===")\n    \n    num1 = float(input("输入第一个数字："))\n    operator = input("输入运算符 (+, -, *, /)：")\n    num2 = float(input("输入第二个数字："))\n    \n    if operator == "+":\n        result = num1 + num2\n    elif operator == "-":\n        result = num1 - num2\n    elif operator == "*":\n        result = num1 * num2\n    elif operator == "/":\n        result = num1 / num2\n    else:\n        print("无效的运算符")\n        return\n    \n    print(f"结果：{result}")\n\ncalculator()</div><h2>6.2 项目二：待办事项</h2><p>实现一个简单的待办事项管理系统。</p><div class="code">todos = []\n\nwhile True:\n    print("\\n=== 待办事项 ===")\n    print("1. 添加事项")\n    print("2. 查看事项")\n    print("3. 删除事项")\n    print("4. 退出")\n    \n    choice = input("选择操作：")\n    \n    if choice == "1":\n        todo = input("输入事项：")\n        todos.append(todo)\n        print("已添加！")\n    elif choice == "2":\n        for i, todo in enumerate(todos, 1):\n            print(f"{i}. {todo}")\n    elif choice == "3":\n        index = int(input("输入序号："))\n        todos.pop(index - 1)\n        print("已删除！")\n    elif choice == "4":\n        break</div><h2>6.3 项目三：数据分析</h2><p>使用 Pandas 进行简单的数据分析。</p><div class="code">import pandas as pd\n\n# 创建数据\ndata = {\n    "姓名": ["张三", "李四", "王五"],\n    "年龄": [25, 30, 35],\n    "工资": [8000, 10000, 12000]\n}\n\ndf = pd.DataFrame(data)\n\n# 查看数据\nprint(df)\nprint(df["工资"].mean())  # 平均工资</div><div class="tip"><strong>🎉 恭喜！</strong>你已经完成了 Python 入门学习。继续练习，编写更多项目来提升技能！</div>' }
                 ]},
                 { title: 'Python 数据结构详解', pages: '180 页', size: '8.5 MB', chapters: [
-                    { title: '第一章：列表进阶', content: '<h1>第一章：列表进阶</h1><h2>1.1 列表推导式</h2><div class="code">squares = [x**2 for x in range(10)]</div>' },
-                    { title: '第二章：字典应用', content: '<h1>第二章：字典应用</h1><h2>2.1 字典推导式</h2><div class="code">{x: x**2 for x in range(5)}</div>' },
-                    { title: '第三章：集合操作', content: '<h1>第三章：集合操作</h1><h2>3.1 集合运算</h2><p>并集、交集、差集等操作。</p>' },
-                    { title: '第四章：元组与命名元组', content: '<h1>第四章：元组与命名元组</h1><h2>4.1 命名元组</h2><p>使用 collections.namedtuple。</p>' },
-                    { title: '第五章：数据结构选择', content: '<h1>第五章：数据结构选择</h1><h2>5.1 性能对比</h2><p>不同数据结构的性能特点。</p>' },
-                    { title: '第六章：实战案例', content: '<h1>第六章：实战案例</h1><h2>6.1 综合应用</h2><p>数据结构的综合应用案例。</p>' }
+                    { title: '第一章：列表进阶', content: '<h1>第一章：列表进阶</h1><h2>1.1 列表推导式</h2><p>列表推导式是一种简洁的创建列表的方法。</p><div class="code"># 基本语法\nsquares = [x**2 for x in range(10)]\nprint(squares)  # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]\n\n# 带条件\neven_squares = [x**2 for x in range(10) if x % 2 == 0]\nprint(even_squares)  # [0, 4, 16, 36, 64]\n\n# 嵌套循环\nmatrix = [[i*j for j in range(3)] for i in range(3)]\nprint(matrix)  # [[0, 0, 0], [0, 1, 2], [0, 2, 4]]</div><h2>1.2 列表常用方法</h2><div class="code">fruits = ["apple", "banana", "orange"]\n\n# 添加\nfruits.append("grape")      # 末尾添加\nfruits.extend(["pear", " peach"])  # 扩展列表\nfruits.insert(0, "first")   # 插入\n\n# 删除\nfruits.remove("banana")     # 删除值\nlast = fruits.pop()         # 弹出最后一个\n\n# 其他\nfruits.sort()               # 排序\nfruits.reverse()            # 反转\nindex = fruits.index("apple")  # 查找索引\ncount = fruits.count("apple")  # 计数</div>' },
+                    { title: '第二章：字典应用', content: '<h1>第二章：字典应用</h1><h2>2.1 字典推导式</h2><div class="code"># 基本语法\nsquares = {x: x**2 for x in range(5)}\nprint(squares)  # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}\n\n# 带条件\neven_squares = {x: x**2 for x in range(10) if x % 2 == 0}\nprint(even_squares)  # {0: 0, 2: 4, 4: 16, 6: 36, 8: 64}</div><h2>2.2 字典常用操作</h2><div class="code">person = {"name": "张三", "age": 25}\n\n# 安全获取\nname = person.get("name", "未知")\n\n# 合并字典\nperson.update({"city": "北京"})\n\n# 遍历\nfor key, value in person.items():\n    print(f"{key}: {value}")</div>' },
+                    { title: '第三章：集合操作', content: '<h1>第三章：集合操作</h1><h2>3.1 集合运算</h2><div class="code">set1 = {1, 2, 3, 4, 5}\nset2 = {4, 5, 6, 7, 8}\n\n# 并集\nprint(set1 | set2)  # {1, 2, 3, 4, 5, 6, 7, 8}\n\n# 交集\nprint(set1 & set2)  # {4, 5}\n\n# 差集\nprint(set1 - set2)  # {1, 2, 3}\n\n# 对称差集\nprint(set1 ^ set2)  # {1, 2, 3, 6, 7, 8}</div>' },
+                    { title: '第四章：元组与命名元组', content: '<h1>第四章：元组与命名元组</h1><h2>4.1 命名元组</h2><div class="code">from collections import namedtuple\n\n# 定义命名元组\nPerson = namedtuple("Person", ["name", "age", "city"])\n\n# 创建实例\np = Person("张三", 25, "北京")\n\n# 访问\nprint(p.name)  # 张三\nprint(p.age)   # 25</div>' },
+                    { title: '第五章：数据结构选择', content: '<h1>第五章：数据结构选择</h1><h2>5.1 性能对比</h2><ul><li><strong>列表：</strong>适合有序数据，支持索引访问</li><li><strong>字典：</strong>适合键值映射，查找速度快</li><li><strong>集合：</strong>适合去重和集合运算</li><li><strong>元组：</strong>适合不可变数据，性能略好</li></ul>' },
+                    { title: '第六章：实战案例', content: '<h1>第六章：实战案例</h1><h2>6.1 综合应用</h2><p>结合多种数据结构解决实际问题。</p><div class="code"># 统计词频\ntext = "python is great python is fun"\nwords = text.split()\n\nfrom collections import Counter\nword_count = Counter(words)\nprint(word_count)  # Counter({\'python\': 2, \'is\': 2, ...})</div>' }
                 ]}
             ],
             // 2. UI/UX 设计
             '2': [
                 { title: 'UI 设计入门指南', pages: '150 页', size: '8.5 MB', chapters: [
-                    { title: '第一章：设计基础', content: '<h1>第一章：设计基础</h1><h2>1.1 设计原则</h2><ul><li>对比</li><li>重复</li><li>对齐</li><li>亲密性</li></ul>' },
-                    { title: '第二章：色彩理论', content: '<h1>第二章：色彩理论</h1><h2>2.1 色相、饱和度、明度</h2><p>色彩的三要素详解。</p>' },
-                    { title: '第三章：版式设计', content: '<h1>第三章：版式设计</h1><h2>3.1 网格系统</h2><p>使用网格进行版面布局。</p>' },
-                    { title: '第四章：字体设计', content: '<h1>第四章：字体设计</h1><h2>4.1 字体选择</h2><p>如何选择合适的字体。</p>' },
-                    { title: '第五章：图标设计', content: '<h1>第五章：图标设计</h1><h2>5.1 图标规范</h2><p>图标设计的规范和技巧。</p>' },
-                    { title: '第六章：项目实战', content: '<h1>第六章：项目实战</h1><h2>6.1 完整设计项目</h2><p>从 0 到 1 完成一个设计项目。</p>' }
+                    { title: '第一章：设计基础', content: '<h1>第一章：设计基础</h1><h2>1.1 设计四原则</h2><h3>对比（Contrast）</h3><p>通过大小、颜色、形状等差异突出重要元素。</p><h3>重复（Repetition）</h3><p>重复使用设计元素，建立视觉一致性。</p><h3>对齐（Alignment）</h3><p>所有元素都应该与页面上的其他元素对齐。</p><h3>亲密性（Proximity）</h3><p>相关的元素应该靠近，不相关的元素应该分开。</p>' },
+                    { title: '第二章：色彩理论', content: '<h1>第二章：色彩理论</h1><h2>2.1 色彩三要素</h2><h3>色相（Hue）</h3><p>色彩的基本属性，如红、黄、蓝等。</p><h3>饱和度（Saturation）</h3><p>色彩的纯度或强度。</p><h3>明度（Brightness）</h3><p>色彩的明暗程度。</p>' },
+                    { title: '第三章：版式设计', content: '<h1>第三章：版式设计</h1><h2>3.1 网格系统</h2><p>使用网格进行版面布局，使设计更加有序。</p>' },
+                    { title: '第四章：字体设计', content: '<h1>第四章：字体设计</h1><h2>4.1 字体选择</h2><p>根据设计目的选择合适的字体。</p>' },
+                    { title: '第五章：图标设计', content: '<h1>第五章：图标设计</h1><h2>5.1 图标规范</h2><p>保持图标风格一致，大小统一。</p>' },
+                    { title: '第六章：项目实战', content: '<h1>第六章：项目实战</h1><h2>6.1 完整设计项目</h2><p>从需求分析到最终交付的完整流程。</p>' }
                 ]},
                 { title: 'Figma 完全手册', pages: '200 页', size: '12.3 MB', chapters: [
-                    { title: '第一章：Figma 基础', content: '<h1>第一章：Figma 基础</h1><h2>1.1 界面介绍</h2><p>Figma 的工作区介绍。</p>' },
-                    { title: '第二章：工具使用', content: '<h1>第二章：工具使用</h1><h2>2.1 形状工具</h2><p>各种形状工具的使用。</p>' },
-                    { title: '第三章：组件设计', content: '<h1>第三章：组件设计</h1><h2>3.1 创建组件</h2><p>组件的创建和使用。</p>' },
-                    { title: '第四章：自动布局', content: '<h1>第四章：自动布局</h1><h2>4.1 自动布局设置</h2><p>自动布局的详细设置。</p>' },
+                    { title: '第一章：Figma 基础', content: '<h1>第一章：Figma 基础</h1><h2>1.1 界面介绍</h2><p>Figma 的工作区分为画布、图层、属性面板。</p>' },
+                    { title: '第二章：工具使用', content: '<h1>第二章：工具使用</h1><h2>2.1 形状工具</h2><p>矩形、圆形、多边形等形状工具的使用。</p>' },
+                    { title: '第三章：组件设计', content: '<h1>第三章：组件设计</h1><h2>3.1 创建组件</h2><p>组件的创建和使用方法。</p>' },
+                    { title: '第四章：自动布局', content: '<h1>第四章：自动布局</h1><h2>4.1 自动布局设置</h2><p>自动布局的详细设置方法。</p>' },
                     { title: '第五章：原型设计', content: '<h1>第五章：原型设计</h1><h2>5.1 交互设置</h2><p>页面交互的设置方法。</p>' },
                     { title: '第六章：设计交付', content: '<h1>第六章：设计交付</h1><h2>6.1 交付给开发</h2><p>如何将设计交付给开发人员。</p>' }
                 ]}
@@ -105,72 +107,72 @@
             // 3. PMP 认证
             '3': [
                 { title: 'PMP 考试大纲详解', pages: '100 页', size: '5.5 MB', chapters: [
-                    { title: '第一章：PMP 概述', content: '<h1>第一章：PMP 概述</h1><h2>1.1 什么是 PMP</h2><p>PMP 是项目管理专业人士认证。</p>' },
-                    { title: '第二章：考试结构', content: '<h1>第二章：考试结构</h1><h2>2.1 考试题型</h2><p>180 道题，230 分钟考试时间。</p>' },
-                    { title: '第三章：知识领域', content: '<h1>第三章：知识领域</h1><h2>3.1 十大知识领域</h2><p>项目管理的十大知识领域。</p>' },
+                    { title: '第一章：PMP 概述', content: '<h1>第一章：PMP 概述</h1><h2>1.1 什么是 PMP</h2><p>PMP（Project Management Professional）是项目管理专业人士认证，由美国项目管理协会（PMI）颁发。</p>' },
+                    { title: '第二章：考试结构', content: '<h1>第二章：考试结构</h1><h2>2.1 考试题型</h2><p>180 道题，230 分钟考试时间，包含单选和多选。</p>' },
+                    { title: '第三章：知识领域', content: '<h1>第三章：知识领域</h1><h2>3.1 十大知识领域</h2><p>整合、范围、进度、成本、质量、资源、沟通、风险、采购、相关方管理。</p>' },
                     { title: '第四章：过程组', content: '<h1>第四章：过程组</h1><h2>4.1 五大过程组</h2><p>启动、规划、执行、监控、收尾。</p>' },
-                    { title: '第五章：备考策略', content: '<h1>第五章：备考策略</h1><h2>5.1 学习计划</h2><p>制定有效的备考计划。</p>' },
-                    { title: '第六章：真题练习', content: '<h1>第六章：真题练习</h1><h2>6.1 模拟题</h2><p>大量真题练习。</p>' }
+                    { title: '第五章：备考策略', content: '<h1>第五章：备考策略</h1><h2>5.1 学习计划</h2><p>建议备考时间 2-3 个月，每天学习 2-3 小时。</p>' },
+                    { title: '第六章：真题练习', content: '<h1>第六章：真题练习</h1><h2>6.1 模拟题</h2><p>大量真题练习，熟悉考试题型。</p>' }
                 ]},
                 { title: '项目管理知识体系指南', pages: '350 页', size: '18.5 MB', chapters: [
-                    { title: '第一章：引论', content: '<h1>第一章：引论</h1><h2>1.1 项目管理基础</h2><p>项目管理基础知识。</p>' },
-                    { title: '第二章：环境', content: '<h1>第二章：环境</h1><h2>2.1 项目运行环境</h2><p>项目运行的内外部环境。</p>' },
-                    { title: '第三章：角色', content: '<h1>第三章：角色</h1><h2>3.1 项目经理职责</h2><p>项目经理的角色和职责。</p>' },
-                    { title: '第四章：整合管理', content: '<h1>第四章：整合管理</h1><h2>4.1 项目整合</h2><p>项目整合管理过程。</p>' },
-                    { title: '第五章：范围管理', content: '<h1>第五章：范围管理</h1><h2>5.1 范围定义</h2><p>项目范围的定义和管理。</p>' },
-                    { title: '第六章：进度管理', content: '<h1>第六章：进度管理</h1><h2>6.1 进度计划</h2><p>项目进度计划的制定。</p>' }
+                    { title: '第一章：引论', content: '<h1>第一章：引论</h1><h2>1.1 项目管理基础</h2><p>项目管理是将知识、技能、工具和技术应用于项目活动，以满足项目要求。</p>' },
+                    { title: '第二章：环境', content: '<h1>第二章：环境</h1><h2>2.1 项目运行环境</h2><p>项目在企业内部或外部环境中运行。</p>' },
+                    { title: '第三章：角色', content: '<h1>第三章：角色</h1><h2>3.1 项目经理职责</h2><p>项目经理负责实现项目目标。</p>' },
+                    { title: '第四章：整合管理', content: '<h1>第四章：整合管理</h1><h2>4.1 项目整合</h2><p>协调所有项目要素。</p>' },
+                    { title: '第五章：范围管理', content: '<h1>第五章：范围管理</h1><h2>5.1 范围定义</h2><p>明确项目的边界。</p>' },
+                    { title: '第六章：进度管理', content: '<h1>第六章：进度管理</h1><h2>6.1 进度计划</h2><p>制定项目进度计划。</p>' }
                 ]}
             ],
             // 4. 数据分析
             '4': [
                 { title: 'Excel 数据分析手册', pages: '180 页', size: '9.5 MB', chapters: [
-                    { title: '第一章：Excel 基础', content: '<h1>第一章：Excel 基础</h1><h2>1.1 基本操作</h2><p>Excel 基本操作和函数。</p>' },
-                    { title: '第二章：数据透视表', content: '<h1>第二章：数据透视表</h1><h2>2.1 创建透视表</h2><p>数据透视表的创建和使用。</p>' },
-                    { title: '第三章：图表制作', content: '<h1>第三章：图表制作</h1><h2>3.1 常用图表</h2><p>各种图表的制作方法。</p>' },
-                    { title: '第四章：Power Query', content: '<h1>第四章：Power Query</h1><h2>4.1 数据查询</h2><p>数据查询和转换。</p>' },
+                    { title: '第一章：Excel 基础', content: '<h1>第一章：Excel 基础</h1><h2>1.1 基本操作</h2><p>单元格操作、公式输入、数据格式设置等基础操作。</p>' },
+                    { title: '第二章：数据透视表', content: '<h1>第二章：数据透视表</h1><h2>2.1 创建透视表</h2><p>数据透视表是强大的数据分析工具。</p>' },
+                    { title: '第三章：图表制作', content: '<h1>第三章：图表制作</h1><h2>3.1 常用图表</h2><p>柱状图、折线图、饼图等图表的制作。</p>' },
+                    { title: '第四章：Power Query', content: '<h1>第四章：Power Query</h1><h2>4.1 数据查询</h2><p>数据查询和转换工具。</p>' },
                     { title: '第五章：数据分析', content: '<h1>第五章：数据分析</h1><h2>5.1 分析方法</h2><p>数据分析方法和技巧。</p>' },
-                    { title: '第六章：实战案例', content: '<h1>第六章：实战案例</h1><h2>6.1 实际项目</h2><p>实际数据分析项目。</p>' }
+                    { title: '第六章：实战案例', content: '<h1>第六章：实战案例</h1><h2>6.1 实际项目</h2><p>实际数据分析项目案例。</p>' }
                 ]},
                 { title: 'SQL 从入门到精通', pages: '220 页', size: '12.3 MB', chapters: [
-                    { title: '第一章：SQL 基础', content: '<h1>第一章：SQL 基础</h1><h2>1.1 基本语法</h2><p>SQL 基本语法和概念。</p>' },
-                    { title: '第二章：数据查询', content: '<h1>第二章：数据查询</h1><h2>2.1 SELECT 语句</h2><p>SELECT 语句详解。</p>' },
-                    { title: '第三章：数据过滤', content: '<h1>第三章：数据过滤</h1><h2>3.1 WHERE 子句</h2><p>WHERE 子句使用。</p>' },
-                    { title: '第四章：数据聚合', content: '<h1>第四章：数据聚合</h1><h2>4.1 GROUP BY</h2><p>GROUP BY 和聚合函数。</p>' },
-                    { title: '第五章：多表连接', content: '<h1>第五章：多表连接</h1><h2>5.1 JOIN 操作</h2><p>JOIN 操作详解。</p>' },
-                    { title: '第六章：高级查询', content: '<h1>第六章：高级查询</h1><h2>6.1 子查询</h2><p>子查询和窗口函数。</p>' }
+                    { title: '第一章：SQL 基础', content: '<h1>第一章：SQL 基础</h1><h2>1.1 基本语法</h2><p>SQL 是结构化查询语言，用于管理关系数据库。</p>' },
+                    { title: '第二章：数据查询', content: '<h1>第二章：数据查询</h1><h2>2.1 SELECT 语句</h2><p>SELECT * FROM table_name;</p>' },
+                    { title: '第三章：数据过滤', content: '<h1>第三章：数据过滤</h1><h2>3.1 WHERE 子句</h2><p>SELECT * FROM table WHERE condition;</p>' },
+                    { title: '第四章：数据聚合', content: '<h1>第四章：数据聚合</h1><h2>4.1 GROUP BY</h2><p>SELECT column, COUNT(*) FROM table GROUP BY column;</p>' },
+                    { title: '第五章：多表连接', content: '<h1>第五章：多表连接</h1><h2>5.1 JOIN 操作</h2><p>SELECT * FROM table1 JOIN table2 ON condition;</p>' },
+                    { title: '第六章：高级查询', content: '<h1>第六章：高级查询</h1><h2>6.1 子查询</h2><p>子查询和窗口函数的高级用法。</p>' }
                 ]}
             ],
             // 5. 新媒体运营
             '5': [
                 { title: '新媒体运营入门手册', pages: '120 页', size: '6.5 MB', chapters: [
-                    { title: '第一章：新媒体概述', content: '<h1>第一章：新媒体概述</h1><h2>1.1 新媒体定义</h2><p>新媒体的定义和发展。</p>' },
-                    { title: '第二章：平台规则', content: '<h1>第二章：平台规则</h1><h2>2.1 平台介绍</h2><p>各大平台规则解读。</p>' },
-                    { title: '第三章：账号定位', content: '<h1>第三章：账号定位</h1><h2>3.1 定位方法</h2><p>如何确定账号定位。</p>' },
-                    { title: '第四章：内容创作', content: '<h1>第四章：内容创作</h1><h2>4.1 创作方法</h2><p>内容创作方法和技巧。</p>' },
-                    { title: '第五章：粉丝增长', content: '<h1>第五章：粉丝增长</h1><h2>5.1 增长策略</h2><p>粉丝增长策略。</p>' },
-                    { title: '第六章：变现模式', content: '<h1>第六章：变现模式</h1><h2>6.1 变现方式</h2><p>新媒体变现方式。</p>' }
+                    { title: '第一章：新媒体概述', content: '<h1>第一章：新媒体概述</h1><h2>1.1 新媒体定义</h2><p>新媒体是指基于数字技术的媒体形态。</p>' },
+                    { title: '第二章：平台规则', content: '<h1>第二章：平台规则</h1><h2>2.1 平台介绍</h2><p>微信、微博、抖音、小红书等平台规则。</p>' },
+                    { title: '第三章：账号定位', content: '<h1>第三章：账号定位</h1><h2>3.1 定位方法</h2><p>确定目标受众和内容方向。</p>' },
+                    { title: '第四章：内容创作', content: '<h1>第四章：内容创作</h1><h2>4.1 创作方法</h2><p>内容创作的方法和技巧。</p>' },
+                    { title: '第五章：粉丝增长', content: '<h1>第五章：粉丝增长</h1><h2>5.1 增长策略</h2><p>粉丝增长的策略和方法。</p>' },
+                    { title: '第六章：变现模式', content: '<h1>第六章：变现模式</h1><h2>6.1 变现方式</h2><p>广告、电商、知识付费等变现方式。</p>' }
                 ]},
                 { title: '爆款文案写作指南', pages: '180 页', size: '9.8 MB', chapters: [
-                    { title: '第一章：文案基础', content: '<h1>第一章：文案基础</h1><h2>1.1 写作原则</h2><p>文案写作基本原则。</p>' },
-                    { title: '第二章：标题技巧', content: '<h1>第二章：标题技巧</h1><h2>2.1 爆款标题</h2><p>爆款标题写作方法。</p>' },
-                    { title: '第三章：开头技巧', content: '<h1>第三章：开头技巧</h1><h2>3.1 吸引读者</h2><p>吸引读者的开头。</p>' },
-                    { title: '第四章：正文结构', content: '<h1>第四章：正文结构</h1><h2>4.1 结构安排</h2><p>正文结构安排。</p>' },
-                    { title: '第五章：结尾技巧', content: '<h1>第五章：结尾技巧</h1><h2>5.1 引导行动</h2><p>引导行动的结尾。</p>' },
-                    { title: '第六章：实战练习', content: '<h1>第六章：实战练习</h1><h2>6.1 文案实战</h2><p>文案写作实战。</p>' }
+                    { title: '第一章：文案基础', content: '<h1>第一章：文案基础</h1><h2>1.1 写作原则</h2><p>文案写作的基本原则。</p>' },
+                    { title: '第二章：标题技巧', content: '<h1>第二章：标题技巧</h1><h2>2.1 爆款标题</h2><p>爆款标题的写作方法。</p>' },
+                    { title: '第三章：开头技巧', content: '<h1>第三章：开头技巧</h1><h2>3.1 吸引读者</h2><p>吸引读者的开头写作。</p>' },
+                    { title: '第四章：正文结构', content: '<h1>第四章：正文结构</h1><h2>4.1 结构安排</h2><p>正文结构的安排方法。</p>' },
+                    { title: '第五章：结尾技巧', content: '<h1>第五章：结尾技巧</h1><h2>5.1 引导行动</h2><p>引导行动的结尾写作。</p>' },
+                    { title: '第六章：实战练习', content: '<h1>第六章：实战练习</h1><h2>6.1 文案实战</h2><p>文案写作实战练习。</p>' }
                 ]}
             ],
             // 6. 商务英语
             '6': [
                 { title: '商务英语常用词汇手册', pages: '200 页', size: '10.5 MB', chapters: [
-                    { title: '第一章：商务基础词汇', content: '<h1>第一章：商务基础词汇</h1><h2>1.1 常用词汇</h2><p>常用商务词汇汇总。</p>' },
-                    { title: '第二章：会议词汇', content: '<h1>第二章：会议词汇</h1><h2>2.1 会议用语</h2><p>会议相关词汇。</p>' },
-                    { title: '第三章：邮件词汇', content: '<h1>第三章：邮件词汇</h1><h2>3.1 邮件用语</h2><p>邮件写作词汇。</p>' },
-                    { title: '第四章：谈判词汇', content: '<h1>第四章：谈判词汇</h1><h2>4.1 谈判用语</h2><p>商务谈判词汇。</p>' },
+                    { title: '第一章：商务基础词汇', content: '<h1>第一章：商务基础词汇</h1><h2>1.1 常用词汇</h2><p>常用商务词汇汇总，包括公司、职位、部门等词汇。</p>' },
+                    { title: '第二章：会议词汇', content: '<h1>第二章：会议词汇</h1><h2>2.1 会议用语</h2><p>会议相关词汇和表达方式。</p>' },
+                    { title: '第三章：邮件词汇', content: '<h1>第三章：邮件词汇</h1><h2>3.1 邮件用语</h2><p>邮件写作常用词汇。</p>' },
+                    { title: '第四章：谈判词汇', content: '<h1>第四章：谈判词汇</h1><h2>4.1 谈判用语</h2><p>商务谈判常用词汇。</p>' },
                     { title: '第五章：演讲词汇', content: '<h1>第五章：演讲词汇</h1><h2>5.1 演讲用语</h2><p>演讲相关词汇。</p>' },
-                    { title: '第六章：面试词汇', content: '<h1>第六章：面试词汇</h1><h2>6.1 面试用语</h2><p>面试常用词汇。</p>' }
+                    { title: '第六章：面试词汇', content: '<h1>第六章：面试词汇</h1><h2>6.1 面试用语</h2><p>面试常用词汇和表达。</p>' }
                 ]},
                 { title: '商务邮件写作模板', pages: '150 页', size: '8.2 MB', chapters: [
-                    { title: '第一章：邮件格式', content: '<h1>第一章：邮件格式</h1><h2>1.1 标准格式</h2><p>商务邮件标准格式。</p>' },
+                    { title: '第一章：邮件格式', content: '<h1>第一章：邮件格式</h1><h2>1.1 标准格式</h2><p>商务邮件的标准格式和结构。</p>' },
                     { title: '第二章：开场白', content: '<h1>第二章：开场白</h1><h2>2.1 开场模板</h2><p>邮件开场白模板。</p>' },
                     { title: '第三章：请求邮件', content: '<h1>第三章：请求邮件</h1><h2>3.1 请求模板</h2><p>请求类邮件模板。</p>' },
                     { title: '第四章：回复邮件', content: '<h1>第四章：回复邮件</h1><h2>4.1 回复模板</h2><p>回复类邮件模板。</p>' },
@@ -182,7 +184,7 @@
             '7': [
                 { title: '高效沟通入门手册', pages: '120 页', size: '6.5 MB', chapters: [
                     { title: '第一章：沟通基础', content: '<h1>第一章：沟通基础</h1><h2>1.1 沟通概念</h2><p>沟通的基本概念和重要性。</p>' },
-                    { title: '第二章：倾听技巧', content: '<h1>第二章：倾听技巧</h1><h2>2.1 有效倾听</h2><p>有效倾听的方法。</p>' },
+                    { title: '第二章：倾听技巧', content: '<h1>第二章：倾听技巧</h1><h2>2.1 有效倾听</h2><p>有效倾听的方法和技巧。</p>' },
                     { title: '第三章：表达技巧', content: '<h1>第三章：表达技巧</h1><h2>3.1 清晰表达</h2><p>清晰表达的方法。</p>' },
                     { title: '第四章：非语言沟通', content: '<h1>第四章：非语言沟通</h1><h2>4.1 肢体语言</h2><p>肢体语言的作用。</p>' },
                     { title: '第五章：冲突处理', content: '<h1>第五章：冲突处理</h1><h2>5.1 处理技巧</h2><p>处理冲突的技巧。</p>' },
@@ -200,7 +202,7 @@
             // 8. 心理咨询
             '8': [
                 { title: '心理学基础入门', pages: '250 页', size: '13.5 MB', chapters: [
-                    { title: '第一章：心理学概述', content: '<h1>第一章：心理学概述</h1><h2>1.1 心理学定义</h2><p>心理学的定义和发展历史。</p>' },
+                    { title: '第一章：心理学概述', content: '<h1>第一章：心理学概述</h1><h2>1.1 心理学定义</h2><p>心理学是研究心理现象和行为的科学。</p>' },
                     { title: '第二章：发展心理学', content: '<h1>第二章：发展心理学</h1><h2>2.1 心理发展</h2><p>人类心理发展过程。</p>' },
                     { title: '第三章：社会心理学', content: '<h1>第三章：社会心理学</h1><h2>3.1 社会心理</h2><p>社会心理学基础。</p>' },
                     { title: '第四章：人格心理学', content: '<h1>第四章：人格心理学</h1><h2>4.1 人格理论</h2><p>人格理论和测评。</p>' },
@@ -227,11 +229,9 @@
             currentCourse = params.get('id') || '1';
             currentEbook = parseInt(params.get('ebook') || '0');
             
-            console.log('Loading ebook:', currentCourse, currentEbook);
-            
             const ebooks = allEbooks[currentCourse];
             if (!ebooks || !ebooks[currentEbook]) {
-                document.querySelector('.ebook-reader').innerHTML = '<div style="padding:50px;text-align:center;"><h1>电子书不存在</h1><p>课程 ID: ' + currentCourse + ', 电子书 ID: ' + currentEbook + '</p><a href="/learning/" style="color:#11998e;">返回课程列表</a></div>';
+                document.querySelector('.ebook-reader').innerHTML = '<div style="padding:50px;text-align:center;"><h1>电子书不存在</h1><a href="/learning/" style="color:#11998e;">返回课程列表</a></div>';
                 return;
             }
             
@@ -260,7 +260,6 @@
             document.getElementById('prevBtn').disabled = currentPage === 0;
             document.getElementById('nextBtn').disabled = currentPage === ebook.chapters.length - 1;
             
-            // 滚动到内容顶部
             const contentEl = document.querySelector('.ebook-content');
             if (contentEl) {
                 contentEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -290,7 +289,6 @@
             renderPage();
         }
         
-        // 页面加载时初始化
         loadEbook();
     </script>
 </body>
